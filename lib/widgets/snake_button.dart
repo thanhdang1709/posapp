@@ -14,7 +14,7 @@ class SnakeButton extends StatefulWidget {
       this.onPressed,
       this.duration = const Duration(milliseconds: 2500),
       this.borderColor = Colors.white,
-      this.snakeColor = Colors.pinkAccent,
+      this.snakeColor = Colors.cyan,
       this.borderWidth = 3.0,
       this.child})
       : super(key: key);
@@ -70,7 +70,7 @@ class _SnakePainter extends CustomPainter {
 
   _SnakePainter({
     @required this.animation,
-    this.snakeColor = Colors.pinkAccent,
+    this.snakeColor = Colors.cyan,
     this.borderColor = Colors.white,
     this.borderWidth = 3.0,
   }) : super(repaint: animation);
@@ -95,7 +95,7 @@ class _SnakePainter extends CustomPainter {
     //=======================
     final snakePaint = Paint()
       ..shader = SweepGradient(
-          colors: [Colors.pinkAccent, Colors.transparent],
+          colors: [Colors.cyan, Colors.transparent],
           stops: [0.5, 0.5],
           startAngle: 0.0,
           endAngle: vector.radians(90),

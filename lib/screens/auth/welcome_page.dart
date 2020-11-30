@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pos_app/screens/auth/components/animated_background.dart';
 import 'package:pos_app/screens/auth/components/common_widget.dart';
 import 'package:pos_app/screens/auth/register_page.dart';
-import 'package:pos_app/screens/auth/components/snake_button.dart';
+import 'package:pos_app/widgets/snake_button.dart';
 import 'package:pos_app/screens/auth/login_page.dart';
 
 class WelcomePage extends StatelessWidget {

@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
-import 'package:pos_app/main.dart';
-import 'package:pos_app/screens/auth/auth_screen.dart';
 import 'package:pos_app/screens/auth/welcome_page.dart';
-import 'package:pos_app/screens/welcome/onboarding_page.dart';
 
 class Introduce extends StatelessWidget {
   const Introduce({
@@ -14,9 +11,14 @@ class Introduce extends StatelessWidget {
     // Navigator.of(context).push(
     //   MaterialPageRoute(builder: (_) => HomePage()),
     // );
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-      return WelcomePage();
-    }));
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) {
+          return WelcomePage();
+        },
+      ),
+    );
   }
 
   Widget _buildImage(String assetName) {

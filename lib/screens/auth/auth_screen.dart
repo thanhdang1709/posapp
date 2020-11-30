@@ -56,12 +56,12 @@ class LoginScreenBodyState extends State<LoginScreenBody>
       child: Stack(
         fit: StackFit.expand,
         children: <Widget>[
-          Image.network(
-            imageUrl,
-            color: Color(0xFFBDA778),
-            colorBlendMode: BlendMode.multiply,
-            fit: BoxFit.cover,
-          ),
+          // Image.network(
+          //   imageUrl,
+          //   color: Color(0xFFBDA778),
+          //   colorBlendMode: BlendMode.multiply,
+          //   fit: BoxFit.cover,
+          // ),
           // Padding(
           //   padding: const EdgeInsets.only(bottom: 18.0),
           //   child: Align(
