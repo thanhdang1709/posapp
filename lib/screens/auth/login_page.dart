@@ -4,7 +4,6 @@ import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:pos_app/screens/auth/components/clippers/inverted_top_border.dart';
 import 'package:pos_app/screens/auth/components/common_widget.dart';
 import 'package:pos_app/screens/home/bottom_nav.dart';
-import 'package:pos_app/screens/welcome/onboarding_page.dart';
 import 'package:pos_app/widgets/stragger_animation.dart';
 
 import 'components/text_input_find_out.dart';

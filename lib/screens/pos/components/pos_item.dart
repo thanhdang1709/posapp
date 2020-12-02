@@ -17,6 +17,7 @@ class _TabPosItemState extends State<TabPosItem>
   double _scale;
   AnimationController _controller;
   int count = 0;
+
   @override
   void initState() {
     _controller = AnimationController(
@@ -41,7 +42,8 @@ class _TabPosItemState extends State<TabPosItem>
   @override
   Widget build(BuildContext context) {
     _scale = 1 - _controller.value;
-    print('re build $_scale');
+    //PosController _posController = new PosController(context: context);
+    //print('re build $_scale');
     final Size size = MediaQuery.of(context).size;
     return Column(children: [
       Padding(

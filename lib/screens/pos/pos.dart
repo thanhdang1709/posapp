@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:pos_app/config/pallate.dart';
 import 'package:pos_app/screens/pos/components/pos_item.dart';
+import 'package:pos_app/screens/pos/pos_controller.dart';
 import 'package:pos_app/widgets/flexi_top_background.dart';
 
 class PosScreen extends StatefulWidget {
@@ -14,6 +15,7 @@ class PosScreen extends StatefulWidget {
 class _PosScreenState extends State<PosScreen>
     with SingleTickerProviderStateMixin {
   TabController _controller;
+  // ignore: unused_field
   int _selectedIndex = 0;
 
   @override
@@ -30,6 +32,7 @@ class _PosScreenState extends State<PosScreen>
   @override
   Widget build(BuildContext context) {
     //  Size size = MediaQuery.of(context).size;
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
