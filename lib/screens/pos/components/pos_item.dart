@@ -50,8 +50,7 @@ class _TabPosItemState extends State<TabPosItem>
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
         child: PosActionRow(),
       ),
-      SizedBox(
-        height: size.height * .62,
+      Expanded(
         child: Padding(
           padding: const EdgeInsets.only(left: 10, right: 10, bottom: 0),
           child: GridView.count(
@@ -68,7 +67,7 @@ class _TabPosItemState extends State<TabPosItem>
         ),
       ),
       Padding(
-        padding: const EdgeInsets.only(left: 10, right: 10, top: 2),
+        padding: const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
         child: Transform.scale(
           scale: _scale,
           child: Container(
@@ -100,6 +99,141 @@ class _TabPosItemState extends State<TabPosItem>
         color: Colors.orange,
         title: 'Gà rán',
         price: 15000,
+        imageUrl:
+            'https://i.pinimg.com/736x/60/de/7f/60de7f8fc369c1f4b023360c3c0f279a.jpg',
+        onPressed: () {
+          setState(() {
+            count += 1;
+          });
+          bounceButtonAction(controller);
+          //print('hello');
+        },
+      ),
+      CardFoodGridItem(
+        size: size,
+        color: Colors.blue,
+        title: 'Cà phê',
+        price: 1000,
+        imageUrl:
+            'https://i.pinimg.com/736x/60/de/7f/60de7f8fc369c1f4b023360c3c0f279a.jpg',
+        onPressed: () {
+          setState(() {
+            count += 1;
+          });
+          bounceButtonAction(controller);
+          //print('hello');
+        },
+      ),
+      CardFoodGridItem(
+        size: size,
+        color: Colors.green,
+        title: 'Trà sữa',
+        price: 25000,
+        imageUrl:
+            'https://i.pinimg.com/736x/60/de/7f/60de7f8fc369c1f4b023360c3c0f279a.jpg',
+        onPressed: () {
+          setState(() {
+            count += 1;
+          });
+          bounceButtonAction(controller);
+          //print('hello');
+        },
+      ),
+      CardFoodGridItem(
+        size: size,
+        color: Colors.green,
+        title: 'Trà sữa',
+        price: 25000,
+        imageUrl:
+            'https://i.pinimg.com/736x/60/de/7f/60de7f8fc369c1f4b023360c3c0f279a.jpg',
+        onPressed: () {
+          setState(() {
+            count += 1;
+          });
+          bounceButtonAction(controller);
+          //print('hello');
+        },
+      ),
+      CardFoodGridItem(
+        size: size,
+        color: Colors.blue,
+        title: 'Trà sữa',
+        price: 25000,
+        imageUrl:
+            'https://i.pinimg.com/736x/60/de/7f/60de7f8fc369c1f4b023360c3c0f279a.jpg',
+        onPressed: () {
+          setState(() {
+            count += 1;
+          });
+          bounceButtonAction(controller);
+          //print('hello');
+        },
+      ),
+      CardFoodGridItem(
+        size: size,
+        color: Colors.pink,
+        title: 'Trà sữa',
+        price: 25000,
+        imageUrl:
+            'https://i.pinimg.com/736x/60/de/7f/60de7f8fc369c1f4b023360c3c0f279a.jpg',
+        onPressed: () {
+          setState(() {
+            count += 1;
+          });
+          bounceButtonAction(controller);
+          //print('hello');
+        },
+      ),
+      CardFoodGridItem(
+        size: size,
+        color: Colors.cyan,
+        title: 'Trà sữa',
+        price: 25000,
+        imageUrl:
+            'https://i.pinimg.com/736x/60/de/7f/60de7f8fc369c1f4b023360c3c0f279a.jpg',
+        onPressed: () {
+          setState(() {
+            count += 1;
+          });
+          bounceButtonAction(controller);
+          //print('hello');
+        },
+      ),
+      CardFoodGridItem(
+        size: size,
+        color: Colors.black,
+        title: 'Trà sữa',
+        price: 25000,
+        imageUrl:
+            'https://i.pinimg.com/736x/60/de/7f/60de7f8fc369c1f4b023360c3c0f279a.jpg',
+        onPressed: () {
+          setState(() {
+            count += 1;
+          });
+          bounceButtonAction(controller);
+          //print('hello');
+        },
+      ),
+      CardFoodGridItem(
+        size: size,
+        color: Colors.yellow,
+        title: 'Trà sữa',
+        price: 25000,
+        imageUrl:
+            'https://i.pinimg.com/736x/60/de/7f/60de7f8fc369c1f4b023360c3c0f279a.jpg',
+        onPressed: () {
+          setState(() {
+            count += 1;
+          });
+          bounceButtonAction(controller);
+          //print('hello');
+        },
+      ),
+      CardFoodGridItem(
+        size: size,
+        color: Colors.red,
+        title: 'Trà sữa',
+        price: 25000,
         imageUrl:
             'https://i.pinimg.com/736x/60/de/7f/60de7f8fc369c1f4b023360c3c0f279a.jpg',
         onPressed: () {

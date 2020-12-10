@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:pos_app/routes/pages.dart';
 //import 'package:introduction_screen/introduction_screen.dart';
 //import 'package:pos_app/screens/introduce/introduce_screen.dart';
 import 'package:pos_app/screens/welcome/onboarding_page.dart';
@@ -19,11 +21,13 @@ class App extends StatelessWidget {
       SystemUiOverlayStyle.light.copyWith(statusBarColor: Colors.transparent),
     );
 
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Introduction screen',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.blue),
       home: OnBoardingPage(),
+      initialRoute: Routes.INITIAL,
+      getPages: AppPages.pages,
     );
   }
 }

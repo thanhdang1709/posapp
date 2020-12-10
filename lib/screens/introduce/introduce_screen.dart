@@ -43,8 +43,9 @@ class Introduce extends StatelessWidget {
         key: introKey,
         pages: [
           PageViewModel(
-            title: "Chào mừng bạn đến với Pos App miễn phí",
-            body: "Phần mềm quản lí cửa hàng vô cũng tiện lợi.",
+            title: "Chào mừng bạn đến với PoPos miễn phí",
+            body:
+                "Phần mềm quản lí nhà hàng, quán ăn, cà phê vô cũng tiện lợi.",
             image: _buildImage('img1'),
             decoration: pageDecoration,
           ),

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 //import 'package:mal_app_call/screens/home/home.dart';
 import 'dart:async';
 
+import 'package:get/get.dart';
+
 class StaggerAnimation extends StatelessWidget {
   StaggerAnimation(
       {Key key,
@@ -128,10 +130,14 @@ class StaggerAnimation extends StatelessWidget {
   Widget build(BuildContext context) {
     buttonController.addListener(() {
       if (buttonController.isCompleted) {
-        //Navigator.pushNamed(context, "/home");
-        Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_) {
-          return redirectTo;
-        }));
+        // Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_) {
+        //   return redirectTo;
+        // }));
+        if (redirectTo == null) {
+          Get.offAllNamed('/pos');
+        } else {
+          Get.to(redirectTo);
+        }
       }
     });
     return new AnimatedBuilder(

@@ -23,17 +23,24 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  cached_network_image: ^2.3.3
   cupertino_icons: ^1.0.0
   dropdown_search: ^0.4.6
   flare_flutter: ^2.0.6
   flutter_vector_icons: ^0.2.1
+  get: ^3.21.3
   google_fonts: ^1.1.1
   introduction_screen: ^1.0.9
-  pin_code_fields: ^6.0.1
   mdi: ^3.0.0
-  transparent_image: ^1.0.0
-  cached_network_image: ^2.3.3
+  pin_code_fields: ^6.0.1
   sqflite: ^1.3.2+1
+  transparent_image: ^1.0.0
+  #flutter_barcode_scanner: ^1.0.1
+  #qrscan: ^0.2.19
+  #qr_code_scanner: ^0.0.13
+  image_picker: ^0.6.7+14
+  flutter_colorpicker: ^0.3.4
+  sliding_up_panel: ^1.0.2
 
 dev_dependencies:
   flutter_test:

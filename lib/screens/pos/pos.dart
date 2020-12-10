@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:get/get.dart';
 import 'package:pos_app/config/pallate.dart';
 import 'package:pos_app/screens/pos/components/pos_item.dart';
 import 'package:pos_app/screens/pos/pos_controller.dart';
+import 'package:pos_app/widgets/drawer/drawer.dart';
 import 'package:pos_app/widgets/flexi_top_background.dart';
 
 class PosScreen extends StatefulWidget {
@@ -36,8 +38,7 @@ class _PosScreenState extends State<PosScreen>
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        toolbarHeight: 70,
-        leading: Icon(Icons.menu),
+        toolbarHeight: 80,
         title: const Text(
           'Pos',
           style: TextStyle(color: Colors.orange),
@@ -50,9 +51,14 @@ class _PosScreenState extends State<PosScreen>
             padding: const EdgeInsets.only(right: 20),
             child: Icon(FontAwesome.table),
           ),
-          Padding(
-            padding: const EdgeInsets.only(right: 20),
-            child: Icon(FontAwesome.user_plus),
+          InkWell(
+            onTap: () {
+              Get.toNamed("customer/add");
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(right: 20),
+              child: Icon(FontAwesome.user_plus),
+            ),
           )
         ],
         bottom: TabBar(
@@ -64,6 +70,7 @@ class _PosScreenState extends State<PosScreen>
           unselectedLabelColor: Pallate.unselectedItemColor,
         ),
       ),
+      drawer: DrawerApp(),
       body: TabBarView(
         controller: _controller,
         children: _buildItemPost(),

@@ -13,7 +13,7 @@ class FindOutLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: fontSize * 3,
+      width: fontSize * 4,
       child: Hero(
         tag: 'logo',
         child: Material(
@@ -21,35 +21,39 @@ class FindOutLogo extends StatelessWidget {
           child: Column(
             children: <Widget>[
               Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'pos',
-                  style: GoogleFonts.poppins(
-                      fontWeight: FontWeight.w700,
-                      fontSize: fontSize,
-                      color: Colors.white),
+                // alignment: Alignment.centerLeft,
+                // child: Text(
+                //   'pos',
+                //   style: GoogleFonts.poppins(
+                //       fontWeight: FontWeight.w700,
+                //       fontSize: fontSize,
+                //       color: Colors.white),
+                // ),
+                child: Image.asset(
+                  'assets/img/logo.png',
+                  height: 80,
                 ),
               ),
-              Align(
-                alignment: Alignment.centerRight,
-                heightFactor: .3,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: <Widget>[
-                    Icon(FontAwesome.mobile,
-                        size: fontSize * .7, color: Colors.orange),
-                    Text(
-                      'app',
-                      style: GoogleFonts.poppins(
-                          height: .4,
-                          fontWeight: FontWeight.w700,
-                          fontSize: fontSize,
-                          color: Colors.white),
-                    ),
-                  ],
-                ),
-              ),
+              // Align(
+              //   alignment: Alignment.centerRight,
+              //   heightFactor: .3,
+              //   child: Row(
+              //     mainAxisSize: MainAxisSize.min,
+              //     crossAxisAlignment: CrossAxisAlignment.end,
+              //     children: <Widget>[
+              //       Icon(FontAwesome.mobile,
+              //           size: fontSize * .7, color: Colors.orange),
+              //       Text(
+              //         'app',
+              //         style: GoogleFonts.poppins(
+              //             height: .4,
+              //             fontWeight: FontWeight.w700,
+              //             fontSize: fontSize,
+              //             color: Colors.white),
+              //       ),
+              //     ],
+              //   ),
+              // ),
             ],
           ),
         ),
