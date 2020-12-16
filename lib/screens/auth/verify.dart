@@ -4,12 +4,8 @@ import 'dart:async';
 
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:pos_app/screens/home/bottom_nav.dart';
-import 'package:pos_app/screens/pos/pos.dart';
-import 'package:pos_app/screens/welcome/onboarding_page.dart';
 
 class PinCodeVerificationScreen extends StatefulWidget {
   final String phoneNumber;

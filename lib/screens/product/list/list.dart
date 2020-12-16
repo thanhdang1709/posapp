@@ -8,7 +8,6 @@ import 'package:pos_app/screens/product/list/components/item_product_stock.dart'
 import 'package:pos_app/widgets/common/row_search_input.dart';
 import 'package:pos_app/ultils/app_ultils.dart';
 import 'package:pos_app/widgets/drawer/drawer.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class ListProductScreen extends StatefulWidget {
   const ListProductScreen({Key key}) : super(key: key);

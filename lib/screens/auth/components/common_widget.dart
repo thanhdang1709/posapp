@@ -72,6 +72,7 @@ class FindOutHorizontalLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
     final style = GoogleFonts.poppins(
         fontWeight: FontWeight.w700,
         color: Colors.white,
@@ -117,6 +118,7 @@ class TitlePlace extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
     var typePlace;
     return Hero(
       tag: place.title,

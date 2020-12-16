@@ -35,7 +35,6 @@ class _BuildProvinceFieldState extends State<BuildProvinceField> {
   // }
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _validate = widget.validate;
   }
@@ -49,7 +48,6 @@ class _BuildProvinceFieldState extends State<BuildProvinceField> {
         if (snapshot.hasData) {
           if (snapshot.data != null) {
             List _listProvince = Province.fromJson(snapshot.data).data;
-
             return Padding(
                 padding: EdgeInsets.only(left: 0, right: 0),
                 child: Column(

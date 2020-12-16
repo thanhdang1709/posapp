@@ -3,7 +3,6 @@ import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pos_app/ultils/app_ultils.dart';
-import 'package:pos_app/widgets/image/image_circle.dart';
 
 class AddCustomerScreen extends StatefulWidget {
   AddCustomerScreen({Key key}) : super(key: key);

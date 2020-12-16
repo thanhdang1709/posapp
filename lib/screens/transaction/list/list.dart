@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:mdi/mdi.dart';
 import 'package:pos_app/config/pallate.dart';
 import 'package:pos_app/ultils/app_ultils.dart';
-import 'package:pos_app/widgets/common/row_search_input.dart';
 import 'package:pos_app/widgets/drawer/drawer.dart';
 
 class TransactionScreen extends StatelessWidget {

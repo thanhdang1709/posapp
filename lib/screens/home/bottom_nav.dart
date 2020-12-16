@@ -1,11 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_vector_icons/flutter_vector_icons.dart';
-import 'package:mdi/mdi.dart';
 import 'package:pos_app/screens/pos/pos.dart';
-import 'package:pos_app/widgets/flexi_top_background.dart';
-import 'dart:ui' as ui;
-
 import 'package:pos_app/widgets/ui_design/shader_maker.dart';
 
 class MyBottomNavHome extends StatefulWidget {

@@ -5,7 +5,7 @@ import 'package:pos_app/screens/auth/components/clippers/inverted_top_border.dar
 import 'package:pos_app/screens/auth/components/common_widget.dart';
 import 'package:pos_app/screens/auth/components/text_input_find_out.dart';
 import 'package:pos_app/screens/auth/verify.dart';
-import 'package:pos_app/widgets/provinces.dart';
+//import 'package:pos_app/widgets/provinces.dart';
 import 'package:pos_app/widgets/stragger_animation.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -31,6 +31,7 @@ class _RegisterPageState extends State<RegisterPage>
     super.dispose();
   }
 
+  // ignore: unused_element
   Future<Null> _playAnimation() async {
     try {
       await _registerButtonController.forward();
@@ -116,12 +117,12 @@ class _RegisterPageState extends State<RegisterPage>
                                     ),
                                     const SizedBox(height: 10),
                                     TextInputFindOut(
-                                      label: 'Địa chỉ',
+                                      label: 'Tên cửa hàng',
                                       iconData: FontAwesome.map,
                                       textInputType: TextInputType.text,
                                     ),
-                                    const SizedBox(height: 10),
-                                    BuildProvinceField(),
+                                    //const SizedBox(height: 10),
+                                    //BuildProvinceField(),
                                     const SizedBox(height: 10),
                                     TextInputFindOut(
                                       label: 'Mật khẩu',

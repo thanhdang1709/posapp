@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:meta/meta.dart';
 
 class AddProductController extends GetxController {
 // final AddProductRepo repository;
@@ -14,10 +13,8 @@ class AddProductController extends GetxController {
 
   var pickerColor = Color(0xff443a49).obs;
   var currentColor = Color(0xff443a49).obs;
-
   var labelName = 'Tên sản phẩm'.obs;
   var labelPrice = '0'.obs;
-
   var imagePickerPath = ''.obs;
   final picker = ImagePicker();
 

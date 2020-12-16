@@ -3,7 +3,6 @@ import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:get/get.dart';
 import 'package:pos_app/config/pallate.dart';
 import 'package:pos_app/screens/pos/components/pos_item.dart';
-import 'package:pos_app/screens/pos/pos_controller.dart';
 import 'package:pos_app/widgets/drawer/drawer.dart';
 import 'package:pos_app/widgets/flexi_top_background.dart';
 

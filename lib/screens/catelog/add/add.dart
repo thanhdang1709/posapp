@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mdi/mdi.dart';
 import 'package:pos_app/ultils/app_ultils.dart';
 
 class AddCatelogScreen extends StatefulWidget {

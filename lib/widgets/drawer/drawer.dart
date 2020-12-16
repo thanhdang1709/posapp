@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:get/get.dart';
 import 'package:pos_app/config/pallate.dart';
-import 'package:pos_app/screens/pos/pos.dart';
 
 class DrawerApp extends StatelessWidget {
   const DrawerApp({
