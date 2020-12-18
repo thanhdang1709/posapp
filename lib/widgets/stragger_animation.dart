@@ -3,15 +3,19 @@ import 'package:flutter/material.dart';
 //import 'package:mal_app_call/screens/home/home.dart';
 import 'dart:async';
 
-import 'package:get/get.dart';
+import 'package:pos_app/screens/auth/register_controller.dart';
+
+// import 'package:get/get.dart';
+// import 'package:get/get_rx/src/rx_typedefs/rx_typedefs.dart';
 
 class StaggerAnimation extends StatelessWidget {
-  StaggerAnimation(
-      {Key key,
-      this.buttonController,
-      this.isLoginSuccess = 0,
-      this.redirectTo})
-      : buttonSqueezeanimation = new Tween(
+  StaggerAnimation({
+    Key key,
+    this.buttonController,
+    this.isLoginSuccess = 0,
+    // this.redirectTo,
+    this.onPress,
+  })  : buttonSqueezeanimation = new Tween(
           begin: 320.0,
           end: 70.0,
         ).animate(
@@ -56,7 +60,8 @@ class StaggerAnimation extends StatelessWidget {
   final Animation buttonSqueezeanimation;
   final Animation buttomZoomOut;
   final int isLoginSuccess;
-  final Widget redirectTo;
+  // final Widget redirectTo;
+  final Function onPress;
   //['default','faild','success']
   Future<Null> _playAnimation() async {
     try {
@@ -128,18 +133,22 @@ class StaggerAnimation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    buttonController.addListener(() {
-      if (buttonController.isCompleted) {
-        // Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_) {
-        //   return redirectTo;
-        // }));
-        if (redirectTo == null) {
-          Get.offAllNamed('/pos');
-        } else {
-          Get.to(redirectTo);
+    buttonController.addListener(
+      () {
+        if (buttonController.isCompleted) {
+          // Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_) {
+          //   return redirectTo;
+          // }));
+          onPress();
+          //onPress();
+          // if (redirectTo == null) {
+          //   Get.offAllNamed('/pos');
+          // } else {
+          //   Get.to(redirectTo);
+          // }
         }
-      }
-    });
+      },
+    );
     return new AnimatedBuilder(
       builder: _buildAnimation,
       animation: buttonController,

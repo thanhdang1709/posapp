@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:pos_app/screens/auth/components/clippers/inverted_top_border.dart';
 import 'package:pos_app/screens/auth/components/common_widget.dart';
+import 'package:pos_app/screens/auth/login_controller.dart';
+import 'package:pos_app/ultils/app_ultils.dart';
 // import 'package:pos_app/screens/home/bottom_nav.dart';
 // import 'package:pos_app/screens/pos/pos.dart';
 import 'package:pos_app/widgets/stragger_animation.dart';
@@ -17,6 +19,8 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   AnimationController _loginButtonController;
   var animationStatus = 0;
+  TextEditingController _emailController = new TextEditingController();
+  TextEditingController _passwordController = new TextEditingController();
 
   @override
   void initState() {
@@ -101,12 +105,14 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                                 children: <Widget>[
                                   const SizedBox(height: 60),
                                   TextInputFindOut(
-                                    label: 'Tên đăng nhập',
+                                    controller: _emailController,
+                                    label: 'Email',
                                     iconData: FontAwesome.user,
                                     textInputType: TextInputType.emailAddress,
                                   ),
                                   const SizedBox(height: 20),
                                   TextInputFindOut(
+                                    controller: _passwordController,
                                     label: 'Mật khẩu',
                                     iconData: Icons.lock_outline,
                                     textInputType:
@@ -162,10 +168,29 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                                   //             )),
                                   //       )
                                   //     : new
-                                  StaggerAnimation(
-                                    buttonController:
-                                        _loginButtonController.view,
-                                    redirectTo: null,
+                                  GestureDetector(
+                                    onTap: () {},
+                                    child: SizedBox(
+                                      child: StaggerAnimation(
+                                        buttonController:
+                                            _loginButtonController.view,
+                                        onPress: () {
+                                          Map<String, dynamic> body = {
+                                            'email': _emailController.text,
+                                            'password':
+                                                _passwordController.text,
+                                            'device_name': 'test'
+                                          };
+                                          if (_emailController.text.isEmpty ||
+                                              _passwordController.text.isEmpty)
+                                            AppUltils().getSnackBarError(
+                                                message:
+                                                    'Vui lòng điền đầy đủ thông tin');
+                                          else
+                                            LoginController().login(body);
+                                        },
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),

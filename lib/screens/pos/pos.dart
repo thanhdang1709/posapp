@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:pos_app/config/pallate.dart';
+import 'package:pos_app/data/store/product_store.dart';
 import 'package:pos_app/screens/pos/components/pos_item.dart';
+import 'package:pos_app/screens/pos/pos_controller.dart';
 import 'package:pos_app/widgets/drawer/drawer.dart';
 import 'package:pos_app/widgets/flexi_top_background.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 class PosScreen extends StatefulWidget {
   const PosScreen({Key key}) : super(key: key);
@@ -18,21 +22,46 @@ class _PosScreenState extends State<PosScreen>
   TabController _controller;
   // ignore: unused_field
   int _selectedIndex = 0;
+  //get catelo
+  List<Widget> lists = [
+    Tab(
+      icon: Text('Tất cả'),
+    )
+  ];
 
+  var box = GetStorage();
   @override
   void initState() {
-    super.initState();
-    _controller = TabController(length: lists.length, vsync: this);
+    ProductStore posStore = Get.find<ProductStore>();
+    posStore.catelogies.forEach(
+      (element) => lists
+        ..add(
+          Tab(
+            icon: Text(element.name),
+          ),
+        ),
+    );
+    _controller =
+        TabController(length: posStore.catelogies.length + 1, vsync: this);
     _controller.addListener(() {
       setState(() {
         _selectedIndex = _controller.index;
       });
     });
+    //PosController posController = Get.find<PosController>();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    //  Size size = MediaQuery.of(context).size;
+    _buildItemPost() {
+      List<Widget> buildItem = [];
+      lists.forEach((e) => buildItem
+        ..add(TabPosItem(
+          catelogId: 0,
+        )));
+      return buildItem;
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -76,20 +105,4 @@ class _PosScreenState extends State<PosScreen>
       ),
     );
   }
-}
-
-//get catelo
-List<Widget> lists = [
-  Tab(icon: Text('Tất cả')),
-  Tab(icon: Text('Đồ uống')),
-  Tab(icon: Text('Đồ ăn')),
-];
-
-//get list item
-_buildItemPost() {
-  return [
-    TabPosItem(),
-    TabPosItem(),
-    TabPosItem(),
-  ];
 }

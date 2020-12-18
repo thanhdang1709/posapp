@@ -4,6 +4,7 @@ import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:pos_app/screens/auth/components/clippers/inverted_top_border.dart';
 import 'package:pos_app/screens/auth/components/common_widget.dart';
 import 'package:pos_app/screens/auth/components/text_input_find_out.dart';
+import 'package:pos_app/screens/auth/register_controller.dart';
 import 'package:pos_app/screens/auth/verify.dart';
 //import 'package:pos_app/widgets/provinces.dart';
 import 'package:pos_app/widgets/stragger_animation.dart';
@@ -30,6 +31,15 @@ class _RegisterPageState extends State<RegisterPage>
     _registerButtonController.dispose();
     super.dispose();
   }
+
+  TextEditingController _nameController = new TextEditingController();
+  TextEditingController _emailController = new TextEditingController();
+  TextEditingController _passwordController = new TextEditingController();
+
+  TextEditingController _phoneController = new TextEditingController();
+
+  TextEditingController _shopNameController = new TextEditingController();
+  //TextEditingController _nameController = new TextEditingController();
 
   // ignore: unused_element
   Future<Null> _playAnimation() async {
@@ -99,24 +109,28 @@ class _RegisterPageState extends State<RegisterPage>
                                   children: <Widget>[
                                     const SizedBox(height: 60),
                                     TextInputFindOut(
+                                      controller: _nameController,
                                       label: 'Họ và tên',
                                       iconData: FontAwesome.user,
                                       textInputType: TextInputType.text,
                                     ),
                                     const SizedBox(height: 10),
                                     TextInputFindOut(
+                                      controller: _phoneController,
                                       label: 'Số điện thoại',
                                       iconData: FontAwesome.phone,
                                       textInputType: TextInputType.text,
                                     ),
                                     const SizedBox(height: 10),
                                     TextInputFindOut(
+                                      controller: _emailController,
                                       label: 'Email',
                                       iconData: Icons.alternate_email,
                                       textInputType: TextInputType.emailAddress,
                                     ),
                                     const SizedBox(height: 10),
                                     TextInputFindOut(
+                                      controller: _shopNameController,
                                       label: 'Tên cửa hàng',
                                       iconData: FontAwesome.map,
                                       textInputType: TextInputType.text,
@@ -125,6 +139,7 @@ class _RegisterPageState extends State<RegisterPage>
                                     //BuildProvinceField(),
                                     const SizedBox(height: 10),
                                     TextInputFindOut(
+                                      controller: _passwordController,
                                       label: 'Mật khẩu',
                                       iconData: Icons.lock_outline,
                                       textInputType:
@@ -151,11 +166,27 @@ class _RegisterPageState extends State<RegisterPage>
                                     //     ),
                                     //   ),
                                     // )
-                                    StaggerAnimation(
-                                      buttonController:
-                                          _registerButtonController.view,
-                                      redirectTo: PinCodeVerificationScreen(
-                                          '0339888746'),
+                                    GestureDetector(
+                                      onTap: () {
+                                        print('hello');
+                                      },
+                                      child: StaggerAnimation(
+                                        buttonController:
+                                            _registerButtonController.view,
+                                        onPress: () {
+                                          Map<String, dynamic> body = {
+                                            'email': _emailController.text,
+                                            'phone': _phoneController.text,
+                                            'name': _nameController.text,
+                                            'shop_name':
+                                                _shopNameController.text,
+                                            'password':
+                                                _passwordController.text,
+                                          };
+
+                                          (RegisterController().register(body));
+                                        },
+                                      ),
                                     ),
                                   ],
                                 ),

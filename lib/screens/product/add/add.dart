@@ -1,13 +1,19 @@
 import 'dart:io';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mdi/mdi.dart';
+import 'package:pos_app/models/catelog_model.dart';
 import 'package:pos_app/screens/product/add/add_controller.dart';
+import 'package:pos_app/screens/product/list/data/list_controller.dart';
 import 'package:pos_app/ultils/app_ultils.dart';
+import 'package:pos_app/ultils/number.dart';
 import 'package:pos_app/widgets/drawer/drawer.dart';
+
+import 'package:searchable_dropdown/searchable_dropdown.dart';
 
 class AddProductScreen extends StatefulWidget {
   const AddProductScreen({Key key}) : super(key: key);
@@ -21,7 +27,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
   AddProductController addProductController =
       Get.put(AddProductController(), permanent: false);
-
+  ListProductController listProductController =
+      Get.put(ListProductController(), permanent: false);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,43 +60,42 @@ class _AddProductScreenState extends State<AddProductScreen> {
                               fontWeight: FontWeight.bold,
                               color: Colors.blueGrey)),
                     ),
-                    SizedBox(
-                      height: 10,
+                    new DropdownSearch<CatelogModel>(
+                      mode: Mode.BOTTOM_SHEET,
+                      showSelectedItem: false,
+                      items: listProductController.catelogies,
+                      dropdownSearchDecoration: InputDecoration(
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.only(
+                            left: 0, right: 0, bottom: 0, top: 5),
+                      ),
+                      label: "Danh mục",
+                      itemAsString: (CatelogModel catelog) => catelog.name,
+                      onChanged: (v) {
+                        addProductController.setCatelogId(v.id);
+                      },
+                    ),
+                    Divider(
+                      color: Colors.black,
                     ),
                     TextFormField(
+                      controller: addProductController.stockController,
+                      keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         labelText: 'Kho',
                         labelStyle: GoogleFonts.roboto(color: Colors.blueGrey),
                       ),
                     ),
                     TextFormField(
-                      controller: addProductController.priceProduct,
+                      controller: addProductController.promoPriceController,
                       onChanged: addProductController.onChangePriceProduct,
                       decoration: InputDecoration(
                         labelText: 'Giá khuyến mãi',
                         labelStyle: GoogleFonts.roboto(color: Colors.blueGrey),
                       ),
                     ),
-                    //Text('Giá khuyến mãi sẽ hiển thị:')
                     TextFormField(
-                      decoration: InputDecoration(
-                          labelText: 'Danh mục',
-                          labelStyle:
-                              GoogleFonts.roboto(color: Colors.blueGrey),
-                          suffixIcon: Icon(
-                            FontAwesome.chevron_right,
-                          )),
-                    ),
-                    TextFormField(
-                      decoration: InputDecoration(
-                          labelText: 'Mô tả',
-                          labelStyle:
-                              GoogleFonts.roboto(color: Colors.blueGrey),
-                          suffixIcon: Icon(
-                            FontAwesome.chevron_right,
-                          )),
-                    ),
-                    TextFormField(
+                      controller: addProductController.barcodeController,
                       decoration: InputDecoration(
                           labelText: 'Code',
                           labelStyle:
@@ -98,6 +104,17 @@ class _AddProductScreenState extends State<AddProductScreen> {
                             Mdi.barcode,
                             size: 40,
                           )),
+                    ),
+                    TextFormField(
+                      controller: addProductController.noteController,
+                      maxLines: 3,
+                      decoration: InputDecoration(
+                        labelText: 'Mô tả',
+                        labelStyle: GoogleFonts.roboto(color: Colors.blueGrey),
+                        // suffixIcon: Icon(
+                        //   FontAwesome.sticky_note,
+                        // ),
+                      ),
                     ),
                     SizedBox(height: Get.height * .2)
                   ],
@@ -109,7 +126,15 @@ class _AddProductScreenState extends State<AddProductScreen> {
       ),
       floatingActionButton: FlatButton.icon(
         //shape: ShapeBorder(),
-        onPressed: () {},
+        onPressed: () {
+          Get.dialog(
+              Center(
+                child: SizedBox(
+                    height: 50, width: 50, child: CircularProgressIndicator()),
+              ),
+              barrierDismissible: false);
+          addProductController.addProduct();
+        },
         icon: Icon(
           Icons.save,
           color: Colors.white,
@@ -135,9 +160,10 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 controller: addProductController.nameProduct,
                 onChanged: addProductController.onChangeNameProduct,
                 decoration: InputDecoration(
-                    labelText: 'Tên sản phẩm',
+                    labelText: 'Tên sản phẩm ',
                     labelStyle: GoogleFonts.roboto(color: Colors.blueGrey))),
             TextFormField(
+                keyboardType: TextInputType.number,
                 controller: addProductController.priceProduct,
                 onChanged: addProductController.onChangePriceProduct,
                 decoration: InputDecoration(
@@ -174,7 +200,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
             textColor:
                 useWhiteForeground(addProductController.currentColor.value)
                     ? const Color(0xffffffff)
-                    : const Color(0xff000000),
+                    : const Color(0xffffffff),
           ),
           SizedBox(
             width: 5,
@@ -200,7 +226,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                 color: useWhiteForeground(
                                         addProductController.currentColor.value)
                                     ? const Color(0xffffffff)
-                                    : const Color(0xff000000)),
+                                    : const Color(0xffffffff)),
                           ),
                         ),
                       )
@@ -224,7 +250,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       color: useWhiteForeground(
                               addProductController.currentColor.value)
                           ? const Color(0xffffffff)
-                          : const Color(0xff000000)),
+                          : const Color(0xffffffff)),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -232,12 +258,12 @@ class _AddProductScreenState extends State<AddProductScreen> {
                   height: 5,
                 ),
                 Text(
-                  '${addProductController.labelPrice.value ?? 0} đ',
+                  '${$Number.numberFormat(int.tryParse(addProductController.labelPrice.value) ?? 0)} đ',
                   style: TextStyle(
                       color: useWhiteForeground(
                               addProductController.currentColor.value)
                           ? const Color(0xffffffff)
-                          : const Color(0xff000000)),
+                          : const Color(0xffffffff)),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 )

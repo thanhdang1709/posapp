@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:mdi/mdi.dart';
 import 'package:pos_app/config/pallate.dart';
 import 'package:pos_app/screens/product/list/components/item_catelog.dart';
 import 'package:pos_app/screens/product/list/components/item_product.dart';
 import 'package:pos_app/screens/product/list/components/item_product_stock.dart';
+import 'package:pos_app/screens/product/list/data/list_controller.dart';
+import 'package:pos_app/ultils/number.dart';
 import 'package:pos_app/widgets/common/row_search_input.dart';
 import 'package:pos_app/ultils/app_ultils.dart';
 import 'package:pos_app/widgets/drawer/drawer.dart';
@@ -94,6 +97,9 @@ class ColumnListCatelog extends StatefulWidget {
 }
 
 class _ColumnListCatelogState extends State<ColumnListCatelog> {
+  TextEditingController _catelogNameController = new TextEditingController();
+  ListProductController controller =
+      Get.put(ListProductController(), permanent: true);
   bool isOpenAddCat = false;
   @override
   Widget build(BuildContext context) {
@@ -125,6 +131,7 @@ class _ColumnListCatelogState extends State<ColumnListCatelog> {
                   children: [
                     Expanded(
                       child: TextFormField(
+                        controller: _catelogNameController,
                         decoration: InputDecoration(
                           labelText: 'Thêm danh mục',
                         ),
@@ -133,18 +140,29 @@ class _ColumnListCatelogState extends State<ColumnListCatelog> {
                     SizedBox(
                       width: 10,
                     ),
-                    Icon(Icons.save),
+                    InkWell(
+                        onTap: () async {
+                          Map data = {'name': _catelogNameController.text};
+                          // ignore: await_only_futures
+                          _catelogNameController.text = '';
+                          print(controller.addCatelog(data));
+                        },
+                        child: Icon(Icons.save)),
                   ],
                 ),
               ],
             ),
           ),
-        Padding(
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            children: [
-              ItemCatelog(),
-            ],
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Obx(() => ListView.builder(
+                itemCount: controller.catelogies.length,
+                itemBuilder: (bc, index) {
+                  return ItemCatelog(
+                    catelogItem: controller.catelogies[index],
+                  );
+                })),
           ),
         ),
       ],
@@ -159,6 +177,8 @@ class ColumnListProductStock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ListProductController controller = Get.put(ListProductController());
+
     return Column(
       children: [
         Container(
@@ -170,17 +190,38 @@ class ColumnListProductStock extends StatelessWidget {
             ),
           ),
         ),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 10, right: 10),
-            child: ListView.builder(
-              itemCount: 10,
-              itemBuilder: (BuildContext context, index) {
-                return ItemProductStock();
-              },
-            ),
-          ),
-        ),
+        // Expanded(
+        //   child: Padding(
+        //     padding: const EdgeInsets.only(left: 10, right: 10),
+        //     child: ListView.builder(
+        //       itemCount: 10,
+        //       itemBuilder: (BuildContext context, index) {
+        //         return ItemProductStock();
+        //       },
+        //     ),
+        //   ),
+        // ),
+        Obx(() => Expanded(
+              child: Padding(
+                  padding: const EdgeInsets.all(5),
+                  child: AnimationLimiter(
+                    child: ListView.builder(
+                        itemCount: controller.products.length,
+                        itemBuilder: (bc, index) {
+                          return AnimationConfiguration.staggeredList(
+                            position: index,
+                            duration: const Duration(milliseconds: 375),
+                            child: SlideAnimation(
+                              verticalOffset: 50.0,
+                              child: FadeInAnimation(
+                                child: ItemProductStock(
+                                    product: controller.products[index]),
+                              ),
+                            ),
+                          );
+                        }),
+                  )),
+            )),
         Container(
           height: Get.height * .13,
           decoration: BoxDecoration(
@@ -199,11 +240,11 @@ class ColumnListProductStock extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Tổng: 8.000.000 đ',
+                      'Tổng: ${$Number.numberFormat(controller.totalPrice.value)} đ',
                       style: TextStyle(color: Colors.white, fontSize: 18),
                     ),
                     Text(
-                      '90',
+                      controller.totalStock.toString(),
                       style: TextStyle(color: Colors.white, fontSize: 18),
                     ),
                   ],
@@ -213,7 +254,7 @@ class ColumnListProductStock extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Tổng giá trị kho: 8.000.000 đ',
+                      'Tổng giá trị kho: ${$Number.numberFormat(controller.totalPrice.value)} đ',
                       style: TextStyle(color: Colors.white, fontSize: 14),
                     ),
                     Text(
@@ -231,13 +272,15 @@ class ColumnListProductStock extends StatelessWidget {
   }
 }
 
-class ColumnListProduct extends StatelessWidget {
+class ColumnListProduct extends GetView<ListProductController> {
   const ColumnListProduct({
     Key key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    ListProductController controller = Get.put(ListProductController());
+
     return Column(
       children: [
         Container(
@@ -249,23 +292,27 @@ class ColumnListProduct extends StatelessWidget {
             }),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(5),
-          child: Column(
-            children: [
-              ItemProduct(),
-              Divider(),
-              ItemProduct(),
-              Divider(),
-              ItemProduct(),
-              Divider(),
-              ItemProduct(),
-              Divider(),
-              ItemProduct(),
-              Divider(),
-            ],
-          ),
-        ),
+        Obx(() => Expanded(
+              child: Padding(
+                  padding: const EdgeInsets.all(5),
+                  child: AnimationLimiter(
+                    child: ListView.builder(
+                        itemCount: controller.products.length,
+                        itemBuilder: (bc, index) {
+                          return AnimationConfiguration.staggeredList(
+                            position: index,
+                            duration: const Duration(milliseconds: 375),
+                            child: SlideAnimation(
+                              verticalOffset: 50.0,
+                              child: FadeInAnimation(
+                                child: ItemProduct(
+                                    product: controller.products[index]),
+                              ),
+                            ),
+                          );
+                        }),
+                  )),
+            )),
       ],
     );
   }

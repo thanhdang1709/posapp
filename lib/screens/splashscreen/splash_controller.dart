@@ -4,7 +4,7 @@ import 'package:pos_app/models/catelog_model.dart';
 import 'package:pos_app/models/product_model.dart';
 import 'package:pos_app/services/product_services.dart';
 
-class PosController extends GetxController {
+class SplashController extends GetxController {
   RxList<CatelogModel> catelogies = <CatelogModel>[].obs;
   ProductStore productStore = Get.put<ProductStore>(ProductStore());
   //ProductStore productStore = Get.find();
@@ -13,13 +13,17 @@ class PosController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    // getCatelogAll();
-    // getProductAll();
-    catelogies.addAll(productStore.catelogies);
-    products.addAll(productStore.products);
+    await getCatelogAll();
+    await getProductAll();
+
+    productStore.catelogies = catelogies;
+    productStore.products = products;
+
+    //if (catelogies.length != 0 && catelogies.length != 0)
+    Get.toNamed('pos');
   }
 
-  getCatelogAll() async {
+  Future getCatelogAll() async {
     var response = (await ProductService().getCatelogAll());
     // print(response);
     catelogies
@@ -27,7 +31,7 @@ class PosController extends GetxController {
     //print(catelogies[0].name);
   }
 
-  getProductAll() async {
+  Future getProductAll() async {
     var response = (await ProductService().getProductAll());
     // print(response);
     products.assignAll(response.map((e) => ProductModel.fromJson(e)).toList());

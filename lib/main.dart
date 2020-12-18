@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:pos_app/data/binding/home_binding.dart';
 import 'package:pos_app/routes/pages.dart';
-//import 'package:introduction_screen/introduction_screen.dart';
-//import 'package:pos_app/screens/introduce/introduce_screen.dart';
-import 'package:pos_app/screens/welcome/onboarding_page.dart';
+import 'package:pos_app/screens/splashscreen/splash_screen.dart';
 
-void main() {
+void main() async {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     systemNavigationBarColor: Colors.cyan, // navigation bar color
     statusBarColor: Colors.cyan, // status bar color
   ));
+  await GetStorage.init();
   return runApp(App());
 }
 
@@ -20,13 +21,14 @@ class App extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle.light.copyWith(statusBarColor: Colors.transparent),
     );
-
     return GetMaterialApp(
-      title: 'Introduction screen',
+      initialBinding: HomeBinding(),
+      title: 'POPOS',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: OnBoardingPage(),
-      initialRoute: Routes.INITIAL,
+      home: SplashScreen(),
+      //initialRoute: Routes.INITIAL,
+      smartManagement: SmartManagement.full,
       getPages: AppPages.pages,
     );
   }

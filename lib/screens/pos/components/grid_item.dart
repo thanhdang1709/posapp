@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:pos_app/config/pallate.dart';
+import 'package:pos_app/ultils/number.dart';
 
 class CardFoodGridItem extends StatefulWidget {
   const CardFoodGridItem({
@@ -108,7 +109,7 @@ class _CardFoodGridItemState extends State<CardFoodGridItem>
                   SizedBox(height: 5),
                   Flexible(
                     child: Text(
-                      '${widget.price} đ',
+                      '${$Number.numberFormat(widget.price).toString()} đ',
                       style: TextStyle(color: Pallate.textColorLight),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,

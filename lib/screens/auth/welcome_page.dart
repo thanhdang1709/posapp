@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pos_app/screens/auth/components/animated_background.dart';
 import 'package:pos_app/screens/auth/components/common_widget.dart';
@@ -8,9 +10,12 @@ import 'package:pos_app/screens/auth/login_page.dart';
 
 class WelcomePage extends StatelessWidget {
   final hideNotifier = ValueNotifier(false);
+  var box = GetStorage();
 
   @override
   Widget build(BuildContext context) {
+    // ignore: unnecessary_statements
+
     final size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,

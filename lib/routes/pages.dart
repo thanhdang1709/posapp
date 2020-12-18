@@ -1,9 +1,13 @@
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:pos_app/data/binding/home_binding.dart';
+import 'package:pos_app/screens/auth/welcome_page.dart';
 import 'package:pos_app/screens/catelog/add/add.dart';
 import 'package:pos_app/screens/customer/add/add.dart';
 import 'package:pos_app/screens/customer/list/list.dart';
 import 'package:pos_app/screens/pos/pos.dart';
 import 'package:pos_app/screens/product/add/add.dart';
+import 'package:pos_app/screens/product/list/data/list_binding.dart';
 import 'package:pos_app/screens/product/list/list.dart';
 import 'package:pos_app/screens/setting/list.dart';
 import 'package:pos_app/screens/transaction/list/list.dart';
@@ -11,23 +15,39 @@ import 'package:pos_app/screens/welcome/onboarding_page.dart';
 part './app_routes.dart';
 
 abstract class AppPages {
+  var box = new GetStorage();
   static final pages = [
     GetPage(
-      name: Routes.INITIAL,
-      page: () => OnBoardingPage(),
+        name: Routes.INITIAL,
+        page: () {
+          return GetStorage().hasData('first_visit')
+              ? GetStorage().hasData('token')
+                  ? PosScreen()
+                  : WelcomePage()
+              : OnBoardingPage();
+        },
+        binding: HomeBinding()),
+    GetPage(
+      name: Routes.WELCOME,
+      page: () {
+        return GetStorage().hasData('token') ? PosScreen() : WelcomePage();
+      },
     ),
     GetPage(
       name: Routes.HOME,
       page: () => PosScreen(),
+      binding: HomeBinding(),
     ),
     GetPage(
       name: Routes.POS,
       page: () => PosScreen(),
+      binding: HomeBinding(),
     ),
     GetPage(
       name: Routes.PRODUCT,
       page: () => ListProductScreen(),
       transition: Transition.rightToLeft,
+      binding: ListProductBinding(),
       // children: [
       //   GetPage(
       //     name: 'add',

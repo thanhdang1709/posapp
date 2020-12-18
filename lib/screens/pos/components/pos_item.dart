@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pos_app/screens/pos/components/add_new_card_item.dart';
 import 'package:pos_app/screens/pos/components/grid_item.dart';
 import 'package:pos_app/screens/pos/components/pos_action_row.dart';
+import 'package:pos_app/screens/pos/pos_controller.dart';
+import 'package:pos_app/ultils/number.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 class TabPosItem extends StatefulWidget {
-  const TabPosItem({
-    Key key,
-  }) : super(key: key);
-
+  const TabPosItem({Key key, this.catelogId}) : super(key: key);
+  final int catelogId;
   @override
   _TabPosItemState createState() => _TabPosItemState();
 }
@@ -17,7 +19,9 @@ class _TabPosItemState extends State<TabPosItem>
   double _scale;
   AnimationController _controller;
   int count = 0;
+  int total = 0;
 
+  // print(widget.catelogId);
   @override
   void initState() {
     _controller = AnimationController(
@@ -42,9 +46,7 @@ class _TabPosItemState extends State<TabPosItem>
   @override
   Widget build(BuildContext context) {
     _scale = 1 - _controller.value;
-    //PosController _posController = new PosController(context: context);
-    //print('re build $_scale');
-    final Size size = MediaQuery.of(context).size;
+    PosController posController = Get.put(PosController());
     return Column(children: [
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
@@ -53,16 +55,46 @@ class _TabPosItemState extends State<TabPosItem>
       Expanded(
         child: Padding(
           padding: const EdgeInsets.only(left: 10, right: 10, bottom: 0),
-          child: GridView.count(
-            shrinkWrap: true,
-            crossAxisCount: 3,
-            crossAxisSpacing: 5,
-            mainAxisSpacing: 5,
-            childAspectRatio: 0.8,
-            controller: new ScrollController(keepScrollOffset: true),
-            scrollDirection: Axis.vertical,
-            children: _buildCardItem(
-                size: size, color: Colors.orange, controller: _controller),
+          child: AnimationLimiter(
+            child: GridView.count(
+              shrinkWrap: true,
+              crossAxisCount: 3,
+              crossAxisSpacing: 5,
+              mainAxisSpacing: 5,
+              childAspectRatio: 0.8,
+              controller: new ScrollController(keepScrollOffset: true),
+              scrollDirection: Axis.vertical,
+              // children: _buildCardItem(
+              //     size: Get.size, color: Colors.orange, controller: _controller),
+              children: List.generate(
+                posController.products.length,
+                (index) => AnimationConfiguration.staggeredList(
+                  position: index,
+                  duration: const Duration(milliseconds: 375),
+                  child: SlideAnimation(
+                    verticalOffset: 50.0,
+                    child: FadeInAnimation(
+                      child: CardFoodGridItem(
+                        size: Get.size,
+                        color: Colors.cyan,
+                        title: posController.products[index].name,
+                        price: posController.products[index].price,
+                        imageUrl:
+                            'https://xemhd.xyz/${posController.products[index].imageUrl}',
+                        onPressed: () {
+                          setState(() {
+                            count += 1;
+                            total += posController.products[index].price;
+                          });
+                          bounceButtonAction(_controller);
+                          //print('hello');
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+              )..add(AddNewCardItem()),
+            ),
           ),
         ),
       ),
@@ -75,12 +107,12 @@ class _TabPosItemState extends State<TabPosItem>
               borderRadius: BorderRadius.circular(20),
               color: Colors.cyan,
             ),
-            width: size.width - 20,
+            width: Get.size.width - 20,
             padding: EdgeInsets.all(7),
             margin: EdgeInsets.all(0),
             child: Center(
                 child: Text(
-              '$count Item = 0 vnd',
+              '$count món = ${$Number.numberFormat(total)} đ',
               style: TextStyle(color: Colors.white, fontSize: 25),
             )),
           ),
@@ -99,141 +131,6 @@ class _TabPosItemState extends State<TabPosItem>
         color: Colors.orange,
         title: 'Gà rán',
         price: 15000,
-        imageUrl:
-            'https://i.pinimg.com/736x/60/de/7f/60de7f8fc369c1f4b023360c3c0f279a.jpg',
-        onPressed: () {
-          setState(() {
-            count += 1;
-          });
-          bounceButtonAction(controller);
-          //print('hello');
-        },
-      ),
-      CardFoodGridItem(
-        size: size,
-        color: Colors.blue,
-        title: 'Cà phê',
-        price: 1000,
-        imageUrl:
-            'https://i.pinimg.com/736x/60/de/7f/60de7f8fc369c1f4b023360c3c0f279a.jpg',
-        onPressed: () {
-          setState(() {
-            count += 1;
-          });
-          bounceButtonAction(controller);
-          //print('hello');
-        },
-      ),
-      CardFoodGridItem(
-        size: size,
-        color: Colors.green,
-        title: 'Trà sữa',
-        price: 25000,
-        imageUrl:
-            'https://i.pinimg.com/736x/60/de/7f/60de7f8fc369c1f4b023360c3c0f279a.jpg',
-        onPressed: () {
-          setState(() {
-            count += 1;
-          });
-          bounceButtonAction(controller);
-          //print('hello');
-        },
-      ),
-      CardFoodGridItem(
-        size: size,
-        color: Colors.green,
-        title: 'Trà sữa',
-        price: 25000,
-        imageUrl:
-            'https://i.pinimg.com/736x/60/de/7f/60de7f8fc369c1f4b023360c3c0f279a.jpg',
-        onPressed: () {
-          setState(() {
-            count += 1;
-          });
-          bounceButtonAction(controller);
-          //print('hello');
-        },
-      ),
-      CardFoodGridItem(
-        size: size,
-        color: Colors.blue,
-        title: 'Trà sữa',
-        price: 25000,
-        imageUrl:
-            'https://i.pinimg.com/736x/60/de/7f/60de7f8fc369c1f4b023360c3c0f279a.jpg',
-        onPressed: () {
-          setState(() {
-            count += 1;
-          });
-          bounceButtonAction(controller);
-          //print('hello');
-        },
-      ),
-      CardFoodGridItem(
-        size: size,
-        color: Colors.pink,
-        title: 'Trà sữa',
-        price: 25000,
-        imageUrl:
-            'https://i.pinimg.com/736x/60/de/7f/60de7f8fc369c1f4b023360c3c0f279a.jpg',
-        onPressed: () {
-          setState(() {
-            count += 1;
-          });
-          bounceButtonAction(controller);
-          //print('hello');
-        },
-      ),
-      CardFoodGridItem(
-        size: size,
-        color: Colors.cyan,
-        title: 'Trà sữa',
-        price: 25000,
-        imageUrl:
-            'https://i.pinimg.com/736x/60/de/7f/60de7f8fc369c1f4b023360c3c0f279a.jpg',
-        onPressed: () {
-          setState(() {
-            count += 1;
-          });
-          bounceButtonAction(controller);
-          //print('hello');
-        },
-      ),
-      CardFoodGridItem(
-        size: size,
-        color: Colors.black,
-        title: 'Trà sữa',
-        price: 25000,
-        imageUrl:
-            'https://i.pinimg.com/736x/60/de/7f/60de7f8fc369c1f4b023360c3c0f279a.jpg',
-        onPressed: () {
-          setState(() {
-            count += 1;
-          });
-          bounceButtonAction(controller);
-          //print('hello');
-        },
-      ),
-      CardFoodGridItem(
-        size: size,
-        color: Colors.yellow,
-        title: 'Trà sữa',
-        price: 25000,
-        imageUrl:
-            'https://i.pinimg.com/736x/60/de/7f/60de7f8fc369c1f4b023360c3c0f279a.jpg',
-        onPressed: () {
-          setState(() {
-            count += 1;
-          });
-          bounceButtonAction(controller);
-          //print('hello');
-        },
-      ),
-      CardFoodGridItem(
-        size: size,
-        color: Colors.red,
-        title: 'Trà sữa',
-        price: 25000,
         imageUrl:
             'https://i.pinimg.com/736x/60/de/7f/60de7f8fc369c1f4b023360c3c0f279a.jpg',
         onPressed: () {
