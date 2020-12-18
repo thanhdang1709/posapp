@@ -5,7 +5,6 @@ import 'package:pos_app/screens/auth/components/clippers/inverted_top_border.dar
 import 'package:pos_app/screens/auth/components/common_widget.dart';
 import 'package:pos_app/screens/auth/components/text_input_find_out.dart';
 import 'package:pos_app/screens/auth/register_controller.dart';
-import 'package:pos_app/screens/auth/verify.dart';
 //import 'package:pos_app/widgets/provinces.dart';
 import 'package:pos_app/widgets/stragger_animation.dart';
 
@@ -184,7 +183,8 @@ class _RegisterPageState extends State<RegisterPage>
                                                 _passwordController.text,
                                           };
 
-                                          (RegisterController().register(body));
+                                          // ignore: unnecessary_statements
+                                          RegisterController().register(body);
                                         },
                                       ),
                                     ),

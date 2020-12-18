@@ -1,14 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http_parser/http_parser.dart';
-import 'package:pos_app/models/catelog_model.dart';
 import 'package:pos_app/repositories/common.dart';
 import 'package:pos_app/ultils/app_ultils.dart';
 import 'package:http/http.dart' as http;
-import 'package:dio/dio.dart';
 
 class ProductService {
   // ignore: missing_return
@@ -21,6 +18,7 @@ class ProductService {
     };
   }
 
+  // ignore: missing_return
   Future<int> submitSubscription({File file, Map<String, String> data}) async {
     ///MultiPart request
     var request = http.MultipartRequest(
@@ -45,6 +43,7 @@ class ProductService {
     print(res.statusCode);
   }
 
+  // ignore: missing_return
   Future<List> getProductAll() async {
     var response =
         await http.get('$BASE_URL/product/all', headers: headers(_box));
@@ -58,6 +57,7 @@ class ProductService {
     }
   }
 
+  // ignore: missing_return
   Future<List> getCatelogAll() async {
     var response =
         await http.get('$BASE_URL/catelog/all', headers: headers(_box));
@@ -85,6 +85,7 @@ class ProductService {
     }
   }
 
+  // ignore: missing_return
   Future<int> addCatelog(body) async {
     var response = await http.post('$BASE_URL/catelog/add',
         body: jsonEncode(body), headers: headers(_box));

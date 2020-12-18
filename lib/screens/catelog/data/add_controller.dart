@@ -10,7 +10,7 @@ class AddCatelogController extends GetxController {
 
   add(body) async {
     var response = await http.post(
-      '${BASE_URL}/catelog/add',
+      '$BASE_URL/catelog/add',
       body: jsonEncode(body),
       headers: {
         'Content-Type': 'application/json',

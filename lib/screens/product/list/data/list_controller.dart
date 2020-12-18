@@ -19,8 +19,7 @@ class ListProductController extends GetxController {
     super.onInit();
     products = productStore.products;
     catelogies = productStore.catelogies;
-    totalStock.value =
-        products.map<int>((m) => (m.stock)).reduce((a, b) => a + b);
+    totalStock.value = products.map((m) => (m.stock)).reduce((a, b) => a + b);
     totalPrice.value = products
         .map<int>((m) => (m.stock * m.price))
         .reduce((value, element) => value + element);

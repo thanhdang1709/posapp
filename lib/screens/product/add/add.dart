@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mdi/mdi.dart';
@@ -12,8 +11,6 @@ import 'package:pos_app/screens/product/list/data/list_controller.dart';
 import 'package:pos_app/ultils/app_ultils.dart';
 import 'package:pos_app/ultils/number.dart';
 import 'package:pos_app/widgets/drawer/drawer.dart';
-
-import 'package:searchable_dropdown/searchable_dropdown.dart';
 
 class AddProductScreen extends StatefulWidget {
   const AddProductScreen({Key key}) : super(key: key);

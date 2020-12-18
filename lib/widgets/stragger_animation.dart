@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 //import 'package:mal_app_call/screens/home/home.dart';
 import 'dart:async';
 
-import 'package:pos_app/screens/auth/register_controller.dart';
-
 // import 'package:get/get.dart';
 // import 'package:get/get_rx/src/rx_typedefs/rx_typedefs.dart';
 

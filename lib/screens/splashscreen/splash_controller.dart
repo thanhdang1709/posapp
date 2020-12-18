@@ -20,7 +20,7 @@ class SplashController extends GetxController {
     productStore.products = products;
 
     //if (catelogies.length != 0 && catelogies.length != 0)
-    Get.toNamed('pos');
+    Get.offAllNamed('pos');
   }
 
   Future getCatelogAll() async {

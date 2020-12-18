@@ -7,7 +7,7 @@ import 'package:pos_app/ultils/app_ultils.dart';
 
 class LoginController extends GetxController {
   login(body) async {
-    var response = await http.post('${BASE_URL}/login',
+    var response = await http.post('$BASE_URL/login',
         body: jsonEncode(body), headers: {'Content-Type': 'application/json'});
     if (response.statusCode == 200) {
       if (response.body.isNotEmpty) {
