@@ -28,9 +28,9 @@ class _PosScreenState extends State<PosScreen>
   ];
 
   var box = GetStorage();
+  ProductStore posStore = Get.find<ProductStore>();
   @override
   void initState() {
-    ProductStore posStore = Get.find<ProductStore>();
     posStore.catelogies.forEach(
       (element) => lists
         ..add(
@@ -54,11 +54,21 @@ class _PosScreenState extends State<PosScreen>
   Widget build(BuildContext context) {
     _buildItemPost() {
       List<Widget> buildItem = [];
-      lists.forEach((e) => buildItem
-        ..add(TabPosItem(
-          catelogId: 0,
-        )));
-      return buildItem;
+      posStore.catelogies.forEach(
+        (e) => buildItem
+          ..add(
+            TabPosItem(
+              catelogId: e.id,
+            ),
+          ),
+      );
+      return buildItem
+        ..insert(
+          0,
+          TabPosItem(
+            catelogId: 0,
+          ),
+        );
     }
 
     return Scaffold(
@@ -66,11 +76,11 @@ class _PosScreenState extends State<PosScreen>
         centerTitle: true,
         toolbarHeight: 80,
         title: const Text(
-          'Pos',
-          style: TextStyle(color: Colors.orange),
+          'Máy POS',
+          //style: TextStyle(color: Colors.white),
         ),
         flexibleSpace: FlexibleTopBackground(
-          assetsImage: 'assets/img1.jpg',
+          assetsImage: 'assets/waiter.png',
         ),
         actions: [
           Padding(
@@ -92,7 +102,7 @@ class _PosScreenState extends State<PosScreen>
           onTap: (index) {},
           controller: _controller,
           tabs: lists,
-          labelColor: Pallate.selectedItemColor,
+          labelColor: Pallate.colorTextOnPink,
           unselectedLabelColor: Pallate.unselectedItemColor,
         ),
       ),

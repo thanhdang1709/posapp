@@ -25,7 +25,7 @@ class App extends StatelessWidget {
       initialBinding: HomeBinding(),
       title: 'POPOS',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(primarySwatch: Colors.blue),
+      theme: ThemeData(primarySwatch: Colors.pink),
       home: SplashScreen(),
       //initialRoute: Routes.INITIAL,
       smartManagement: SmartManagement.full,

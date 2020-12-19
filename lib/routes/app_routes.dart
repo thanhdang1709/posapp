@@ -9,6 +9,7 @@ abstract class Routes {
   static const SETTING = 'setting';
   static const PRODUCT = 'product';
   static const ADD_PRODUCT = 'product/add';
+  static const EDIT_PRODUCT = 'product/edit';
   static const CATELOG = 'catelog';
   static const ADD_CATELOG = 'catelog/add';
   static const CUSTOMER = 'customer';

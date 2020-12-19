@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pos_app/config/pallate.dart';
+import 'package:pos_app/data/store/product_store.dart';
+import 'package:pos_app/models/product_model.dart';
+import 'package:pos_app/repositories/common.dart';
 import 'package:pos_app/screens/pos/components/add_new_card_item.dart';
 import 'package:pos_app/screens/pos/components/grid_item.dart';
 import 'package:pos_app/screens/pos/components/pos_action_row.dart';
 import 'package:pos_app/screens/pos/pos_controller.dart';
+import 'package:pos_app/ultils/color.dart';
 import 'package:pos_app/ultils/number.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
@@ -21,6 +26,7 @@ class _TabPosItemState extends State<TabPosItem>
   int count = 0;
   int total = 0;
 
+  List<ProductModel> products;
   // print(widget.catelogId);
   @override
   void initState() {
@@ -46,7 +52,14 @@ class _TabPosItemState extends State<TabPosItem>
   @override
   Widget build(BuildContext context) {
     _scale = 1 - _controller.value;
-    PosController posController = Get.put(PosController());
+    // PosController posController = Get.put(PosController());
+    ProductStore posStore = Get.find();
+    products = widget.catelogId != 0
+        ? posStore.products
+            .where((element) => element.catelogId == widget.catelogId)
+            .toList()
+        : posStore.products;
+
     return Column(children: [
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
@@ -67,7 +80,7 @@ class _TabPosItemState extends State<TabPosItem>
               // children: _buildCardItem(
               //     size: Get.size, color: Colors.orange, controller: _controller),
               children: List.generate(
-                posController.products.length,
+                products.length,
                 (index) => AnimationConfiguration.staggeredList(
                   position: index,
                   duration: const Duration(milliseconds: 375),
@@ -76,15 +89,16 @@ class _TabPosItemState extends State<TabPosItem>
                     child: FadeInAnimation(
                       child: CardFoodGridItem(
                         size: Get.size,
-                        color: Colors.cyan,
-                        title: posController.products[index].name,
-                        price: posController.products[index].price,
-                        imageUrl:
-                            'https://xemhd.xyz/${posController.products[index].imageUrl}',
+                        color: products[index].color == ''
+                            ? Pallate.primaryColor
+                            : ColorFormat.stringToColor(products[index].color),
+                        title: products[index].name,
+                        price: products[index].price,
+                        imageUrl: '$BASE_DOMAIN/${products[index].imageUrl}',
                         onPressed: () {
                           setState(() {
                             count += 1;
-                            total += posController.products[index].price;
+                            total += products[index].price;
                           });
                           bounceButtonAction(_controller);
                           //print('hello');
@@ -105,7 +119,7 @@ class _TabPosItemState extends State<TabPosItem>
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              color: Colors.cyan,
+              color: Pallate.primaryColor,
             ),
             width: Get.size.width - 20,
             padding: EdgeInsets.all(7),
@@ -124,6 +138,7 @@ class _TabPosItemState extends State<TabPosItem>
     ]);
   }
 
+  // ignore: unused_element
   List<Widget> _buildCardItem({size, color, controller}) {
     return [
       CardFoodGridItem(

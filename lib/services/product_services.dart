@@ -19,7 +19,7 @@ class ProductService {
   }
 
   // ignore: missing_return
-  Future<int> submitSubscription({File file, Map<String, String> data}) async {
+  Future<int> addProduct({File file, Map<String, String> data}) async {
     ///MultiPart request
     var request = http.MultipartRequest(
       'POST',
@@ -40,7 +40,37 @@ class ProductService {
     print("request: " + request.toString());
     var res = await request.send();
     print("This is response:" + res.toString());
+    return (res.statusCode);
+    //return res;
+  }
+
+  Future<int> updateProduct({File file, Map<String, String> data}) async {
+    ///MultiPart request
+    var request = http.MultipartRequest(
+      'POST',
+      Uri.parse("$BASE_URL/product/update"),
+    );
+    //file = compressImage(file);
+
+    if (file != null) {
+      request.files.add(
+        http.MultipartFile(
+          'image',
+          file.readAsBytes().asStream(),
+          file.lengthSync(),
+          filename: 'image.png',
+          contentType: MediaType('image', 'jpeg'),
+        ),
+      );
+    }
+    request.headers.addAll(headers(_box));
+    request.fields.addAll(data);
+    print("request: " + request.toString());
+    var res = await request.send();
+    print("This is response:" + res.toString());
     print(res.statusCode);
+    return (res.statusCode);
+    //return res;
   }
 
   // ignore: missing_return
@@ -66,6 +96,22 @@ class ProductService {
         var result = jsonDecode(response.body);
         if (result['alert'] == 'success') {
           return result['data'];
+        }
+      }
+    }
+  }
+
+  Future deleteProduct(id) async {
+    var response =
+        await http.get('$BASE_URL/product/delete/$id', headers: headers(_box));
+    if (response.statusCode == 200) {
+      if (response.body.isNotEmpty) {
+        var result = jsonDecode(response.body);
+        if (result['alert'] == 'success') {
+          AppUltils().getSnackBarSuccess(message: 'Xoá menu thành công');
+          // return result['data'];
+        } else {
+          AppUltils().getSnackBarError(message: 'Xoá menu thành công');
         }
       }
     }

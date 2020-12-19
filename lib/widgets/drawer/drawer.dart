@@ -21,10 +21,10 @@ class DrawerApp extends StatelessWidget {
           color: Colors.white,
           gradient: LinearGradient(
             colors: [
-              Colors.blue.withOpacity(0.7),
-              Colors.cyan.withOpacity(0.7),
-              Colors.cyan.withOpacity(0.7),
-              Colors.blue.withOpacity(0.7),
+              Pallate.primaryColor.withOpacity(0.7),
+              Pallate.secondColor.withOpacity(0.7),
+              Pallate.secondColor.withOpacity(0.7),
+              Pallate.primaryColor.withOpacity(0.7),
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -87,7 +87,7 @@ class DrawerApp extends StatelessWidget {
                   imageUrl: 'assets/icons/pos.png',
                   title: 'Bán hàng',
                   selectedColor:
-                      Get.currentRoute == '/pos' ? Colors.blue[300] : null,
+                      Get.currentRoute == '/pos' ? Pallate.primaryColor : null,
                   onPress: () {
                     Get.put(PosController());
                     Get.offNamed(
@@ -108,8 +108,9 @@ class DrawerApp extends StatelessWidget {
                 ItemMenuDraw(
                   imageUrl: 'assets/icons/diet.png',
                   title: 'Sản phẩm',
-                  selectedColor:
-                      Get.currentRoute == '/product' ? Colors.blue[300] : null,
+                  selectedColor: Get.currentRoute == '/product'
+                      ? Pallate.primaryColor
+                      : null,
                   onPress: () {
                     Get.offNamed('/product');
                   },
@@ -122,8 +123,9 @@ class DrawerApp extends StatelessWidget {
                 ItemMenuDraw(
                   imageUrl: 'assets/icons/customer.png',
                   title: 'Khách hàng',
-                  selectedColor:
-                      Get.currentRoute == '/customer' ? Colors.blue[300] : null,
+                  selectedColor: Get.currentRoute == '/customer'
+                      ? Pallate.primaryColor
+                      : null,
                   onPress: () {
                     Get.offNamed('/customer');
                   },
@@ -132,7 +134,7 @@ class DrawerApp extends StatelessWidget {
                   imageUrl: 'assets/icons/transaction.png',
                   title: 'Giao dịch',
                   selectedColor: Get.currentRoute == '/transaction'
-                      ? Colors.blue[300]
+                      ? Pallate.primaryColor
                       : null,
                   onPress: () {
                     Get.offNamed('/transaction');
@@ -151,8 +153,9 @@ class DrawerApp extends StatelessWidget {
                 ItemMenuDraw(
                   imageUrl: 'assets/icons/settings.png',
                   title: 'Cài đặt',
-                  selectedColor:
-                      Get.currentRoute == '/setting' ? Colors.blue[300] : null,
+                  selectedColor: Get.currentRoute == '/setting'
+                      ? Pallate.primaryColor
+                      : null,
                   onPress: () {
                     Get.offNamed('/setting');
                     print(Get.currentRoute);

@@ -10,8 +10,9 @@ import 'package:pos_app/models/product_model.dart';
 import 'package:pos_app/services/product_services.dart';
 import 'package:pos_app/ultils/app_ultils.dart';
 import 'package:pos_app/ultils/color.dart';
+import 'package:pos_app/widgets/common/dialog.dart';
 
-class AddProductController extends GetxController {
+class EditProductController extends GetxController {
 // final AddProductRepo repository;
 // AddProductController({@required this.repository}) : assert(repository != null);
 
@@ -25,18 +26,37 @@ class AddProductController extends GetxController {
 // .then((response) => print(response))
 // .catchError((error) => print(error));
 
+  EditProductController() {
+    oldProduct = (Get.arguments);
+    productId = oldProduct.id;
+    nameProduct.text = oldProduct.name;
+    priceProduct.text = oldProduct.price.toString();
+    stockController.text = oldProduct.stock.toString();
+    noteController.text = oldProduct.note;
+    barcodeController.text = oldProduct.barCode;
+    promoPriceController.text = oldProduct.promoPrice?.toString() ?? '0';
+    oldImageUrl = oldProduct.imageUrl;
+    labelName.value = oldProduct.name;
+    labelPrice.value = oldProduct.price.toString();
+    catelogId.value = oldProduct.catelogId;
+    currentColor.value = oldProduct.color == ''
+        ? Pallate.primaryColor
+        : ColorFormat.stringToColor(oldProduct.color);
+  }
   final _obj = ''.obs;
   set obj(value) => this._obj.value = value;
   get obj => this._obj.value;
   ProductStore productStore = Get.find<ProductStore>();
 
   RxList<ProductModel> products = <ProductModel>[].obs;
-
+  ProductModel oldProduct;
+  int productId;
   var pickerColor = Pallate.primaryColor.obs;
   var currentColor = Pallate.primaryColor.obs;
-  var labelName = 'Tên sản phẩm'.obs;
+  var labelName = 'Tên món'.obs;
   var labelPrice = '0'.obs;
   var imagePickerPath = ''.obs;
+  var oldImageUrl = '';
   RxInt catelogId = 0.obs;
   final picker = ImagePicker();
   File selectedImage;
@@ -68,13 +88,12 @@ class AddProductController extends GetxController {
     return catelogId.value = id;
   }
 
-  void addProduct() async {
-    //print(pickerColor.value);
+  void updateProduct() async {
     //print(productStore.products);
-    if (selectedImage.isNull) {
-      Get.back();
-      return AppUltils().getSnackBarError(message: 'Vui lòng chọn ảnh cho món');
-    }
+    // if (selectedImage.isNull) {
+    //   Get.back();
+    //   return AppUltils().getSnackBarError(message: 'Vui lòng chọn ảnh cho món');
+    // }
     if (nameProduct.text == '') {
       Get.back();
       return AppUltils().getSnackBarError(message: 'Vui lòng chọn tên cho món');
@@ -84,6 +103,7 @@ class AddProductController extends GetxController {
       return AppUltils().getSnackBarError(message: 'Vui lòng chọn tên cho món');
     }
     var data = {
+      'id': productId.toString(),
       'name': nameProduct.text.toString(),
       'price': priceProduct.text.toString(),
       'promoprice': promoPriceController.text.toString(),
@@ -91,11 +111,12 @@ class AddProductController extends GetxController {
       'barcode': barcodeController.text.toString(),
       'stock': stockController.text.toString(),
       'catelog_id': catelogId.toString(),
-      'color': ColorFormat.colorToString(pickerColor.value)
+      'color': ColorFormat.colorToString(currentColor.value).toString()
     };
     print(data);
+    print(selectedImage);
     var result =
-        await ProductService().addProduct(file: selectedImage, data: data);
+        await ProductService().updateProduct(file: selectedImage, data: data);
     // print(result.body);
     if (!result.isNull)
       AppUltils().getSnackBarSuccess(message: 'Thêm sản phẩm thành công');
@@ -111,6 +132,37 @@ class AddProductController extends GetxController {
     var response = (await ProductService().getProductAll());
     print(response);
     products.assignAll(response.map((e) => ProductModel.fromJson(e)).toList());
+    //return products;
+    //print(catelogies[0].name);
+  }
+
+  Future deleteProduct() async {
+    DialogConfirm()
+        .info(
+          context: Get.context,
+          title: "Bạn có chắc chắn?",
+          desc: "Xoá menu là không thể phục hồi",
+        )
+        .onCancel(
+          text: "Đóng lại",
+        )
+        .onConfirm(
+          text: "Đồng ý",
+          onPress: () async {
+            var response = (await ProductService().deleteProduct(productId));
+            // await getProductAll();
+            var position = productStore.products
+                .indexWhere((element) => element.id == productId);
+            productStore.products = productStore.products..removeAt(position);
+            Get.back();
+            Get.back();
+          },
+        )
+        .show(hideIcon: false);
+    ;
+
+    // print(response);
+    // products.assignAll(response.map((e) => ProductModel.fromJson(e)).toList());
     //return products;
     //print(catelogies[0].name);
   }

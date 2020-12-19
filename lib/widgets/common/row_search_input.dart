@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pos_app/config/pallate.dart';
 
 class RowSearchInput extends StatelessWidget {
   const RowSearchInput(
@@ -31,7 +32,7 @@ class RowSearchInput extends StatelessWidget {
             child: Icon(
               iconRight ?? Icons.add,
               size: 30,
-              color: Colors.cyan,
+              color: Pallate.primaryColor,
             ),
           ),
         ),

@@ -7,6 +7,8 @@ import 'package:pos_app/screens/customer/add/add.dart';
 import 'package:pos_app/screens/customer/list/list.dart';
 import 'package:pos_app/screens/pos/pos.dart';
 import 'package:pos_app/screens/product/add/add.dart';
+import 'package:pos_app/screens/product/edit/edit.dart';
+import 'package:pos_app/screens/product/edit/edit_controller.dart';
 import 'package:pos_app/screens/product/list/data/list_binding.dart';
 import 'package:pos_app/screens/product/list/list.dart';
 import 'package:pos_app/screens/setting/list.dart';
@@ -46,17 +48,26 @@ abstract class AppPages {
     GetPage(
       name: Routes.PRODUCT,
       page: () => ListProductScreen(),
-      transition: Transition.rightToLeft,
+      transition: Transition.cupertino,
       binding: ListProductBinding(),
       // children: [
       //   GetPage(
       //     name: 'add',
       //     page: () => AddProductScreen(),
-      //   )}
+      //   ),
+      //   GetPage(
+      //     name: 'edit',
+      //     page: () => EditProductScreen(),
+      //   ),
+      // ],
     ),
     GetPage(
       name: Routes.ADD_PRODUCT,
       page: () => AddProductScreen(),
+    ),
+    GetPage(
+      name: Routes.EDIT_PRODUCT,
+      page: () => EditProductScreen(),
     ),
     GetPage(
       name: Routes.CATELOG,

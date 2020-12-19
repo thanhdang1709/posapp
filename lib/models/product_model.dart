@@ -6,6 +6,7 @@ class ProductModel {
   int catelogId;
   int stock;
   String imageUrl;
+  String color;
   String note;
   String barCode;
 
@@ -15,6 +16,7 @@ class ProductModel {
     this.barCode,
     this.catelogId,
     this.imageUrl,
+    this.color,
     this.stock,
     this.note,
     this.price,
@@ -25,8 +27,10 @@ class ProductModel {
       id: json['id'],
       name: json['name'],
       price: (json['price']).toInt(),
+      catelogId: (json['catelog_id']).toInt(),
       stock: (json['stock']).toInt(),
       imageUrl: json['default_image'],
+      color: json['color'].toString(),
     );
   }
 
@@ -34,6 +38,7 @@ class ProductModel {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['name'] = this.name;
+
     return data;
   }
 }

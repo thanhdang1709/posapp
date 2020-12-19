@@ -3,6 +3,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:mdi/mdi.dart';
 import 'package:pos_app/config/pallate.dart';
+import 'package:pos_app/data/store/product_store.dart';
 import 'package:pos_app/screens/product/list/components/item_catelog.dart';
 import 'package:pos_app/screens/product/list/components/item_product.dart';
 import 'package:pos_app/screens/product/list/components/item_product_stock.dart';
@@ -38,10 +39,11 @@ class _ListProductScreenState extends State<ListProductScreen>
 
   @override
   Widget build(BuildContext context) {
+    ProductStore posStore = Get.find<ProductStore>();
     return Scaffold(
       appBar: AppUltils.buildAppBar(
         height: 80,
-        title: 'Sản phẩm (0)',
+        title: 'Sản phẩm (${posStore.products.length})',
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 10),
@@ -53,7 +55,7 @@ class _ListProductScreenState extends State<ListProductScreen>
           onTap: (index) {},
           controller: _controller,
           tabs: listCatelogies,
-          labelColor: Pallate.selectedItemColor,
+          labelColor: Pallate.colorTextOnPink,
           unselectedLabelColor: Pallate.unselectedItemColor,
         ),
       ),
@@ -100,6 +102,7 @@ class _ColumnListCatelogState extends State<ColumnListCatelog> {
   TextEditingController _catelogNameController = new TextEditingController();
   ListProductController controller =
       Get.put(ListProductController(), permanent: true);
+
   bool isOpenAddCat = false;
   @override
   Widget build(BuildContext context) {
@@ -177,8 +180,7 @@ class ColumnListProductStock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ListProductController controller = Get.put(ListProductController());
-
+    ProductStore posStore = Get.find<ProductStore>();
     return Column(
       children: [
         Container(
@@ -206,7 +208,7 @@ class ColumnListProductStock extends StatelessWidget {
                   padding: const EdgeInsets.all(5),
                   child: AnimationLimiter(
                     child: ListView.builder(
-                        itemCount: controller.products.length,
+                        itemCount: posStore.products.length,
                         itemBuilder: (bc, index) {
                           return AnimationConfiguration.staggeredList(
                             position: index,
@@ -215,7 +217,7 @@ class ColumnListProductStock extends StatelessWidget {
                               verticalOffset: 50.0,
                               child: FadeInAnimation(
                                 child: ItemProductStock(
-                                    product: controller.products[index]),
+                                    product: posStore.products[index]),
                               ),
                             ),
                           );
@@ -240,11 +242,14 @@ class ColumnListProductStock extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Tổng: ${$Number.numberFormat(controller.totalPrice.value)} đ',
+                      'Tổng: ${$Number.numberFormat(posStore.products.map((m) => (m.stock * m.price)).reduce((a, b) => a + b))} đ',
                       style: TextStyle(color: Colors.white, fontSize: 18),
                     ),
                     Text(
-                      controller.totalStock.toString(),
+                      posStore.products
+                          .map((m) => (m.stock))
+                          .reduce((a, b) => a + b)
+                          .toString(),
                       style: TextStyle(color: Colors.white, fontSize: 18),
                     ),
                   ],
@@ -254,7 +259,7 @@ class ColumnListProductStock extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Tổng giá trị kho: ${$Number.numberFormat(controller.totalPrice.value)} đ',
+                      'Tổng giá trị kho: ${$Number.numberFormat(posStore.products.map((m) => (m.stock * m.price)).reduce((a, b) => a + b))} đ',
                       style: TextStyle(color: Colors.white, fontSize: 14),
                     ),
                     Text(
@@ -279,7 +284,7 @@ class ColumnListProduct extends GetView<ListProductController> {
 
   @override
   Widget build(BuildContext context) {
-    ListProductController controller = Get.put(ListProductController());
+    ProductStore posStore = Get.find<ProductStore>();
 
     return Column(
       children: [
@@ -297,7 +302,7 @@ class ColumnListProduct extends GetView<ListProductController> {
                   padding: const EdgeInsets.all(5),
                   child: AnimationLimiter(
                     child: ListView.builder(
-                        itemCount: controller.products.length,
+                        itemCount: posStore.products.length,
                         itemBuilder: (bc, index) {
                           return AnimationConfiguration.staggeredList(
                             position: index,
@@ -306,7 +311,7 @@ class ColumnListProduct extends GetView<ListProductController> {
                               verticalOffset: 50.0,
                               child: FadeInAnimation(
                                 child: ItemProduct(
-                                    product: controller.products[index]),
+                                    product: posStore.products[index]),
                               ),
                             ),
                           );

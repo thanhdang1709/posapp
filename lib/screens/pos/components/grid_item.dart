@@ -73,11 +73,15 @@ class _CardFoodGridItemState extends State<CardFoodGridItem>
                 child: CachedNetworkImage(
                   imageUrl: widget.imageUrl,
                   fit: BoxFit.cover,
-                  progressIndicatorBuilder: (context, url, downloadProgress) =>
-                      Transform.scale(
-                          scale: 0.3,
-                          child: CircularProgressIndicator(
-                              value: downloadProgress.progress)),
+                  // progressIndicatorBuilder: (context, url, downloadProgress) =>
+                  //     Transform.scale(
+                  //         scale: 0.3,
+                  //         child: SizedBox(
+                  //           height: 30,
+                  //           width: 30,
+                  //           child: CircularProgressIndicator(
+                  //               value: downloadProgress.progress),
+                  //         )),
                   errorWidget: (context, url, error) => Icon(Icons.error),
                 ),
               ),

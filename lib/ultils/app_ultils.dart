@@ -32,7 +32,7 @@ class AppUltils {
       duration: Duration(seconds: 3),
       colorText: Colors.white,
       backgroundGradient: LinearGradient(
-        colors: [Colors.blue.withOpacity(0.9), Colors.cyan.withOpacity(0.9)],
+        colors: [Colors.green.withOpacity(0.9), Colors.cyan.withOpacity(0.9)],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       ),

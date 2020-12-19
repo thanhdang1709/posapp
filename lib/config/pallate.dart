@@ -3,8 +3,14 @@ import 'package:google_fonts/google_fonts.dart';
 
 class Pallate {
   final Shader linearGradient = LinearGradient(
-    colors: <Color>[Colors.greenAccent[200], Colors.blueAccent[200]],
+    colors: <Color>[primaryColor, secondColor],
   ).createShader(Rect.fromLTWH(0.0, 0.0, 200.0, 70.0));
+
+  static final Color primaryColor = Color(0xfffe6694);
+
+  static final Color secondColor = Color(0xfffebecc);
+
+  static final Color colorTextOnPink = Colors.yellowAccent;
 
   static final Color selectedItemColor = Colors.orange;
 
