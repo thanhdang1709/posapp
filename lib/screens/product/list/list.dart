@@ -43,7 +43,7 @@ class _ListProductScreenState extends State<ListProductScreen>
     return Scaffold(
       appBar: AppUltils.buildAppBar(
         height: 80,
-        title: 'Sản phẩm (${posStore.products.length})',
+        title: 'Menu (${posStore.products.length})',
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 10),
@@ -75,7 +75,7 @@ class _ListProductScreenState extends State<ListProductScreen>
 
 //get catelo
 List<Widget> listCatelogies = [
-  Tab(icon: Text('Sản phẩm')),
+  Tab(icon: Text('Menu')),
   Tab(icon: Text('Kho')),
   Tab(icon: Text('Danh mục')),
 ];

@@ -22,7 +22,7 @@ class RowSearchInput extends StatelessWidget {
         Expanded(
           child: TextFormField(
             decoration: InputDecoration(
-                border: InputBorder.none, hintText: hintText ?? 'Tìm sản phẩm'),
+                border: InputBorder.none, hintText: hintText ?? 'Tìm menu'),
           ),
         ),
         InkWell(
