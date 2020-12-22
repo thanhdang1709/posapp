@@ -1,14 +1,16 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:pos_app/data/binding/cart_binding.dart';
 import 'package:pos_app/data/binding/home_binding.dart';
 import 'package:pos_app/screens/auth/welcome_page.dart';
+import 'package:pos_app/screens/cart/index.dart';
 import 'package:pos_app/screens/catelog/add/add.dart';
 import 'package:pos_app/screens/customer/add/add.dart';
 import 'package:pos_app/screens/customer/list/list.dart';
 import 'package:pos_app/screens/pos/pos.dart';
+import 'package:pos_app/screens/pos/pos_binding.dart';
 import 'package:pos_app/screens/product/add/add.dart';
 import 'package:pos_app/screens/product/edit/edit.dart';
-import 'package:pos_app/screens/product/edit/edit_controller.dart';
 import 'package:pos_app/screens/product/list/data/list_binding.dart';
 import 'package:pos_app/screens/product/list/list.dart';
 import 'package:pos_app/screens/setting/list.dart';
@@ -16,8 +18,7 @@ import 'package:pos_app/screens/transaction/list/list.dart';
 import 'package:pos_app/screens/welcome/onboarding_page.dart';
 part './app_routes.dart';
 
-abstract class AppPages {
-  var box = new GetStorage();
+class AppPages {
   static final pages = [
     GetPage(
         name: Routes.INITIAL,
@@ -43,7 +44,7 @@ abstract class AppPages {
     GetPage(
       name: Routes.POS,
       page: () => PosScreen(),
-      binding: HomeBinding(),
+      binding: PosBinding(),
     ),
     GetPage(
       name: Routes.PRODUCT,
@@ -93,5 +94,7 @@ abstract class AppPages {
       name: Routes.TRANSACTION,
       page: () => TransactionScreen(),
     ),
+    GetPage(
+        name: Routes.CART, page: () => CartScreen(), binding: CartBinding()),
   ];
 }

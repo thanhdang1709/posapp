@@ -3,15 +3,17 @@ import 'package:get/get.dart';
 import 'package:pos_app/widgets/flexi_top_background.dart';
 
 class AppUltils {
-  static AppBar buildAppBar(
-      {String title,
-      Widget leading,
-      double height,
-      List<Widget> actions,
-      TabBar tabBar}) {
+  static AppBar buildAppBar({
+    String title,
+    Widget leading,
+    double height,
+    List<Widget> actions,
+    TabBar tabBar,
+    bool centerTitle,
+  }) {
     return AppBar(
       leading: leading ?? null,
-      centerTitle: true,
+      centerTitle: centerTitle ?? true,
       toolbarHeight: height ?? 40,
       title: Text(
         title,

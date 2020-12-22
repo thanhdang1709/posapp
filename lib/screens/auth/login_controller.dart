@@ -13,7 +13,7 @@ class LoginController extends GetxController {
       if (response.body.isNotEmpty) {
         var result = jsonDecode(response.body);
         if (result['token'].isNotEmpty) {
-          Get.offAllNamed('/pos');
+          Get.offAllNamed('pos');
           var box = GetStorage();
           box.write('token', result['token']);
           box.write('user_info', result['user']);

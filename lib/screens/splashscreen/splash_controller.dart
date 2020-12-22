@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:pos_app/data/store/product_store.dart';
 import 'package:pos_app/models/catelog_model.dart';
 import 'package:pos_app/models/product_model.dart';
@@ -13,18 +14,19 @@ class SplashController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
+
     await getCatelogAll();
     await getProductAll();
 
     productStore.catelogies = catelogies;
     productStore.products = products;
 
-    //if (catelogies.length != 0 && catelogies.length != 0)
-    Get.offAllNamed('pos');
+    if (catelogies.length != 0 && catelogies.length != 0)
+      Get.offAllNamed('pos');
   }
 
   Future getCatelogAll() async {
-    var response = (await ProductService().getCatelogAll());
+    var response = await ProductService().getCatelogAll();
     // print(response);
     catelogies
         .assignAll(response.map((e) => CatelogModel.fromJson(e)).toList());

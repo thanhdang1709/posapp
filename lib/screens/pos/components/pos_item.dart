@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos_app/config/pallate.dart';
+import 'package:pos_app/data/controllers/cart_controller.dart';
 import 'package:pos_app/data/store/product_store.dart';
 import 'package:pos_app/models/product_model.dart';
 import 'package:pos_app/repositories/common.dart';
@@ -52,7 +53,8 @@ class _TabPosItemState extends State<TabPosItem>
   @override
   Widget build(BuildContext context) {
     _scale = 1 - _controller.value;
-    // PosController posController = Get.put(PosController());
+    PosController posController = Get.put(PosController());
+    //CartController cartController = Get.put(CartController());
     ProductStore posStore = Get.find();
     products = widget.catelogId != 0
         ? posStore.products
@@ -96,10 +98,11 @@ class _TabPosItemState extends State<TabPosItem>
                         price: products[index].price,
                         imageUrl: '$BASE_DOMAIN/${products[index].imageUrl}',
                         onPressed: () {
-                          setState(() {
-                            count += 1;
-                            total += products[index].price;
-                          });
+                          posController.addToCart(products[index]);
+                          // setState(() {
+                          //   count += 1;
+                          //   total += products[index].price;
+                          // });
                           bounceButtonAction(_controller);
                           //print('hello');
                         },
@@ -112,23 +115,31 @@ class _TabPosItemState extends State<TabPosItem>
           ),
         ),
       ),
-      Padding(
-        padding: const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
-        child: Transform.scale(
-          scale: _scale,
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: Pallate.primaryColor,
+      InkWell(
+        onTap: () {
+          if (posStore.cartItem.length != 0) {
+            Get.toNamed('cart');
+          }
+        },
+        child: Padding(
+          padding:
+              const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+          child: Transform.scale(
+            scale: _scale,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Pallate.primaryColor,
+              ),
+              width: Get.size.width - 20,
+              padding: EdgeInsets.all(7),
+              margin: EdgeInsets.all(0),
+              child: Center(
+                  child: Obx(() => Text(
+                        '${posStore.cartItem.length} món = ${$Number.numberFormat(posStore.cartItem.length != 0 ? posStore.cartItem?.map((element) => element.price)?.reduce((a, b) => a + b) : 0)} đ',
+                        style: TextStyle(color: Colors.white, fontSize: 25),
+                      ))),
             ),
-            width: Get.size.width - 20,
-            padding: EdgeInsets.all(7),
-            margin: EdgeInsets.all(0),
-            child: Center(
-                child: Text(
-              '$count món = ${$Number.numberFormat(total)} đ',
-              style: TextStyle(color: Colors.white, fontSize: 25),
-            )),
           ),
         ),
       )

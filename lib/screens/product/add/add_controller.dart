@@ -12,19 +12,6 @@ import 'package:pos_app/ultils/app_ultils.dart';
 import 'package:pos_app/ultils/color.dart';
 
 class AddProductController extends GetxController {
-// final AddProductRepo repository;
-// AddProductController({@required this.repository}) : assert(repository != null);
-
-// Dio dio = new Dio();
-// FormData formdata = new FormData(); // just like JS
-// formdata.add("photos", new UploadFileInfo(_image, basename(_image.path)));
-// dio.post(uploadURL, data: formdata, options: Options(
-// method: 'POST',
-// responseType: ResponseType.PLAIN // or ResponseType.JSON
-// ))
-// .then((response) => print(response))
-// .catchError((error) => print(error));
-
   final _obj = ''.obs;
   set obj(value) => this._obj.value = value;
   get obj => this._obj.value;
@@ -83,7 +70,7 @@ class AddProductController extends GetxController {
       Get.back();
       return AppUltils().getSnackBarError(message: 'Vui lòng chọn tên cho món');
     }
-    var data = {
+    Map<String, dynamic> data = {
       'name': nameProduct.text.toString(),
       'price': priceProduct.text.toString(),
       'promoprice': promoPriceController.text.toString(),

@@ -5,6 +5,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:pos_app/config/pallate.dart';
 import 'package:pos_app/data/store/product_store.dart';
 import 'package:pos_app/screens/pos/components/pos_item.dart';
+import 'package:pos_app/screens/pos/pos_controller.dart';
 import 'package:pos_app/widgets/drawer/drawer.dart';
 import 'package:pos_app/widgets/flexi_top_background.dart';
 
@@ -29,6 +30,7 @@ class _PosScreenState extends State<PosScreen>
 
   var box = GetStorage();
   ProductStore posStore = Get.find<ProductStore>();
+  PosController posController = Get.find<PosController>();
   @override
   void initState() {
     posStore.catelogies.forEach(
@@ -46,7 +48,7 @@ class _PosScreenState extends State<PosScreen>
         _selectedIndex = _controller.index;
       });
     });
-    //PosController posController = Get.find<PosController>();
+
     super.initState();
   }
 

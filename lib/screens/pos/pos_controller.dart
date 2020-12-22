@@ -9,14 +9,26 @@ class PosController extends GetxController {
   ProductStore productStore = Get.put<ProductStore>(ProductStore());
   //ProductStore productStore = Get.find();
   RxList<ProductModel> products = <ProductModel>[].obs;
+  RxInt totalItem = 0.obs;
+  RxInt totalPrice = 0.obs;
 
   @override
   void onInit() async {
     super.onInit();
-    // getCatelogAll();
-    // getProductAll();
-    catelogies.addAll(productStore.catelogies);
-    products.addAll(productStore.products);
+    print('backnpos');
+    await getCatelogAll();
+    await getProductAll();
+
+    productStore.catelogies = catelogies;
+    productStore.products = products;
+  }
+
+  addToCart(ProductModel product) {
+    productStore.cartItem.add(product);
+    totalItem.value = productStore.cartItem.length;
+    totalPrice.value = productStore.cartItem
+        .map((element) => element.price)
+        .reduce((a, b) => a + b);
   }
 
   getCatelogAll() async {

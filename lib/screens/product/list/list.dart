@@ -180,6 +180,8 @@ class ColumnListProductStock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ListProductController listProductController =
+        Get.put(ListProductController());
     ProductStore posStore = Get.find<ProductStore>();
     return Column(
       children: [
@@ -242,14 +244,11 @@ class ColumnListProductStock extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Tổng: ${$Number.numberFormat(posStore.products.map((m) => (m.stock * m.price)).reduce((a, b) => a + b))} đ',
+                      'Tổng: ${$Number.numberFormat(listProductController.totalPrice.value)} đ',
                       style: TextStyle(color: Colors.white, fontSize: 18),
                     ),
                     Text(
-                      posStore.products
-                          .map((m) => (m.stock))
-                          .reduce((a, b) => a + b)
-                          .toString(),
+                      listProductController.totalStock.value.toString(),
                       style: TextStyle(color: Colors.white, fontSize: 18),
                     ),
                   ],
@@ -259,7 +258,7 @@ class ColumnListProductStock extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Tổng giá trị kho: ${$Number.numberFormat(posStore.products.map((m) => (m.stock * m.price)).reduce((a, b) => a + b))} đ',
+                      'Tổng giá trị kho: ${$Number.numberFormat(listProductController.totalPrice.value)} đ',
                       style: TextStyle(color: Colors.white, fontSize: 14),
                     ),
                     Text(

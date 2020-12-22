@@ -1,11 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:get_storage/get_storage.dart';
-import 'package:http_parser/http_parser.dart';
 import 'package:pos_app/repositories/common.dart';
 import 'package:pos_app/ultils/app_ultils.dart';
 import 'package:http/http.dart' as http;
+import 'package:pos_app/ultils/http_service.dart';
 
 class ProductService {
   // ignore: missing_return
@@ -19,70 +18,57 @@ class ProductService {
   }
 
   // ignore: missing_return
-  Future<int> addProduct({File file, Map<String, String> data}) async {
-    ///MultiPart request
-    var request = http.MultipartRequest(
-      'POST',
-      Uri.parse("$BASE_URL/product/add"),
-    );
-    //file = compressImage(file);
-    request.files.add(
-      http.MultipartFile(
-        'image',
-        file.readAsBytes().asStream(),
-        file.lengthSync(),
-        filename: 'image.png',
-        contentType: MediaType('image', 'jpeg'),
-      ),
-    );
-    request.headers.addAll(headers(_box));
-    request.fields.addAll(data);
-    print("request: " + request.toString());
-    var res = await request.send();
-    print("This is response:" + res.toString());
-    return (res.statusCode);
-    //return res;
+  Future<int> addProduct({File file, Map<String, dynamic> data}) async {
+    var response = await HttpService().fetch(
+        url: 'api/product/add', method: 'POST', files: [file], body: data);
+    print(response);
+    return response.statusCode;
   }
 
-  Future<int> updateProduct({File file, Map<String, String> data}) async {
+  Future<int> updateProduct({File file, Map<String, dynamic> data}) async {
     ///MultiPart request
-    var request = http.MultipartRequest(
-      'POST',
-      Uri.parse("$BASE_URL/product/update"),
-    );
-    //file = compressImage(file);
+    // var request = http.MultipartRequest(
+    //   'POST',
+    //   Uri.parse("$BASE_URL/product/update"),
+    // );
+    // //file = compressImage(file);
 
-    if (file != null) {
-      request.files.add(
-        http.MultipartFile(
-          'image',
-          file.readAsBytes().asStream(),
-          file.lengthSync(),
-          filename: 'image.png',
-          contentType: MediaType('image', 'jpeg'),
-        ),
-      );
-    }
-    request.headers.addAll(headers(_box));
-    request.fields.addAll(data);
-    print("request: " + request.toString());
-    var res = await request.send();
-    print("This is response:" + res.toString());
-    print(res.statusCode);
-    return (res.statusCode);
+    // if (file != null) {
+    //   request.files.add(
+    //     http.MultipartFile(
+    //       'image',
+    //       file.readAsBytes().asStream(),
+    //       file.lengthSync(),
+    //       filename: 'image.png',
+    //       contentType: MediaType('image', 'jpeg'),
+    //     ),
+    //   );
+    // }
+    // request.headers.addAll(headers(_box));
+    // request.fields.addAll(data);
+    // print("request: " + request.toString());
+    // var res = await request.send();
+    // print("This is response:" + res.toString());
+    // print(res.statusCode);
+    // return (res.statusCode);
     //return res;
+
+    var response = await HttpService().fetch(
+        url: 'api/product/update', method: 'POST', files: [file], body: data);
+    print(response);
+    return response.statusCode;
   }
 
   // ignore: missing_return
   Future<List> getProductAll() async {
-    var response =
-        await http.get('$BASE_URL/product/all', headers: headers(_box));
+    var response = await HttpService().fetch(
+      url: 'api/product/all',
+      method: 'GET',
+    );
     if (response.statusCode == 200) {
-      if (response.body.isNotEmpty) {
-        var result = jsonDecode(response.body);
-        if (result['alert'] == 'success') {
-          return result['data'];
-        }
+      var result = (response.body);
+      if (result['alert'] == 'success') {
+        return result['data'];
       }
     }
   }
