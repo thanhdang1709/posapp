@@ -4,46 +4,43 @@ import 'package:pos_app/models/catelog_model.dart';
 import 'package:pos_app/models/product_model.dart';
 import 'package:pos_app/services/product_services.dart';
 
-class PosController extends GetxController {
+class SplashController extends GetxController {
   RxList<CatelogModel> catelogies = <CatelogModel>[].obs;
   ProductStore productStore = Get.put<ProductStore>(ProductStore());
-  //ProductStore productStore = Get.find();
   RxList<ProductModel> products = <ProductModel>[].obs;
-  RxInt totalItem = 0.obs;
-  RxInt totalPrice = 0.obs;
 
   @override
   void onInit() async {
     super.onInit();
-    print('backnpos');
+
     await getCatelogAll();
     await getProductAll();
 
     productStore.catelogies = catelogies;
     productStore.products = products;
+
+    // if (catelogies.length != 0 && catelogies.length != 0)
+    Get.offAllNamed('pos');
   }
 
-  addToCart(ProductModel product) {
-    productStore.cartItem.add(product);
-    totalItem.value = productStore.cartItem.length;
-    totalPrice.value = productStore.cartItem
-        .map((element) => element.price)
-        .reduce((a, b) => a + b);
-  }
+  Future getCatelogAll() async {
+    var response = await ProductService().getCatelogAll();
+    print(response);
+    if (response != null && response.length != 0) {
+      catelogies
+          .assignAll(response.map((e) => CatelogModel.fromJson(e)).toList());
+    }
 
-  getCatelogAll() async {
-    var response = (await ProductService().getCatelogAll());
-    // print(response);
-    catelogies
-        .assignAll(response.map((e) => CatelogModel.fromJson(e)).toList());
     //print(catelogies[0].name);
   }
 
-  getProductAll() async {
+  Future getProductAll() async {
     var response = (await ProductService().getProductAll());
     // print(response);
-    products.assignAll(response.map((e) => ProductModel.fromJson(e)).toList());
-
+    if (response != null && response.length != 0) {
+      products
+          .assignAll(response.map((e) => ProductModel.fromJson(e)).toList());
+    }
     //print(catelogies[0].name);
   }
 }

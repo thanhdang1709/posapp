@@ -70,20 +70,20 @@ class AddProductController extends GetxController {
       Get.back();
       return AppUltils().getSnackBarError(message: 'Vui lòng chọn tên cho món');
     }
-    Map<String, dynamic> data = {
-      'name': nameProduct.text.toString(),
-      'price': priceProduct.text.toString(),
-      'promoprice': promoPriceController.text.toString(),
-      'note': noteController.text.toString(),
-      'barcode': barcodeController.text.toString(),
-      'stock': stockController.text.toString(),
-      'catelog_id': catelogId.toString(),
-      'color': ColorFormat.colorToString(pickerColor.value)
+    Map<String, String> data = {
+      'name': nameProduct.text.toString().trim(),
+      'price': priceProduct.text.toString().trim(),
+      'promoprice': promoPriceController.text.toString().trim(),
+      'note': noteController.text.toString().trim(),
+      'barcode': barcodeController.text.toString().trim(),
+      'stock': stockController.text.toString().trim(),
+      'catelog_id': catelogId.toString().trim(),
+      'color': ColorFormat.colorToString(pickerColor.value).toString().trim()
     };
-    print(data);
+    print(data.runtimeType);
     var result =
         await ProductService().addProduct(file: selectedImage, data: data);
-    // print(result.body);
+    print(result);
     if (!result.isNull)
       AppUltils().getSnackBarSuccess(message: 'Thêm sản phẩm thành công');
     await getProductAll();
@@ -91,12 +91,11 @@ class AddProductController extends GetxController {
     Get.back();
     Get.back();
     Get.back();
-    //Get.reset();
   }
 
   Future getProductAll() async {
     var response = (await ProductService().getProductAll());
-    print(response);
+    // print(response);
     products.assignAll(response.map((e) => ProductModel.fromJson(e)).toList());
     //return products;
     //print(catelogies[0].name);

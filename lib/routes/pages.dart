@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:pos_app/data/binding/cart_binding.dart';
+import 'package:pos_app/data/binding/customer_binding.dart';
 import 'package:pos_app/data/binding/home_binding.dart';
 import 'package:pos_app/screens/auth/welcome_page.dart';
 import 'package:pos_app/screens/cart/index.dart';
@@ -8,10 +9,10 @@ import 'package:pos_app/screens/catelog/add/add.dart';
 import 'package:pos_app/screens/customer/add/add.dart';
 import 'package:pos_app/screens/customer/list/list.dart';
 import 'package:pos_app/screens/pos/pos.dart';
-import 'package:pos_app/screens/pos/pos_binding.dart';
+import 'package:pos_app/data/binding/pos_binding.dart';
 import 'package:pos_app/screens/product/add/add.dart';
 import 'package:pos_app/screens/product/edit/edit.dart';
-import 'package:pos_app/screens/product/list/data/list_binding.dart';
+import 'package:pos_app/data/binding/list_binding.dart';
 import 'package:pos_app/screens/product/list/list.dart';
 import 'package:pos_app/screens/setting/list.dart';
 import 'package:pos_app/screens/transaction/list/list.dart';
@@ -81,6 +82,7 @@ class AppPages {
     GetPage(
       name: Routes.CUSTOMER,
       page: () => CustomerScreen(),
+      binding: CustomerBinding(),
     ),
     GetPage(
       name: Routes.ADD_CUSTOMER,

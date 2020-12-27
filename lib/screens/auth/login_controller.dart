@@ -7,8 +7,9 @@ import 'package:pos_app/ultils/app_ultils.dart';
 
 class LoginController extends GetxController {
   login(body) async {
-    var response = await http.post('$BASE_URL/login',
+    var response = await http.post('$BASE_URL/api/login',
         body: jsonEncode(body), headers: {'Content-Type': 'application/json'});
+    print(response.body);
     if (response.statusCode == 200) {
       if (response.body.isNotEmpty) {
         var result = jsonDecode(response.body);
@@ -17,7 +18,7 @@ class LoginController extends GetxController {
           var box = GetStorage();
           box.write('token', result['token']);
           box.write('user_info', result['user']);
-          box.write('shop_name', result['user']['shop_name']);
+          box.write('store_name', result['user']['store_name']);
           box.write('name', result['user']['name']);
           AppUltils().getSnackBarSuccess(
               title: 'Thành công', message: 'Đăng nhập thành công');

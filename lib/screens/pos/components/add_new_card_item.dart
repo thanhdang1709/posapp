@@ -12,7 +12,7 @@ class AddNewCardItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Get.to(ListProductScreen());
+        Get.toNamed('product');
       },
       child: Container(
         child: Center(

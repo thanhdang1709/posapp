@@ -47,7 +47,6 @@ class EditProductController extends GetxController {
   set obj(value) => this._obj.value = value;
   get obj => this._obj.value;
   ProductStore productStore = Get.find<ProductStore>();
-
   RxList<ProductModel> products = <ProductModel>[].obs;
   ProductModel oldProduct;
   int productId;
@@ -115,8 +114,8 @@ class EditProductController extends GetxController {
     };
     print(data);
     print(selectedImage);
-    var result =
-        await ProductService().updateProduct(file: selectedImage, data: data);
+    var result = await ProductService()
+        .updateProduct(file: selectedImage ?? null, data: data);
     // print(result.body);
     if (!result.isNull)
       AppUltils().getSnackBarSuccess(message: 'Thêm sản phẩm thành công');

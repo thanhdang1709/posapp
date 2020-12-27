@@ -3,7 +3,8 @@ import 'package:pos_app/modules/http_services.dart';
 
 class HttpService extends HttpServiceCore {
   /* DESC: Khi "url" bạn truyền vào cho mỗi request mà không có base url, ví dụ "/api/user/delete" thì sẽ được tự động gắn base url này */
-  String baseUrl = 'https://xemhd.xyz/';
+  String baseUrl = 'http://localhost:8000';
+  //String baseUrl = 'https://xemhd.xyz';
   //var _box = GetStorage();
   /* DESC: Thời gian chờ một request phản hồi trong trường hợp mạng yếu hoặc API xử lý chậm */
   int defaultTimeout = 30; //seconds
@@ -18,7 +19,7 @@ class HttpService extends HttpServiceCore {
   };
 
   /* DESC: Mỗi request tự động sẽ chèn thêm body này, nó sẽ merge với body bạn cấu hình trong mỗi request */
-  Map<String, dynamic> defaultBody = {};
+  Map<String, String> defaultBody = {};
 
   /* DESC: Sự kiện khi hết thời gian chờ phản hồi của một request */
   void defaultFnOnTimeout() {}

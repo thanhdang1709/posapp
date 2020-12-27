@@ -19,27 +19,34 @@ class ListProductController extends GetxController {
     super.onInit();
     products = productStore.products;
     catelogies = productStore.catelogies;
-    totalStock.value = products.map((m) => (m.stock)).reduce((a, b) => a + b);
-    totalPrice.value = products
-        .map<int>((m) => (m.stock * m.price))
-        .reduce((value, element) => value + element);
-
+    totalStock.value = products.length != 0
+        ? products.map((m) => (m.stock))?.reduce((a, b) => a + b)
+        : 0;
+    totalPrice.value = products.length != 0
+        ? products
+            .map<int>((m) => (m.stock * m.price))
+            ?.reduce((value, element) => value + element)
+        : 0;
     //products.firstWhere((element) => element.catelogId == 1);
   }
 
   getCatelogAll() async {
     var response = (await ProductService().getCatelogAll());
-    print(response);
-    catelogies
-        .assignAll(response.map((e) => CatelogModel.fromJson(e)).toList());
+    if (response != null && response.length != 0) {
+      catelogies
+          .assignAll(response.map((e) => CatelogModel.fromJson(e)).toList());
+    }
     //print(catelogies[0].name);
   }
 
   getProductAll() async {
     var response = (await ProductService().getProductAll());
-    print(response);
-    products.assignAll(response.map((e) => ProductModel.fromJson(e)).toList());
-    return products;
+    if (response != null && response.length != 0) {
+      products
+          .assignAll(response.map((e) => ProductModel.fromJson(e)).toList());
+      return products;
+    }
+
     //print(catelogies[0].name);
   }
 

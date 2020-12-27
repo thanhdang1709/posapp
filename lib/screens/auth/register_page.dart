@@ -7,6 +7,7 @@ import 'package:pos_app/screens/auth/components/text_input_find_out.dart';
 import 'package:pos_app/screens/auth/register_controller.dart';
 //import 'package:pos_app/widgets/provinces.dart';
 import 'package:pos_app/widgets/stragger_animation.dart';
+import 'package:uuid/uuid.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -147,24 +148,6 @@ class _RegisterPageState extends State<RegisterPage>
                                     const SizedBox(height: 5),
                                     _AcceptTerms(),
                                     const SizedBox(height: 10),
-                                    // SizedBox(
-                                    //   width: size.width * .65,
-                                    //   child: FlatButton(
-                                    //     onPressed: () {},
-                                    //     padding: const EdgeInsets.all(12),
-                                    //     shape: RoundedRectangleBorder(
-                                    //       borderRadius: BorderRadius.circular(10),
-                                    //     ),
-                                    //     color: Colors.pinkAccent,
-                                    //     child: Text(
-                                    //       "Đăng ký",
-                                    //       style: TextStyle(
-                                    //           fontSize: 16,
-                                    //           fontWeight: FontWeight.w600,
-                                    //           color: Colors.white),
-                                    //     ),
-                                    //   ),
-                                    // )
                                     GestureDetector(
                                       onTap: () {
                                         print('hello');
@@ -177,8 +160,9 @@ class _RegisterPageState extends State<RegisterPage>
                                             'email': _emailController.text,
                                             'phone': _phoneController.text,
                                             'name': _nameController.text,
-                                            'shop_name':
+                                            'store_name':
                                                 _shopNameController.text,
+                                            'store_id': Uuid().v4(),
                                             'password':
                                                 _passwordController.text,
                                           };

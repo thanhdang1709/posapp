@@ -10,7 +10,7 @@ class HttpServiceCore {
   int defaultTimeout;
   int maxTimeRetry;
   Map<String, String> defaultHeaders;
-  Map<String, dynamic> defaultBody;
+  Map<String, String> defaultBody;
   List<File> defaultFiles;
 
   defaultFnOnTimeout() {}
@@ -36,7 +36,7 @@ class HttpServiceCore {
     int timeout,
     Function onTimeout,
     Map<String, String> headers,
-    Map<String, dynamic> body,
+    Map<String, String> body,
     List<File> files,
   }) async {
     Uri uri = await _getUrl(url, params);
@@ -73,7 +73,7 @@ class HttpServiceCore {
     int timeout,
     Function onTimeout,
     Map<String, String> headers,
-    Map<String, dynamic> body,
+    Map<String, String> body,
     List<File> files,
   }) async {
     Completer completer = new Completer<Response>();
@@ -99,12 +99,12 @@ class HttpServiceCore {
         }
       } else {
         request = http.Request(method, uri);
+        body.addAll(defaultBody);
+        request.body = json.encode(body);
       }
-      request = http.Request(method, uri);
+      //request = http.Request(method, uri);
       headers.addAll(defaultHeaders);
-      body.addAll(defaultBody);
       request.headers.addAll(headers);
-      request.body = json.encode(body);
       http.StreamedResponse res = await request
           .send()
           .timeout(Duration(seconds: timeout), onTimeout: () async {

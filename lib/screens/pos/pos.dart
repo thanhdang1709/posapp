@@ -5,7 +5,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:pos_app/config/pallate.dart';
 import 'package:pos_app/data/store/product_store.dart';
 import 'package:pos_app/screens/pos/components/pos_item.dart';
-import 'package:pos_app/screens/pos/pos_controller.dart';
+import 'package:pos_app/data/controllers/pos_controller.dart';
 import 'package:pos_app/widgets/drawer/drawer.dart';
 import 'package:pos_app/widgets/flexi_top_background.dart';
 

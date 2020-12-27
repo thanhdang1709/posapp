@@ -3,7 +3,7 @@ import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:pos_app/config/pallate.dart';
-import 'package:pos_app/screens/pos/pos_controller.dart';
+import 'package:pos_app/data/controllers/pos_controller.dart';
 
 class DrawerApp extends StatelessWidget {
   const DrawerApp({
@@ -42,7 +42,7 @@ class DrawerApp extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        box.read('shop_name') ??
+                        box.read('store_name') ??
                             'Cà Phê Trung Nguyên Nguyên Nguyên',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,

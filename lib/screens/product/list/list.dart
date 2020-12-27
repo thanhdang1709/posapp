@@ -7,7 +7,7 @@ import 'package:pos_app/data/store/product_store.dart';
 import 'package:pos_app/screens/product/list/components/item_catelog.dart';
 import 'package:pos_app/screens/product/list/components/item_product.dart';
 import 'package:pos_app/screens/product/list/components/item_product_stock.dart';
-import 'package:pos_app/screens/product/list/data/list_controller.dart';
+import 'package:pos_app/data/controllers/list_controller.dart';
 import 'package:pos_app/ultils/number.dart';
 import 'package:pos_app/widgets/common/row_search_input.dart';
 import 'package:pos_app/ultils/app_ultils.dart';
@@ -39,11 +39,11 @@ class _ListProductScreenState extends State<ListProductScreen>
 
   @override
   Widget build(BuildContext context) {
-    ProductStore posStore = Get.find<ProductStore>();
+    ProductStore productStore = Get.put(ProductStore());
     return Scaffold(
       appBar: AppUltils.buildAppBar(
         height: 80,
-        title: 'Menu (${posStore.products.length})',
+        title: 'Menu (${productStore.products.length})',
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 10),
@@ -284,7 +284,6 @@ class ColumnListProduct extends GetView<ListProductController> {
   @override
   Widget build(BuildContext context) {
     ProductStore posStore = Get.find<ProductStore>();
-
     return Column(
       children: [
         Container(

@@ -11,16 +11,27 @@ class CartScreen extends GetView<CartController> {
   @override
   Widget build(BuildContext context) {
     // ProductStore productStore = Get.find();
-
-    List<Widget> buildCartItem(newCart) {
+    //CartController cartController = Get.find();
+    List<Widget> buildCartItem(CartController controller) {
       List<Widget> results = [];
-      newCart.forEach((e) {
+      controller.newCart.forEach((e) {
         results
-          ..add(CartItem(
-            totalPriceItem: e['totalPrice'],
-            productName: e['name'],
-            quality: e['countItem'],
-          ))
+          ..add(
+            InkWell(
+              onTap: () {
+                print(e['id']);
+                controller.extendRow(e['id']);
+              },
+              child: CartItem(
+                productId: e['id'],
+                totalPriceItem: e['totalPrice'],
+                productName: e['name'],
+                quality: e['countItem'],
+                priceItem: e['priceItem'],
+                totalItem: e['totalItem'],
+              ),
+            ),
+          )
           ..add(Container(height: 1, width: double.infinity));
       });
       return results;
@@ -56,18 +67,45 @@ class CartScreen extends GetView<CartController> {
         children: [
           Expanded(
             child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  ...buildCartItem(controller.newCart),
-                  RowTotalPrice(
-                    totalPrice: controller.totalPrice,
-                  ),
-                  SizedBox(
-                    height: 10,
-                  )
-                ],
+              child: Obx(
+                () => Column(
+                  children: [
+                    ...buildCartItem(controller),
+                    RowTotalPrice(
+                      totalPrice: controller.totalPrice,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    )
+                  ],
+                ),
               ),
             ),
+            // child: GetX<CartController>(
+            //   init: CartController(),
+            //   initState: (_) {},
+            //   builder: (_) {
+            //     return ListView.builder(
+            //       itemCount: controller.newCart.length,
+            //       itemBuilder: (bc, index) {
+            //         return InkWell(
+            //           onTap: () {
+            //             print(controller.newCart[index]['id']);
+            //             controller.extendRow(controller.newCart[index]['id']);
+            //           },
+            //           child: CartItem(
+            //             productId: controller.newCart[index]['id'],
+            //             totalPriceItem: controller.newCart[index]['totalPrice'],
+            //             productName: controller.newCart[index]['name'],
+            //             quality: controller.newCart[index]['countItem'],
+            //             priceItem: controller.newCart[index]['priceItem'],
+            //             totalItem: controller.newCart[index]['totalItem'],
+            //           ),
+            //         );
+            //       },
+            //     );
+            //   },
+            // ),
           ),
           Container(
             height: Get.height * .1,
@@ -115,7 +153,7 @@ class CartScreen extends GetView<CartController> {
                       ],
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ),

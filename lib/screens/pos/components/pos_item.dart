@@ -8,7 +8,7 @@ import 'package:pos_app/repositories/common.dart';
 import 'package:pos_app/screens/pos/components/add_new_card_item.dart';
 import 'package:pos_app/screens/pos/components/grid_item.dart';
 import 'package:pos_app/screens/pos/components/pos_action_row.dart';
-import 'package:pos_app/screens/pos/pos_controller.dart';
+import 'package:pos_app/data/controllers/pos_controller.dart';
 import 'package:pos_app/ultils/color.dart';
 import 'package:pos_app/ultils/number.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
