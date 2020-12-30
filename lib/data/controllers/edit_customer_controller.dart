@@ -1,14 +1,22 @@
-import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pos_app/models/customer_model.dart';
 import 'package:pos_app/services/customer_service.dart';
 import 'package:pos_app/ultils/app_ultils.dart';
 
-class CustomerController extends GetxController {
+class EditCustomerController extends GetxController {
+  EditCustomerController() {
+    oldCustomer = Get.arguments;
+    print(oldCustomer);
+    nameController.text = oldCustomer.name;
+    phoneController.text = oldCustomer.phone;
+    addressController.text = oldCustomer.address;
+  }
+  CustomerModel oldCustomer;
   var imagePickerPath = ''.obs;
   final picker = ImagePicker();
   File selectedImage;
@@ -20,25 +28,7 @@ class CustomerController extends GetxController {
   TextEditingController addressController = new TextEditingController();
   TextEditingController searchKeyword = new TextEditingController();
 
-  Timer _debounce;
-  RxBool isSearchActive = false.obs;
-  @override
-  onInit() async {
-    super.onInit();
-    await getAll();
-    //print(customers);
-    print('onInit agrument');
-    searchKeyword.addListener(_onSearchChanged);
-  }
-
-  @override
-  void onReady() {
-    // TODO: implement onReady
-    super.onReady();
-    print('onReady');
-  }
-
-  void submit() async {
+  void updateCustomer() async {
     if (nameController.text.trim() == '') {
       return AppUltils()
           .getSnackBarError(message: 'Vui lòng điền tên khách hàng');
@@ -47,17 +37,18 @@ class CustomerController extends GetxController {
       'name': nameController.text.trim().toString(),
       'phone': phoneController.text.trim().toString(),
       'address': addressController.text.trim().toString(),
+      'id': oldCustomer.id.toString(),
     };
-    var result = await CustomerService()
-        .addProduct(file: selectedImage ?? null, data: data);
+    var result =
+        await CustomerService().update(file: selectedImage ?? null, data: data);
     nameController.text = '';
     phoneController.text = '';
     addressController.text = '';
-
+    print(result);
     await getAll();
     Get.back();
     //Get.back();
-    AppUltils().getSnackBarSuccess(message: 'Thêm khách hàng thành công');
+    AppUltils().getSnackBarSuccess(message: 'Cập nhật khách hàng thành công');
   }
 
   Future getAll() async {
@@ -69,41 +60,6 @@ class CustomerController extends GetxController {
       //);
       // return customers;
     }
-  }
-
-  deleteCustomer(int id) async {
-    print(id);
-    var response = (await CustomerService().delete(id));
-    if (response != null && response.length != 0) {
-      print('deleteOk');
-      customers.removeAt(customers.indexWhere((e) => e.id == id));
-
-      Get.back();
-      Get.back();
-      AppUltils().getSnackBarSuccess(message: 'Xoá khách hàng thành công');
-    } else {
-      AppUltils()
-          .getSnackBarError(message: 'Có lỗi xảy ra vui lòng thử lại sau');
-    }
-  }
-
-  _onSearchChanged() {
-    if (_debounce?.isActive ?? false) _debounce.cancel();
-    _debounce = Timer(const Duration(milliseconds: 500), () {
-      // do something with _searchQuery.text
-      print(searchKeyword.text);
-      if (searchKeyword.text != '') {
-        searchResults.assignAll(
-          customers.where(
-            (element) => element.name
-                .toLowerCase()
-                .contains(searchKeyword.text.toLowerCase()),
-          ),
-        );
-      } else {
-        searchResults.clear();
-      }
-    });
   }
 
   addImageModalBottomSheet(context) {

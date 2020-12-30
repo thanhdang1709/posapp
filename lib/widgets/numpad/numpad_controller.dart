@@ -77,11 +77,15 @@ class NumpadController with ChangeNotifier {
     switch (format) {
       case NumpadFormat.NONE:
         defaultHintText = '0';
-        maxRawLength = 2;
+        maxRawLength = 3;
         break;
       case NumpadFormat.CURRENCY:
         defaultHintText = '0 đ';
-        maxRawLength = 6;
+        maxRawLength = 9;
+        break;
+      case NumpadFormat.AMOUNT:
+        defaultHintText = '0 đ';
+        maxRawLength = 9;
         break;
       case NumpadFormat.PHONE:
         defaultHintText = '(___) ___-____';
@@ -119,6 +123,8 @@ class NumpadController with ChangeNotifier {
         if (_rawString != null) {
           if (_rawString.length < maxRawLength) {
             _rawString += input.toString();
+            print(_rawString);
+            notifyListeners();
             if (_rawString.length == maxRawLength &&
                 format != NumpadFormat.CURRENCY) {
               inputValid = true;

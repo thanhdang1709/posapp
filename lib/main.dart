@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -8,11 +10,13 @@ import 'package:pos_app/routes/pages.dart';
 import 'package:pos_app/screens/auth/welcome_page.dart';
 import 'package:pos_app/screens/splashscreen/splash_screen.dart';
 import 'package:pos_app/screens/welcome/onboarding_page.dart';
+import 'package:pdf/widgets.dart' as pw;
 
 void main() async {
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle.light.copyWith(statusBarColor: Colors.transparent),
   );
+
   await GetStorage.init();
   var box = GetStorage();
   return runApp(

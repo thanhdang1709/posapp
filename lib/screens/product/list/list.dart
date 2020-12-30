@@ -113,6 +113,7 @@ class _ColumnListCatelogState extends State<ColumnListCatelog> {
           child: Padding(
             padding: const EdgeInsets.all(5),
             child: RowSearchInput(
+              controller: controller.searchCatelogyController,
               hintText: 'Tìm danh mục',
               iconRight: isOpenAddCat ? Icons.close : Icons.add,
               onPressIcon: () {
@@ -159,13 +160,25 @@ class _ColumnListCatelogState extends State<ColumnListCatelog> {
         Expanded(
           child: Padding(
             padding: const EdgeInsets.all(10),
-            child: Obx(() => ListView.builder(
-                itemCount: controller.catelogies.length,
-                itemBuilder: (bc, index) {
-                  return ItemCatelog(
-                    catelogItem: controller.catelogies[index],
-                  );
-                })),
+            child: Obx(
+              () => controller.searchCatelogies.length == 0
+                  ? ListView.builder(
+                      itemCount: controller.catelogies.length,
+                      itemBuilder: (bc, index) {
+                        return ItemCatelog(
+                          catelogItem: controller.catelogies[index],
+                        );
+                      },
+                    )
+                  : ListView.builder(
+                      itemCount: controller.searchCatelogies.length,
+                      itemBuilder: (bc, index) {
+                        return ItemCatelog(
+                          catelogItem: controller.searchCatelogies[index],
+                        );
+                      },
+                    ),
+            ),
           ),
         ),
       ],
@@ -190,6 +203,7 @@ class ColumnListProductStock extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(5),
             child: RowSearchInput(
+              controller: listProductController.searchController,
               iconRight: Mdi.filterMenuOutline,
             ),
           ),
@@ -205,27 +219,52 @@ class ColumnListProductStock extends StatelessWidget {
         //     ),
         //   ),
         // ),
-        Obx(() => Expanded(
-              child: Padding(
-                  padding: const EdgeInsets.all(5),
-                  child: AnimationLimiter(
-                    child: ListView.builder(
-                        itemCount: posStore.products.length,
-                        itemBuilder: (bc, index) {
-                          return AnimationConfiguration.staggeredList(
-                            position: index,
-                            duration: const Duration(milliseconds: 375),
-                            child: SlideAnimation(
-                              verticalOffset: 50.0,
-                              child: FadeInAnimation(
-                                child: ItemProductStock(
-                                    product: posStore.products[index]),
-                              ),
-                            ),
-                          );
-                        }),
-                  )),
-            )),
+        Obx(
+          () => posStore.searchProducts.length == 0
+              ? Expanded(
+                  child: Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: AnimationLimiter(
+                        child: ListView.builder(
+                            itemCount: posStore.products.length,
+                            itemBuilder: (bc, index) {
+                              return AnimationConfiguration.staggeredList(
+                                position: index,
+                                duration: const Duration(milliseconds: 375),
+                                child: SlideAnimation(
+                                  verticalOffset: 50.0,
+                                  child: FadeInAnimation(
+                                    child: ItemProductStock(
+                                        product: posStore.products[index]),
+                                  ),
+                                ),
+                              );
+                            }),
+                      )),
+                )
+              : Expanded(
+                  child: Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: AnimationLimiter(
+                        child: ListView.builder(
+                            itemCount: posStore.searchProducts.length,
+                            itemBuilder: (bc, index) {
+                              return AnimationConfiguration.staggeredList(
+                                position: index,
+                                duration: const Duration(milliseconds: 375),
+                                child: SlideAnimation(
+                                  verticalOffset: 50.0,
+                                  child: FadeInAnimation(
+                                    child: ItemProductStock(
+                                        product:
+                                            posStore.searchProducts[index]),
+                                  ),
+                                ),
+                              );
+                            }),
+                      )),
+                ),
+        ),
         Container(
           height: Get.height * .13,
           decoration: BoxDecoration(
@@ -290,32 +329,59 @@ class ColumnListProduct extends GetView<ListProductController> {
           color: Colors.grey[200],
           child: Padding(
             padding: const EdgeInsets.all(5),
-            child: RowSearchInput(onPressIcon: () {
-              Get.toNamed('/product/add');
-            }),
+            child: RowSearchInput(
+                controller: controller.searchController,
+                onPressIcon: () {
+                  Get.toNamed('/product/add');
+                }),
           ),
         ),
-        Obx(() => Expanded(
-              child: Padding(
-                  padding: const EdgeInsets.all(5),
-                  child: AnimationLimiter(
-                    child: ListView.builder(
-                        itemCount: posStore.products.length,
-                        itemBuilder: (bc, index) {
-                          return AnimationConfiguration.staggeredList(
-                            position: index,
-                            duration: const Duration(milliseconds: 375),
-                            child: SlideAnimation(
-                              verticalOffset: 50.0,
-                              child: FadeInAnimation(
-                                child: ItemProduct(
-                                    product: posStore.products[index]),
-                              ),
-                            ),
-                          );
-                        }),
-                  )),
-            )),
+        Obx(
+          () => posStore.searchProducts.length == 0
+              ? Expanded(
+                  child: Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: AnimationLimiter(
+                        child: ListView.builder(
+                            itemCount: posStore.products.length,
+                            itemBuilder: (bc, index) {
+                              return AnimationConfiguration.staggeredList(
+                                position: index,
+                                duration: const Duration(milliseconds: 375),
+                                child: SlideAnimation(
+                                  verticalOffset: 50.0,
+                                  child: FadeInAnimation(
+                                    child: ItemProduct(
+                                        product: posStore.products[index]),
+                                  ),
+                                ),
+                              );
+                            }),
+                      )),
+                )
+              : Expanded(
+                  child: Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: AnimationLimiter(
+                        child: ListView.builder(
+                            itemCount: posStore.searchProducts.length,
+                            itemBuilder: (bc, index) {
+                              return AnimationConfiguration.staggeredList(
+                                position: index,
+                                duration: const Duration(milliseconds: 375),
+                                child: SlideAnimation(
+                                  verticalOffset: 50.0,
+                                  child: FadeInAnimation(
+                                    child: ItemProduct(
+                                        product:
+                                            posStore.searchProducts[index]),
+                                  ),
+                                ),
+                              );
+                            }),
+                      )),
+                ),
+        ),
       ],
     );
   }

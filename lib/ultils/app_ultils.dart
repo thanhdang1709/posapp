@@ -34,7 +34,7 @@ class AppUltils {
       duration: Duration(seconds: 3),
       colorText: Colors.white,
       backgroundGradient: LinearGradient(
-        colors: [Colors.green.withOpacity(0.9), Colors.cyan.withOpacity(0.9)],
+        colors: [Colors.green, Colors.cyan],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       ),
@@ -45,11 +45,11 @@ class AppUltils {
     if (!Get.isSnackbarOpen)
       Get.snackbar(
         'Thất bại',
-        message,
+        message ?? 'Có lỗi xảy ra vui lòng thử lại',
         duration: Duration(seconds: 3),
         colorText: Colors.white,
         backgroundGradient: LinearGradient(
-          colors: [Colors.red.withOpacity(0.9), Colors.pink.withOpacity(0.9)],
+          colors: [Colors.red, Colors.pink],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),

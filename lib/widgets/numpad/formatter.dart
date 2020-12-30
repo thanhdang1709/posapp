@@ -1,3 +1,5 @@
+import 'package:pos_app/ultils/number.dart';
+
 import 'numpad_format.dart';
 
 export 'numpad_format.dart';
@@ -6,6 +8,8 @@ String formatRawString(String rawString, NumpadFormat format) {
   switch (format) {
     case NumpadFormat.CURRENCY:
       return _numberStringToDollarString(rawString);
+    case NumpadFormat.AMOUNT:
+      return _numberStringToVndString(rawString);
     case NumpadFormat.PHONE:
       return _numberStringToPhoneNumber(rawString);
     case NumpadFormat.PIN4:
@@ -22,6 +26,12 @@ String _numberStringToDollarString(String valueString) {
       '.' +
       rawString.substring(rawString.length - 2);
   return dollarString;
+}
+
+String _numberStringToVndString(String valueString) {
+  var rawString = valueString.padLeft(3, '0');
+  var vndString = $Number.numberFormat(int.parse(valueString)) + ' đ';
+  return vndString;
 }
 
 String _numberStringToPhoneNumber(String phone) {

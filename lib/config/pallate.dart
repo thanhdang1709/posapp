@@ -10,6 +10,8 @@ class Pallate {
 
   static final Color secondColor = Color(0xfffebecc);
 
+  static final Color colorCyan = Colors.cyan;
+
   static final Color colorTextOnPink = Colors.yellowAccent;
 
   static final Color selectedItemColor = Colors.orange;

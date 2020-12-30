@@ -49,6 +49,8 @@
 	<string>PhotoLibrary permission is required for picker image..</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Microphone permission is required for picker image.</string>
+    <key>io.flutter.embedded_views_preview</key>
+    <true/>
 
 </dict>
 </plist>

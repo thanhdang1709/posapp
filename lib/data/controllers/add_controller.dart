@@ -84,13 +84,14 @@ class AddProductController extends GetxController {
     var result =
         await ProductService().addProduct(file: selectedImage, data: data);
     print(result);
-    if (!result.isNull)
-      AppUltils().getSnackBarSuccess(message: 'Thêm sản phẩm thành công');
+
     await getProductAll();
     productStore.products = products;
+    //Get.back();
     Get.back();
     Get.back();
-    Get.back();
+    if (!result.isNull)
+      AppUltils().getSnackBarSuccess(message: 'Thêm sản phẩm thành công');
   }
 
   Future getProductAll() async {

@@ -2,13 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:pos_app/config/pallate.dart';
 
 class RowSearchInput extends StatelessWidget {
-  const RowSearchInput(
-      {Key key, this.iconRight, this.hintText, this.onPressIcon})
-      : super(key: key);
+  const RowSearchInput({
+    Key key,
+    this.iconRight,
+    this.hintText,
+    this.onPressIcon,
+    this.controller,
+  }) : super(key: key);
 
   final IconData iconRight;
   final String hintText;
   final Function onPressIcon;
+  final TextEditingController controller;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -21,6 +26,7 @@ class RowSearchInput extends StatelessWidget {
         SizedBox(width: 10),
         Expanded(
           child: TextFormField(
+            controller: controller,
             decoration: InputDecoration(
                 border: InputBorder.none, hintText: hintText ?? 'Tìm menu'),
           ),

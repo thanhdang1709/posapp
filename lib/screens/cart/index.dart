@@ -3,6 +3,8 @@ import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:get/get.dart';
 import 'package:pos_app/config/pallate.dart';
 import 'package:pos_app/data/controllers/cart_controller.dart';
+import 'package:pos_app/data/store/product_store.dart';
+import 'package:pos_app/screens/cart/add_note.dart';
 import 'package:pos_app/screens/cart/components/cart_item.dart';
 import 'package:pos_app/ultils/app_ultils.dart';
 import 'package:pos_app/ultils/number.dart';
@@ -10,30 +12,32 @@ import 'package:pos_app/ultils/number.dart';
 class CartScreen extends GetView<CartController> {
   @override
   Widget build(BuildContext context) {
-    // ProductStore productStore = Get.find();
+    ProductStore productStore = Get.find();
     //CartController cartController = Get.find();
     List<Widget> buildCartItem(CartController controller) {
       List<Widget> results = [];
-      controller.newCart.forEach((e) {
-        results
-          ..add(
-            InkWell(
-              onTap: () {
-                print(e['id']);
-                controller.extendRow(e['id']);
-              },
-              child: CartItem(
-                productId: e['id'],
-                totalPriceItem: e['totalPrice'],
-                productName: e['name'],
-                quality: e['countItem'],
-                priceItem: e['priceItem'],
-                totalItem: e['totalItem'],
+      controller.newCart.forEach(
+        (e) {
+          results
+            ..add(
+              InkWell(
+                onTap: () {
+                  print(e['id']);
+                  controller.extendRow(e['id']);
+                },
+                child: CartItem(
+                  productId: e['id'],
+                  totalPriceItem: e['totalPrice'],
+                  productName: e['name'],
+                  quality: e['countItem'],
+                  priceItem: e['priceItem'],
+                  totalItem: e['totalItem'],
+                ),
               ),
-            ),
-          )
-          ..add(Container(height: 1, width: double.infinity));
-      });
+            )
+            ..add(Container(height: 1, width: double.infinity));
+        },
+      );
       return results;
     }
 
@@ -47,17 +51,20 @@ class CartScreen extends GetView<CartController> {
             padding: const EdgeInsets.only(right: 10),
             child: Icon(
               FontAwesome.plus_square,
-              color: Colors.cyan,
             ),
           ),
           SizedBox(
             width: 20,
           ),
-          Padding(
-            padding: const EdgeInsets.only(right: 10),
-            child: Icon(
-              FontAwesome.user_plus,
-              color: Colors.cyan,
+          InkWell(
+            onTap: () {
+              Get.toNamed('customer');
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(right: 10),
+              child: Icon(
+                FontAwesome.user_plus,
+              ),
             ),
           )
         ],
@@ -81,32 +88,8 @@ class CartScreen extends GetView<CartController> {
                 ),
               ),
             ),
-            // child: GetX<CartController>(
-            //   init: CartController(),
-            //   initState: (_) {},
-            //   builder: (_) {
-            //     return ListView.builder(
-            //       itemCount: controller.newCart.length,
-            //       itemBuilder: (bc, index) {
-            //         return InkWell(
-            //           onTap: () {
-            //             print(controller.newCart[index]['id']);
-            //             controller.extendRow(controller.newCart[index]['id']);
-            //           },
-            //           child: CartItem(
-            //             productId: controller.newCart[index]['id'],
-            //             totalPriceItem: controller.newCart[index]['totalPrice'],
-            //             productName: controller.newCart[index]['name'],
-            //             quality: controller.newCart[index]['countItem'],
-            //             priceItem: controller.newCart[index]['priceItem'],
-            //             totalItem: controller.newCart[index]['totalItem'],
-            //           ),
-            //         );
-            //       },
-            //     );
-            //   },
-            // ),
           ),
+          Obx(() => Text(controller.note.value.toString())),
           Container(
             height: Get.height * .1,
             padding: EdgeInsets.all(10),
@@ -142,12 +125,17 @@ class CartScreen extends GetView<CartController> {
                         Expanded(
                           child: Align(
                             alignment: Alignment.center,
-                            child: Text(
-                              '${controller.totalItem} món = ${$Number.numberFormat(controller.totalPrice)} đ',
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: Pallate.textTitle1(),
-                            ),
+                            child: Obx(() => InkWell(
+                                  onTap: () {
+                                    Get.toNamed('payment');
+                                  },
+                                  child: Text(
+                                    '${productStore.cartItem.length} món = ${$Number.numberFormat(productStore.cartItem.length != 0 ? productStore.cartItem?.map((element) => element.price)?.reduce((a, b) => a + b) : 0)} đ',
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: Pallate.textTitle1(),
+                                  ),
+                                )),
                           ),
                         )
                       ],
@@ -177,6 +165,7 @@ class CartScreen extends GetView<CartController> {
                 title: new Text('Thêm ghi chú'),
                 onTap: () {
                   // controller.clearCart();
+                  Get.to(AddNoteScreen());
                 },
               ),
               new ListTile(

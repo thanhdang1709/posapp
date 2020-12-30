@@ -3,5 +3,13 @@ class CartModel {
   List<int> products;
   int totalPrice;
   int toalItem;
-  CartModel({this.id, this.products, this.toalItem, this.totalPrice});
+  String note;
+
+  CartModel({
+    this.id,
+    this.products,
+    this.toalItem,
+    this.totalPrice,
+    this.note,
+  });
 }

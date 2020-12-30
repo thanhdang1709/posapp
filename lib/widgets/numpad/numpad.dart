@@ -19,18 +19,20 @@ class Numpad extends StatelessWidget {
   final double width;
   final NumpadController controller;
   final Function submitInput;
+  final Function onChange;
 
-  Numpad({
-    Key key,
-    @required this.controller,
-    this.buttonColor,
-    this.textColor,
-    this.innerPadding = 4,
-    this.buttonTextSize = 30,
-    this.height = double.infinity,
-    this.width = double.infinity,
-    this.submitInput,
-  }) : super(key: key);
+  Numpad(
+      {Key key,
+      @required this.controller,
+      this.buttonColor,
+      this.textColor,
+      this.innerPadding = 4,
+      this.buttonTextSize = 30,
+      this.height = double.infinity,
+      this.width = double.infinity,
+      this.submitInput,
+      this.onChange})
+      : super(key: key);
 
   EdgeInsetsGeometry _buttonPadding() {
     return EdgeInsets.all(innerPadding);
@@ -55,6 +57,7 @@ class Numpad extends StatelessWidget {
           color: buttonColor,
           onPressed: () {
             if (passNum != -2) {
+              // print();
               return controller.parseInput(passNum);
             } else {
               submitInput(controller.rawNumber);
@@ -93,6 +96,7 @@ class Numpad extends StatelessWidget {
                 icon: Icon(
                   Icons.backspace,
                   size: buttonTextSize,
+                  color: Colors.yellow,
                 )),
             _buildNumButton(context: context, displayNum: 0),
             _buildNumButton(

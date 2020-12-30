@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:get/get.dart';
 import 'package:pos_app/data/store/product_store.dart';
+import 'package:pos_app/models/customer_model.dart';
 import 'package:pos_app/models/product_model.dart';
 
 class CartController extends GetxController {
@@ -17,6 +18,7 @@ class CartController extends GetxController {
   RxList<dynamic> newCart = [].obs;
   RxList cart = [].obs;
   Map<dynamic, List<dynamic>> newMap;
+  Rx<CustomerModel> selectedCustomer = null.obs;
 
   @override
   void onInit() {
@@ -61,10 +63,18 @@ class CartController extends GetxController {
     productStore.cartItem.add(product);
   }
 
+  addNote(String string) {
+    note.value = string;
+  }
+
   clearCart() {
     productStore.cartItem.clear();
     Get.back();
     Get.offAllNamed('pos');
+  }
+
+  selectCustomer(CustomerModel customer) {
+    selectedCustomer.value = customer;
   }
 
   reloadState() {

@@ -11,7 +11,7 @@ import 'package:pos_app/data/store/product_store.dart';
 import 'package:pos_app/models/catelog_model.dart';
 import 'package:pos_app/models/product_model.dart';
 import 'package:pos_app/repositories/common.dart';
-import 'package:pos_app/data/controllers/edit_controller.dart';
+import 'package:pos_app/data/controllers/edit_product_controller.dart';
 import 'package:pos_app/ultils/app_ultils.dart';
 import 'package:pos_app/ultils/number.dart';
 //import 'package:pos_app/widgets/drawer/drawer.dart';

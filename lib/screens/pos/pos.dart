@@ -91,11 +91,11 @@ class _PosScreenState extends State<PosScreen>
           ),
           InkWell(
             onTap: () {
-              Get.toNamed("customer/add");
+              Get.toNamed("customer");
             },
             child: Padding(
               padding: const EdgeInsets.only(right: 20),
-              child: Icon(FontAwesome.user_plus),
+              child: Icon(FontAwesome.user),
             ),
           )
         ],
