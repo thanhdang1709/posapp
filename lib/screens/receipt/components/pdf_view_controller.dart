@@ -2,13 +2,15 @@ import 'dart:io';
 
 import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 import 'package:get/get.dart';
+import 'package:flutter_pdfview/flutter_pdfview.dart';
 
 class PdfViewController extends GetxController {
   var doc;
   String pdfUrl = Get.arguments;
   @override
-  void onInit() async {
-    super.onInit();
+  void onReady() async {
+    super.onReady();
     doc = await PDFDocument.fromFile(File(pdfUrl));
+    update();
   }
 }

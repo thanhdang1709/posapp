@@ -1,15 +1,50 @@
-import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:pos_app/screens/receipt/components/pdf_view_controller.dart';
+import 'package:get/get.dart';
+import 'package:native_pdf_view/native_pdf_view.dart';
 
-class PdfViewerScreen extends GetView<PdfViewController> {
+class PdfViewerScreen extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return Obx(
-      () => Scaffold(
-        body: PDFViewer(document: controller.doc),
-      ),
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<PdfViewerScreen> {
+  int _actualPageNumber = 1, _allPagesCount = 0;
+  bool isSampleDoc = false;
+  PdfController _pdfController;
+
+  @override
+  void initState() {
+    print(Get.arguments);
+    _pdfController = PdfController(
+      document: PdfDocument.openFile(Get.arguments),
     );
+    super.initState();
   }
+
+  @override
+  void dispose() {
+    _pdfController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(),
+        body: PdfView(
+          documentLoader: Center(child: CircularProgressIndicator()),
+          pageLoader: Center(child: CircularProgressIndicator()),
+          controller: _pdfController,
+          onDocumentLoaded: (document) {
+            setState(() {
+              _actualPageNumber = 1;
+              _allPagesCount = document.pagesCount;
+            });
+          },
+          onPageChanged: (page) {
+            setState(() {
+              _actualPageNumber = page;
+            });
+          },
+        ),
+      );
 }

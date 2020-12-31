@@ -96,6 +96,15 @@ class DrawerApp extends StatelessWidget {
                   },
                 ),
                 ItemMenuDraw(
+                  imageUrl: 'assets/icons/diet.png',
+                  title: 'Đơn hàng',
+                  selectedColor:
+                      Get.currentRoute == 'order' ? Pallate.primaryColor : null,
+                  onPress: () {
+                    Get.offNamed('order');
+                  },
+                ),
+                ItemMenuDraw(
                   imageUrl: 'assets/icons/table.png',
                   title: 'Bàn',
                   onPress: () {},

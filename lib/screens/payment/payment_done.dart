@@ -33,14 +33,17 @@ class PaymentDoneScreen extends GetView<PaymentController> {
                   SizedBox(
                     height: 10,
                   ),
-                  Text(
-                    agrs != null
-                        ? 'Đơn hàng: ' +
-                            $Number.numberFormat(agrs['totalPrice']) +
-                            ' đ'
-                        : '',
-                    style: TextStyle(fontSize: 20, color: Pallate.primaryColor),
-                  ),
+                  agrs != null
+                      ? Text(
+                          agrs != null
+                              ? 'Đơn hàng: ' +
+                                  $Number.numberFormat(agrs['totalPrice']) +
+                                  ' đ'
+                              : '',
+                          style: TextStyle(
+                              fontSize: 20, color: Pallate.primaryColor),
+                        )
+                      : Text(''),
                   SizedBox(
                     height: 10,
                   ),
@@ -82,7 +85,7 @@ class PaymentDoneScreen extends GetView<PaymentController> {
                 Spacer(),
                 InkWell(
                   onTap: () {
-                    Get.to(ReceiptScreen());
+                    Get.offAll(ReceiptScreen());
                   },
                   child: Text(
                     'Xem hoá đơn',

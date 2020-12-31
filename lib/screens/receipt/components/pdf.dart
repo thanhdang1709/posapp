@@ -227,6 +227,7 @@ Future savetoPdf() async {
         }),
   );
   var pdfUrl = await ReceiptController().write(pdf);
+  print(pdfUrl);
   Get.to(PdfViewerScreen(), arguments: pdfUrl);
 }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos_app/config/pallate.dart';
+import 'package:pos_app/data/controllers/cart_controller.dart';
 import 'package:pos_app/screens/receipt/components/row_action_receipt.dart';
 import 'package:pos_app/ultils/number.dart';
 import 'components/pdf.dart';
@@ -11,6 +12,7 @@ class ReceiptScreen extends GetView {
 
   @override
   Widget build(BuildContext context) {
+    CartController cartController = Get.put(CartController());
     return Scaffold(
       appBar: AppBar(
         title: Text('Hoá đơn'),
@@ -25,7 +27,13 @@ class ReceiptScreen extends GetView {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Icon(Icons.close),
+                    InkWell(
+                        onTap: () {
+                          cartController.productStore.cartItem.clear();
+
+                          Get.offNamed('pos');
+                        },
+                        child: Icon(Icons.close)),
                     SizedBox(
                       height: 20,
                     ),
