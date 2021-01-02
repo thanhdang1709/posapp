@@ -204,13 +204,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.3.10"
-  dartx:
+  device_info:
     dependency: transitive
     description:
-      name: dartx
+      name: device_info
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.0"
+    version: "1.0.0"
+  device_info_platform_interface:
+    dependency: transitive
+    description:
+      name: device_info_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   dio:
     dependency: "direct main"
     description:
@@ -232,6 +239,27 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.4.8"
+  extended_image:
+    dependency: transitive
+    description:
+      name: extended_image
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.5.0"
+  extended_image_library:
+    dependency: transitive
+    description:
+      name: extended_image_library
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.1"
+  extension:
+    dependency: transitive
+    description:
+      name: extension
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.1"
   fake_async:
     dependency: transitive
     description:
@@ -380,20 +408,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.0"
-  hive:
-    dependency: transitive
-    description:
-      name: hive
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.4.4+1"
-  hive_generator:
-    dependency: "direct main"
-    description:
-      name: hive_generator
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.8.2"
   http:
     dependency: "direct main"
     description:
@@ -401,6 +415,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.12.2"
+  http_client_helper:
+    dependency: transitive
+    description:
+      name: http_client_helper
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.1"
   http_multi_server:
     dependency: transitive
     description:
@@ -520,6 +541,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.9.7"
+  native_pdf_renderer:
+    dependency: transitive
+    description:
+      name: native_pdf_renderer
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.4.0"
+  native_pdf_view:
+    dependency: "direct main"
+    description:
+      name: native_pdf_view
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.9.0"
   node_interop:
     dependency: transitive
     description:
@@ -749,13 +784,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.2"
-  source_gen:
-    dependency: transitive
-    description:
-      name: source_gen
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.9.10+1"
   source_span:
     dependency: transitive
     description:
@@ -840,13 +868,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.19-nullsafety.2"
-  time:
-    dependency: transitive
-    description:
-      name: time
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.4.0"
   timelines:
     dependency: "direct main"
     description:

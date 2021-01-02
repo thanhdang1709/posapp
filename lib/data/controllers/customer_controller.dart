@@ -48,6 +48,7 @@ class CustomerController extends GetxController {
       'phone': phoneController.text.trim().toString(),
       'address': addressController.text.trim().toString(),
     };
+    // ignore: unused_local_variable
     var result = await CustomerService()
         .addProduct(file: selectedImage ?? null, data: data);
     nameController.text = '';

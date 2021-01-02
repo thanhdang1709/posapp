@@ -2,17 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos_app/config/pallate.dart';
 import 'package:pos_app/data/controllers/cart_controller.dart';
+import 'package:pos_app/data/controllers/receipt_controller.dart';
 import 'package:pos_app/screens/receipt/components/row_action_receipt.dart';
 import 'package:pos_app/ultils/number.dart';
 import 'components/pdf.dart';
 
 // ignore: must_be_immutable
-class ReceiptScreen extends GetView {
+class ReceiptScreen extends GetView<ReceiptController> {
   DateTime now = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
     CartController cartController = Get.put(CartController());
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Hoá đơn'),
@@ -30,7 +32,6 @@ class ReceiptScreen extends GetView {
                     InkWell(
                         onTap: () {
                           cartController.productStore.cartItem.clear();
-
                           Get.offNamed('pos');
                         },
                         child: Icon(Icons.close)),
@@ -44,13 +45,13 @@ class ReceiptScreen extends GetView {
                           'assets/img/logo.png',
                           height: 40,
                         ),
-                        Text(
-                          'Hoá Đơn #14',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                        Obx(() => Text(
+                              'Hoá Đơn #${controller.order.value.orderCode}',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )),
                       ],
                     ),
                     SizedBox(
@@ -79,71 +80,77 @@ class ReceiptScreen extends GetView {
                     SizedBox(
                       height: 20,
                     ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            '1 món (SL: 4)',
-                            maxLines: 2,
-                            style: Pallate.titleProduct(),
-                          ),
-                        )
-                      ],
-                    ),
+                    Obx(() => Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                '${controller.totalMenu} món (SL: ${controller.totalOrderItem})',
+                                maxLines: 2,
+                                style: Pallate.titleProduct(),
+                              ),
+                            )
+                          ],
+                        )),
                     Divider(
                       thickness: 2,
                       color: Colors.blueGrey,
                     ),
                     Column(
+                      children: [...controller.buildRowItem()],
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        RowItemReCeipt(
-                          productName: 'Cà phê',
-                          productPrice: 10000,
-                          quantity: 4,
+                        Obx(
+                          () => Text(
+                            'Tổng: ${$Number.numberFormat(controller.order.value.totalPrice ?? 0)} đ',
+                            style: TextStyle(
+                                color: Colors.blueGrey,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20),
+                          ),
+                        )
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        SizedBox(
+                          height: 5,
                         ),
-                        Divider(),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          'Tổng: 40,000 đ',
-                          style: TextStyle(
-                              color: Colors.blueGrey,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20),
+                        Obx(
+                          () => controller.order.value.amountReceive != 0
+                              ? Text(
+                                  'Nhận: ${$Number.numberFormat(controller.order.value.amountReceive)} đ',
+                                  style: TextStyle(
+                                      color: Colors.blueGrey, fontSize: 16),
+                                )
+                              : Text(''),
                         )
                       ],
                     ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          'Nhận: 50,000 đ',
-                          style:
-                              TextStyle(color: Colors.blueGrey, fontSize: 16),
-                        )
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          'Tiền thừa: 10,000 đ',
-                          style:
-                              TextStyle(color: Colors.blueGrey, fontSize: 16),
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      height: 30,
+                    Obx(
+                      () => controller.order.value.change != 0
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Text(
+                                  'Tiền thừa: ${$Number.numberFormat(controller.order.value.change)} đ',
+                                  style: TextStyle(
+                                      color: Colors.blueGrey, fontSize: 16),
+                                ),
+                                SizedBox(
+                                  height: 30,
+                                ),
+                              ],
+                            )
+                          : Text(''),
                     ),
                     Divider(
                       thickness: 2,
@@ -164,24 +171,28 @@ class ReceiptScreen extends GetView {
                         )
                       ],
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          now.day.toString() +
-                              ' tháng ' +
-                              now.month.toString() +
-                              ' ' +
-                              now.year.toString() +
-                              ' ' +
-                              now.hour.toString() +
-                              ':' +
-                              now.minute.toString(),
-                          style:
-                              TextStyle(color: Colors.blueGrey, fontSize: 15),
-                        )
-                      ],
-                    ),
+                    Obx(() => Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              controller.order.value.createdAt?.day.toString() +
+                                  ' tháng ' +
+                                  controller.order.value.createdAt.month
+                                      .toString() +
+                                  ' ' +
+                                  controller.order.value.createdAt.year
+                                      .toString() +
+                                  ' ' +
+                                  controller.order.value.createdAt.hour
+                                      .toString() +
+                                  ':' +
+                                  controller.order.value.createdAt.minute
+                                      .toString(),
+                              style: TextStyle(
+                                  color: Colors.blueGrey, fontSize: 15),
+                            )
+                          ],
+                        )),
                   ],
                 ),
               ),
@@ -209,32 +220,37 @@ class RowItemReCeipt extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      // crossAxisAlignment: CrossAxisAlignment.start,
+    return Column(
       children: [
-        Text('$quantity x'),
-        SizedBox(
-          width: 20,
-        ),
-        Expanded(
-          child: Align(
-            alignment: Alignment.bottomLeft,
-            child: Column(
-              children: [
-                Text(
-                  productName,
-                  style: Pallate.titleProduct(),
-                ),
-                Text(
-                  '${$Number.numberFormat(productPrice)} đ',
-                  style: TextStyle(color: Colors.grey),
-                )
-              ],
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          // crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('$quantity x'),
+            SizedBox(
+              width: 20,
             ),
-          ),
+            Expanded(
+              child: Align(
+                alignment: Alignment.bottomLeft,
+                child: Column(
+                  children: [
+                    Text(
+                      productName,
+                      style: Pallate.titleProduct(),
+                    ),
+                    Text(
+                      '${$Number.numberFormat(productPrice)} đ',
+                      style: TextStyle(color: Colors.grey),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            Text('${$Number.numberFormat(quantity * productPrice)} đ')
+          ],
         ),
-        Text('${$Number.numberFormat(quantity * productPrice)} đ')
+        Divider(),
       ],
     );
   }

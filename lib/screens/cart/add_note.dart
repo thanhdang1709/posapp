@@ -6,6 +6,7 @@ import 'package:pos_app/config/pallate.dart';
 import 'package:pos_app/data/controllers/cart_controller.dart';
 import 'package:pos_app/ultils/app_ultils.dart';
 
+// ignore: must_be_immutable
 class AddNoteScreen extends GetView<CartController> {
   TextEditingController note = TextEditingController();
 

@@ -7,11 +7,7 @@ class StatusModel {
   bool isChecked;
   String createdAt;
 
-  StatusModel({
-    this.id,
-    this.title,
-    this.createdAt,
-  });
+  StatusModel({this.id, this.title, this.createdAt, this.icon});
   factory StatusModel.fromJson(json) {
     return new StatusModel(
         id: json['id'], title: json['title'], createdAt: json['created_at']);

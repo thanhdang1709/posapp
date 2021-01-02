@@ -148,6 +148,7 @@ class EditProductController extends GetxController {
         .onConfirm(
           text: "Đồng ý",
           onPress: () async {
+            // ignore: unused_local_variable
             var response = (await ProductService().deleteProduct(productId));
             // await getProductAll();
             var position = productStore.products
@@ -158,7 +159,6 @@ class EditProductController extends GetxController {
           },
         )
         .show(hideIcon: false);
-    ;
 
     // print(response);
     // products.assignAll(response.map((e) => ProductModel.fromJson(e)).toList());

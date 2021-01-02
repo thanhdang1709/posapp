@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:get/get.dart';
 import 'package:pos_app/config/pallate.dart';
@@ -56,7 +55,9 @@ class PaymentScreen extends GetView<PaymentController> {
                             borderRadius: BorderRadius.circular(10.0),
                             side: BorderSide(color: Pallate.primaryColor)),
                         //color: Colors.grey[300],
-                        onPressed: () {},
+                        onPressed: () {
+                          controller.saveOrder();
+                        },
                         child: Text(
                           'Lưu hoá đơn',
                           style: Pallate.titleProduct(),

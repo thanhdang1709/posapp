@@ -6,7 +6,7 @@ import 'package:pos_app/models/table_model.dart';
 class OrderModel {
   int id;
   String orderCode;
-  List<ProductModel> items;
+  List<ProductModel> products;
   List<StatusModel> status;
   String timeStart;
   String timeEnd;
@@ -15,26 +15,31 @@ class OrderModel {
   int change;
   TableModel table;
   EmployeeModel employee;
+  DateTime createdAt;
+  int date;
+  String note;
 
-  OrderModel({
-    this.id,
-    this.orderCode,
-    this.items,
-    this.status,
-    this.timeStart,
-    this.timeEnd,
-    this.totalPrice,
-    this.amountReceive,
-    this.change,
-    this.employee,
-    this.table,
-  });
+  OrderModel(
+      {this.id,
+      this.orderCode,
+      this.products,
+      this.status,
+      this.timeStart,
+      this.timeEnd,
+      this.totalPrice,
+      this.amountReceive,
+      this.change,
+      this.employee,
+      this.table,
+      this.createdAt,
+      this.date,
+      this.note});
 
   // factory OrderModel.fromJson(json) {
   //   return new OrderModel(
   //     id: json['id'],
   //     orderCode: json['order_code'],
-  //     items: (json['products']).map((e) => ProductModel.fromJson(e)).toList(),
+  //     products: (json['products']).map((e) => ProductModel.fromJson(e)).toList(),
   //     status: json['status'],
   //     totalPrice: json['total_price'],
   //     timeStart: json['time_start'],
@@ -59,10 +64,13 @@ class OrderModel {
     timeStart = json['time_start'];
     timeEnd = json['time_end'];
     if (json['products'] != null) {
-      items = new List<ProductModel>();
+      products = new List<ProductModel>();
       json['products'].forEach((v) {
-        items.add(new ProductModel.fromJson(v));
+        products.add(new ProductModel.fromJson(v));
       });
+      createdAt = DateTime.parse(json['created_at']);
+      date = DateTime.parse(json['created_at']).day;
+      note = json['none'];
     }
   }
 

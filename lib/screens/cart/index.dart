@@ -13,7 +13,6 @@ class CartScreen extends GetView<CartController> {
   @override
   Widget build(BuildContext context) {
     ProductStore productStore = Get.find();
-    //CartController cartController = Get.find();
     List<Widget> buildCartItem(CartController controller) {
       List<Widget> results = [];
       controller.newCart.forEach(
@@ -29,7 +28,7 @@ class CartScreen extends GetView<CartController> {
                   productId: e['id'],
                   totalPriceItem: e['totalPrice'],
                   productName: e['name'],
-                  quality: e['countItem'],
+                  quantity: e['countItem'],
                   priceItem: e['priceItem'],
                   totalItem: e['totalItem'],
                 ),

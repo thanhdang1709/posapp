@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos_app/config/pallate.dart';
-import 'package:pos_app/screens/product/list/list.dart';
 
 class AddNewCardItem extends StatelessWidget {
   const AddNewCardItem({

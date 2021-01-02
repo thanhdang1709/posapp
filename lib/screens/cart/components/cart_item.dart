@@ -72,7 +72,7 @@ class RowTotalPrice extends StatelessWidget {
 class CartItem extends GetView {
   const CartItem(
       {Key key,
-      this.quality,
+      this.quantity,
       this.productName,
       this.totalPriceItem,
       this.isExtend = false,
@@ -81,7 +81,7 @@ class CartItem extends GetView {
       this.totalItem})
       : super(key: key);
 
-  final int quality;
+  final int quantity;
   final String productName;
   final int totalPriceItem;
   final int priceItem;
@@ -91,162 +91,163 @@ class CartItem extends GetView {
   @override
   Widget build(BuildContext context) {
     CartController cartController = Get.find();
-    return Obx(() => Container(
-          padding: EdgeInsets.all(25),
-          decoration: BoxDecoration(
-            color: Colors.grey[200],
-          ),
-          child: Column(
-            children: [
-              Row(
+    return Obx(
+      () => Container(
+        padding: EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: Colors.grey[200],
+        ),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Text(
+                  '$quantity' + 'x',
+                  style: Pallate.titleProduct(),
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                Text(
+                  '$productName',
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  style: Pallate.titleProduct(),
+                ),
+                Spacer(),
+                Text(
+                  '${$Number.numberFormat(totalPriceItem)} đ',
+                  style: Pallate.titleProduct(),
+                ),
+              ],
+            ),
+            if (cartController.extendRowId.value == productId)
+              Column(
                 children: [
-                  Text(
-                    '$quality X',
-                    style: Pallate.titleProduct(),
-                  ),
                   SizedBox(
-                    width: 5,
+                    height: 10,
                   ),
-                  Text(
-                    '$productName',
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    style: Pallate.titleProduct(),
+                  Container(
+                    height: 1,
+                    width: double.infinity,
+                    color: Colors.white,
                   ),
-                  Spacer(),
-                  Text(
-                    '${$Number.numberFormat(totalPriceItem)} đ',
-                    style: Pallate.titleProduct(),
-                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            //change quality item in cart
+                            Get.to(
+                              NumpadWidget(
+                                productName: productName,
+                                quantity: quantity,
+                                productId: productId,
+                                callbackSubmit: (v) {
+                                  if (v == 0) {
+                                    cartController.remoteItemInCart(productId);
+                                    Get.back();
+                                  } else if (v == null) {
+                                    Get.back();
+                                  } else {
+                                    if (v - totalItem < 0) {
+                                      cartController.decrementCartItem(
+                                        cartController.cart.firstWhere(
+                                            (e) => e.id == productId),
+                                        $Number.absVal(v - totalItem),
+                                      );
+                                    } else if (v - totalItem > 0) {
+                                      cartController.incrementCartItem(
+                                        cartController.cart.firstWhere(
+                                            (e) => e.id == productId),
+                                        (v - totalItem),
+                                      );
+                                    }
+                                    Get.back();
+                                  }
+                                },
+                              ),
+                            );
+                          },
+                          child: Column(
+                            children: [
+                              Icon(MdiIcons.counter),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                '$totalItem',
+                              ),
+                            ],
+                          ),
+                        ),
+                        $VerticalDivider(),
+                        Column(
+                          children: [
+                            Icon(
+                              MdiIcons.currencyUsd,
+                              color: Colors.green,
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              '${$Number.numberFormat(priceItem)} đ',
+                              style: TextStyle(color: Colors.green),
+                            ),
+                          ],
+                        ),
+                        $VerticalDivider(),
+                        Column(
+                          children: [
+                            Icon(
+                              MdiIcons.ticketPercent,
+                              color: Colors.orange,
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              'Giảm giá',
+                              style: TextStyle(color: Colors.orange),
+                            ),
+                          ],
+                        ),
+                        $VerticalDivider(),
+                        InkWell(
+                          onTap: () {
+                            cartController.remoteItemInCart(productId);
+                            // cartController.newCart
+                            //   ..assignAll(cartController.newCart
+                            //       .where((e) => e['id'] != productId)
+                            //       .toList());
+                          },
+                          child: Column(
+                            children: [
+                              Icon(
+                                MdiIcons.delete,
+                                color: Colors.red,
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                'Xoá',
+                                style: TextStyle(color: Colors.red),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  )
                 ],
               ),
-              if (cartController.extendRowId.value == productId)
-                Column(
-                  children: [
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                      height: 1,
-                      width: double.infinity,
-                      color: Colors.white,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              //change quality item in cart
-                              Get.to(
-                                NumpadWidget(
-                                  productName: productName,
-                                  quantity: quality,
-                                  productId: productId,
-                                  callbackSubmit: (v) {
-                                    if (v == 0) {
-                                      cartController
-                                          .remoteItemInCart(productId);
-                                      Get.back();
-                                    } else if (v == null) {
-                                      Get.back();
-                                    } else {
-                                      if (v - totalItem < 0) {
-                                        cartController.decrementCartItem(
-                                          cartController.cart.firstWhere(
-                                              (e) => e.id == productId),
-                                          $Number.absVal(v - totalItem),
-                                        );
-                                      } else if (v - totalItem > 0) {
-                                        cartController.incrementCartItem(
-                                          cartController.cart.firstWhere(
-                                              (e) => e.id == productId),
-                                          (v - totalItem),
-                                        );
-                                      }
-                                      Get.back();
-                                    }
-                                  },
-                                ),
-                              );
-                            },
-                            child: Column(
-                              children: [
-                                Icon(MdiIcons.counter),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  '$totalItem',
-                                ),
-                              ],
-                            ),
-                          ),
-                          $VerticalDivider(),
-                          Column(
-                            children: [
-                              Icon(
-                                MdiIcons.currencyUsd,
-                                color: Colors.green,
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Text(
-                                '${$Number.numberFormat(priceItem)} đ',
-                                style: TextStyle(color: Colors.green),
-                              ),
-                            ],
-                          ),
-                          $VerticalDivider(),
-                          Column(
-                            children: [
-                              Icon(
-                                MdiIcons.ticketPercent,
-                                color: Colors.orange,
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Text(
-                                'Giảm giá',
-                                style: TextStyle(color: Colors.orange),
-                              ),
-                            ],
-                          ),
-                          $VerticalDivider(),
-                          InkWell(
-                            onTap: () {
-                              cartController.remoteItemInCart(productId);
-                              // cartController.newCart
-                              //   ..assignAll(cartController.newCart
-                              //       .where((e) => e['id'] != productId)
-                              //       .toList());
-                            },
-                            child: Column(
-                              children: [
-                                Icon(
-                                  MdiIcons.delete,
-                                  color: Colors.red,
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  'Xoá',
-                                  style: TextStyle(color: Colors.red),
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-            ],
-          ),
-        ));
+          ],
+        ),
+      ),
+    );
   }
 }

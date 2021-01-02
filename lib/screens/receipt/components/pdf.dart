@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
+import 'package:pos_app/data/controllers/receipt_controller.dart';
 import 'package:pos_app/screens/receipt/components/pdf_viewer.dart';
-import 'package:pos_app/screens/receipt/receipt_controller.dart';
 
 Future savetoPdf() async {
   final pdf = pw.Document();
@@ -231,6 +231,7 @@ Future savetoPdf() async {
   Get.to(PdfViewerScreen(), arguments: pdfUrl);
 }
 
+// ignore: unused_element
 pw.Widget _contentTable(pw.Context context) {
   const tableHeaders = ['SP', 'Gia', 'SL', 'Tong'];
 

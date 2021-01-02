@@ -29,6 +29,7 @@ String _numberStringToDollarString(String valueString) {
 }
 
 String _numberStringToVndString(String valueString) {
+  // ignore: unused_local_variable
   var rawString = valueString.padLeft(3, '0');
   var vndString = $Number.numberFormat(int.parse(valueString)) + ' đ';
   return vndString;

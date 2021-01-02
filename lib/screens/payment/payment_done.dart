@@ -9,9 +9,9 @@ import 'package:pos_app/ultils/number.dart';
 class PaymentDoneScreen extends GetView<PaymentController> {
   @override
   Widget build(BuildContext context) {
-    CartController cartController = Get.put(CartController());
+    CartController cartController = Get.find();
     var agrs = Get.arguments;
-    agrs = agrs ?? {'totalPrice': 0, 'amountReceive': 0};
+    agrs = agrs ?? {'totalPrice': 0, 'amountReceive': 0, 'icon': (Icons.check)};
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -25,11 +25,11 @@ class PaymentDoneScreen extends GetView<PaymentController> {
               child: Column(
                 children: [
                   Icon(
-                    Icons.check,
+                    agrs != null ? agrs['icon'] : Icons.check,
                     size: 200,
-                    color: Colors.green,
+                    color: agrs['color'],
                   ),
-                  Text('Thành công', style: TextStyle(fontSize: 30)),
+                  Text(agrs['status_title'], style: TextStyle(fontSize: 30)),
                   SizedBox(
                     height: 10,
                   ),
@@ -47,22 +47,26 @@ class PaymentDoneScreen extends GetView<PaymentController> {
                   SizedBox(
                     height: 10,
                   ),
-                  Text(
-                    'Đã nhận: ' +
-                        $Number.numberFormat(agrs['amountReceive']) +
-                        ' đ',
-                    style: TextStyle(fontSize: 20, color: Colors.grey),
-                  ),
+                  agrs['amountReceive'] != 0
+                      ? Text(
+                          'Đã nhận: ' +
+                              $Number.numberFormat(agrs['amountReceive']) +
+                              ' đ',
+                          style: TextStyle(fontSize: 20, color: Colors.grey),
+                        )
+                      : Text(''),
                   SizedBox(
                     height: 10,
                   ),
-                  Text(
-                    'Tiền thừa: ' +
-                        $Number.numberFormat(
-                            agrs['amountReceive'] - agrs['totalPrice']) +
-                        ' đ',
-                    style: TextStyle(fontSize: 20, color: Colors.grey),
-                  ),
+                  agrs['amountReceive'] != 0
+                      ? Text(
+                          'Tiền thừa: ' +
+                              $Number.numberFormat(
+                                  agrs['amountReceive'] - agrs['totalPrice']) +
+                              ' đ',
+                          style: TextStyle(fontSize: 20, color: Colors.grey),
+                        )
+                      : Text(''),
                 ],
               ),
             ),
@@ -71,7 +75,7 @@ class PaymentDoneScreen extends GetView<PaymentController> {
             margin: EdgeInsets.only(left: 5, right: 5, bottom: 10),
             padding: EdgeInsets.all(15),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Colors.grey[300],
               borderRadius: BorderRadius.circular(15),
             ),
             child: Row(
@@ -85,7 +89,7 @@ class PaymentDoneScreen extends GetView<PaymentController> {
                 Spacer(),
                 InkWell(
                   onTap: () {
-                    Get.offAll(ReceiptScreen());
+                    Get.offNamed('receipt', arguments: agrs['order_id']);
                   },
                   child: Text(
                     'Xem hoá đơn',

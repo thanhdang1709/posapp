@@ -8,6 +8,7 @@ class PdfViewerScreen extends StatefulWidget {
 }
 
 class _MyAppState extends State<PdfViewerScreen> {
+  // ignore: unused_field
   int _actualPageNumber = 1, _allPagesCount = 0;
   bool isSampleDoc = false;
   PdfController _pdfController;

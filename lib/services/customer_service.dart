@@ -35,6 +35,7 @@ class CustomerService {
     }
   }
 
+  // ignore: missing_return
   Future<List> getAll() async {
     var response = await HttpService().fetch(
       url: 'api/customer/all',

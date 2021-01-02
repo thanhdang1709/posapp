@@ -77,6 +77,7 @@ class Invoice {
 
   String _logo;
 
+  // ignore: unused_field
   String _bgShape;
 
   Future<Uint8List> buildPdf(PdfPageFormat pageFormat) async {
@@ -380,6 +381,7 @@ class Invoice {
     );
   }
 
+  // ignore: unused_element
   pw.Widget _termsAndConditions(pw.Context context) {
     return pw.Row(
       crossAxisAlignment: pw.CrossAxisAlignment.end,

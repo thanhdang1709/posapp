@@ -97,6 +97,7 @@ class RowContactItem extends StatelessWidget {
   final CustomerModel customer;
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
     CartController cartController = Get.put(CartController());
     print(Get.previousRoute);
     return InkWell(
