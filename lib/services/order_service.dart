@@ -52,6 +52,23 @@ class OrderService {
     }
   }
 
+  Future getTrasactionAll() async {
+    var response = await HttpService().fetch(
+      url: 'api/order/transactions',
+      method: 'GET',
+    );
+    var result;
+    print(response);
+    if (response.statusCode == 200) {
+      result = (response.body);
+      if (result['alert'] == 'success') {
+        return result['data'];
+      }
+    } else {
+      return null;
+    }
+  }
+
   Future getOrder(id) async {
     var response = await HttpService().fetch(
       url: 'api/order/$id',

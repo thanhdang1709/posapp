@@ -1,62 +1,197 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:get/get.dart';
-import 'package:mdi/mdi.dart';
-import 'package:pos_app/config/pallate.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:pos_app/data/controllers/order_controller.dart';
+import 'package:pos_app/data/controllers/transaction_controller.dart';
+import 'package:pos_app/models/status_model.dart';
 import 'package:pos_app/ultils/app_ultils.dart';
+import 'package:pos_app/ultils/number.dart';
 import 'package:pos_app/widgets/drawer/drawer.dart';
 
-class TransactionScreen extends StatelessWidget {
-  const TransactionScreen({Key key}) : super(key: key);
+class TransactionScreen extends GetView<TransactionController> {
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).requestFocus(new FocusNode());
+      },
+      child: Scaffold(
+        appBar: AppUltils.buildAppBar(
+          height: 50,
+          centerTitle: false,
+          title: 'Giao dịch',
+          actions: [],
+        ),
+        drawer: DrawerApp(),
+        body: Column(
+          children: [
+            Container(
+              color: Colors.grey[200],
+              child: Padding(
+                padding: const EdgeInsets.all(5),
+                child: TextFormField(
+                  focusNode: FocusNode(),
+                  // controller: controller.searchKeyword,
+                  decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.search, size: 35),
+                      border: InputBorder.none,
+                      hintText: 'Sản phẩm, khách hàng, giá, barcode'),
+                ),
+              ),
+            ),
+            RowFilterStatus(),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Align(
+                  alignment: Alignment.bottomLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Obx(() => Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            ...controller.buildOrderItem(controller.mapOrders),
+                          ],
+                        )),
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.all(10),
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.blueGrey,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Tổng 30 ngày gần nhất',
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                  SizedBox(height: 10),
+                  Obx(
+                    () => Text(
+                      '${$Number.numberFormat(controller.totalOrderPrice.value)}đ từ ${controller.totalOrderItem.value} đơn',
+                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    ),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ignore: must_be_immutable
+class RowFilterStatus extends StatelessWidget {
+  RowFilterStatus({
+    Key key,
+  }) : super(key: key);
+
+  List<Widget> buildRowCheckbox() {
+    return List.generate(
+      status.length,
+      (index) => Row(
+        children: [
+          Checkbox(
+            value: status[index].isChecked ?? false,
+            onChanged: (e) {},
+          ),
+          Text(status[index].title),
+          Spacer(),
+          Icon(
+            MdiIcons.clock,
+          )
+        ],
+      ),
+    );
+  }
+
+  List<StatusModel> status = [
+    new StatusModel(
+      title: 'Chờ xác nhận',
+      //icon: (Icons.close),
+    ),
+    new StatusModel(
+      title: 'Đã xác nhận',
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppUltils.buildAppBar(
-        // leading: Icon(Mdi.menu),
-        height: 40,
-        title: 'Giao dịch',
-
-        actions: [
-          InkWell(
-            onTap: () {
-              //Get.toNamed('customer/add');
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Icon(Mdi.export),
-            ),
-          ),
-          InkWell(
-            onTap: () {
-              //Get.toNamed('customer/add');
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Icon(FontAwesome.filter),
-            ),
-          ),
-        ],
-      ),
-      drawer: DrawerApp(),
-      body: Column(
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Padding(
-            padding: EdgeInsets.all(10),
-            child: TextFormField(
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: 'Sản phẩm, khách hàng hoặc barcode',
-                prefixIcon: Icon(Icons.search),
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(10),
+          InkWell(
+            onTap: () {
+              Get.bottomSheet(
+                  Container(
+                    padding: EdgeInsets.all(15),
+                    child: new Column(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Chọn 1 hoặc nhiều...',
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              // Icon(Icons.close)
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: [...buildRowCheckbox()],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  backgroundColor: Colors.white,
+                  isScrollControlled: false,
+                  enableDrag: false);
+            },
             child: Row(
               children: [
-                Icon(Icons.supervised_user_circle_outlined,
-                    color: Colors.black54),
+                Icon(
+                  MdiIcons.clock,
+                  color: Colors.blueGrey,
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                Text('Tất cả trạng thái'),
+                SizedBox(
+                  width: 5,
+                ),
+                Icon(
+                  MdiIcons.chevronDown,
+                )
+              ],
+            ),
+          ),
+          InkWell(
+            onTap: () {},
+            child: Row(
+              children: [
+                Icon(
+                  FontAwesome.user,
+                  color: Colors.blueGrey,
+                ),
                 SizedBox(
                   width: 5,
                 ),
@@ -65,134 +200,13 @@ class TransactionScreen extends StatelessWidget {
                   width: 5,
                 ),
                 Icon(
-                  FontAwesome.chevron_down,
-                  size: 15,
-                  color: Colors.grey,
+                  MdiIcons.chevronDown,
                 )
               ],
-            ),
-          ),
-          // SizedBox(
-          //   height: 5,
-          // ),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.all(10),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          'Hôm nay',
-                          style: Pallate.titleProduct(),
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          '2 sale, 480.000 đ',
-                          style: Pallate.smallText(),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    RowTransactionItem(),
-                    RowTransactionItem(),
-                    RowTransactionItem(),
-                    RowTransactionItem(),
-                    RowTransactionItem(),
-                    RowTransactionItem(),
-                    RowTransactionItem(),
-                    RowTransactionItem(),
-                    RowTransactionItem(),
-                    RowTransactionItem(),
-                    RowTransactionItem(),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Container(
-            height: Get.height * .12,
-            width: double.infinity,
-            color: Colors.blueGrey,
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Tổng 30 ngày gần nhất',
-                    style: Pallate.textTitle1(),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        ' 2 đơn hàng: 480.000 đ',
-                        style: Pallate.textTitle2(),
-                      )
-                    ],
-                  )
-                ],
-              ),
             ),
           )
         ],
       ),
-    );
-  }
-}
-
-class RowTransactionItem extends StatelessWidget {
-  const RowTransactionItem({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            Icon(FontAwesome.money, size: 30),
-            SizedBox(
-              width: 20,
-            ),
-            Expanded(
-              child: Text(
-                '480.000 đ',
-                style: Pallate.titleProduct(),
-              ),
-            ),
-            Text('14:46'),
-          ],
-        ),
-        Row(
-          children: [
-            Expanded(
-              child: Text(
-                '2x RedBull, 6x Cà phê',
-                style: Pallate.smallText(),
-              ),
-            ),
-            Text('#1'),
-          ],
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Divider()
-      ],
     );
   }
 }

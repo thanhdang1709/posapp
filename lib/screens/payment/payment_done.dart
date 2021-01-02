@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:pos_app/config/pallate.dart';
 import 'package:pos_app/data/controllers/cart_controller.dart';
 import 'package:pos_app/data/controllers/payment_controller.dart';
-import 'package:pos_app/screens/receipt/receipt.dart';
 import 'package:pos_app/ultils/number.dart';
 
 class PaymentDoneScreen extends GetView<PaymentController> {
@@ -12,6 +11,7 @@ class PaymentDoneScreen extends GetView<PaymentController> {
     CartController cartController = Get.find();
     var agrs = Get.arguments;
     agrs = agrs ?? {'totalPrice': 0, 'amountReceive': 0, 'icon': (Icons.check)};
+    print(agrs);
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -29,7 +29,8 @@ class PaymentDoneScreen extends GetView<PaymentController> {
                     size: 200,
                     color: agrs['color'],
                   ),
-                  Text(agrs['status_title'], style: TextStyle(fontSize: 30)),
+                  Text(agrs['status_title'] ?? '',
+                      style: TextStyle(fontSize: 30)),
                   SizedBox(
                     height: 10,
                   ),

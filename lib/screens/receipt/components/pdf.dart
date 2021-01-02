@@ -3,8 +3,16 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pos_app/data/controllers/receipt_controller.dart';
 import 'package:pos_app/screens/receipt/components/pdf_viewer.dart';
+import 'package:pos_app/ultils/number.dart';
 
-Future savetoPdf() async {
+Future savetoPdf({
+  orderCode,
+  totalItem,
+  totalPrice,
+  createdAt,
+  totalMenu,
+  products,
+}) async {
   final pdf = pw.Document();
   DateTime now = DateTime.now();
   pdf.addPage(
@@ -27,7 +35,7 @@ Future savetoPdf() async {
                       mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                       children: [
                         pw.Text(
-                          'Hoa Don Thanh Toan #20123014',
+                          'Hoa Don Thanh Toan #$orderCode',
                           style: pw.TextStyle(
                             fontSize: 8,
                             fontWeight: pw.FontWeight.bold,
@@ -39,15 +47,15 @@ Future savetoPdf() async {
                       mainAxisAlignment: pw.MainAxisAlignment.start,
                       children: [
                         pw.Text(
-                          now.day.toString() +
+                          createdAt?.day.toString() +
                               ' thang ' +
-                              now.month.toString() +
+                              createdAt?.month.toString() +
                               ' nam ' +
-                              now.year.toString() +
+                              createdAt?.year.toString() +
                               ' ' +
-                              now.hour.toString() +
+                              createdAt?.hour.toString() +
                               ':' +
-                              now.minute.toString(),
+                              createdAt?.minute.toString(),
                           style:
                               pw.TextStyle(color: PdfColors.black, fontSize: 6),
                         )
@@ -93,7 +101,7 @@ Future savetoPdf() async {
                       children: [
                         pw.Expanded(
                           child: pw.Text(
-                            '1 mon (SL: 4)',
+                            '$totalMenu mon (SL: $totalItem)',
                             maxLines: 2,
                             //style: Pallate.titleProduct(),
                           ),
@@ -107,39 +115,7 @@ Future savetoPdf() async {
                     //_contentTable(context),
                     pw.Column(
                       children: [
-                        pw.Row(
-                          mainAxisAlignment: pw.MainAxisAlignment.start,
-                          // crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            pw.Text('4x', style: pw.TextStyle(fontSize: 8)),
-                            pw.SizedBox(
-                              width: 2,
-                            ),
-                            pw.Expanded(
-                              child: pw.Align(
-                                alignment: pw.Alignment.bottomLeft,
-                                child: pw.Column(
-                                  children: [
-                                    pw.Text(
-                                      'Ca phe',
-                                      style: pw.TextStyle(
-                                          fontSize: 7,
-                                          color: PdfColors.black,
-                                          fontWeight: pw.FontWeight.bold),
-                                    ),
-                                    pw.Text(
-                                      '10,000 d',
-                                      style: pw.TextStyle(
-                                          color: PdfColors.grey, fontSize: 6),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                            pw.Text('40,000 d',
-                                style: pw.TextStyle(fontSize: 8))
-                          ],
-                        ),
+                        ..._buildItemReceipt(products),
                         pw.Divider(),
                       ],
                     ),
@@ -150,7 +126,7 @@ Future savetoPdf() async {
                       mainAxisAlignment: pw.MainAxisAlignment.end,
                       children: [
                         pw.Text(
-                          'Tong: 40,000 d',
+                          'Tong: ${$Number.numberFormat(totalPrice)} d',
                           style: pw.TextStyle(
                               color: PdfColors.blueGrey,
                               //fontWeight: FontWeight.bold,
@@ -213,7 +189,7 @@ Future savetoPdf() async {
                           width: 50,
                           child: pw.BarcodeWidget(
                             barcode: pw.Barcode.qrCode(),
-                            data: '20123014',
+                            data: orderCode,
                           ),
                           //child: pw.BarcodeWidget(),
                         ),
@@ -229,6 +205,49 @@ Future savetoPdf() async {
   var pdfUrl = await ReceiptController().write(pdf);
   print(pdfUrl);
   Get.to(PdfViewerScreen(), arguments: pdfUrl);
+}
+
+List<pw.Widget> _buildItemReceipt(products) {
+  List<pw.Widget> lists = [];
+  products?.forEach(
+    (v) {
+      lists.add(pw.Row(
+        mainAxisAlignment: pw.MainAxisAlignment.start,
+        children: [
+          pw.Text('${v['quantity']}x', style: pw.TextStyle(fontSize: 8)),
+          pw.SizedBox(
+            width: 5,
+          ),
+          pw.Expanded(
+            child: pw.Align(
+              alignment: pw.Alignment.bottomLeft,
+              child: pw.Column(
+                mainAxisAlignment: pw.MainAxisAlignment.start,
+                crossAxisAlignment: pw.CrossAxisAlignment.start,
+                children: [
+                  pw.Text(
+                    '${v['product_name']}',
+                    style: pw.TextStyle(
+                        fontSize: 7,
+                        color: PdfColors.black,
+                        fontWeight: pw.FontWeight.bold),
+                  ),
+                  pw.Text(
+                    '${v['product_price']} d',
+                    style: pw.TextStyle(color: PdfColors.grey, fontSize: 6),
+                  )
+                ],
+              ),
+            ),
+          ),
+          pw.Text(
+              '${$Number.numberFormat(v['quantity'] * v['product_price'])} d',
+              style: pw.TextStyle(fontSize: 8))
+        ],
+      ));
+    },
+  );
+  return lists;
 }
 
 // ignore: unused_element

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos_app/config/pallate.dart';
+import 'package:pos_app/data/controllers/payment_controller.dart';
 import 'package:pos_app/screens/payment/amount_controller.dart';
 import 'package:pos_app/screens/payment/payment_done.dart';
 import 'package:pos_app/ultils/app_ultils.dart';
@@ -19,8 +20,9 @@ class AmountNumpadWidget extends GetView<AmountController> {
   @override
   // ignore: override_on_non_overriding_member
   Widget build(BuildContext context) {
-    AmountController amountController = Get.put(
-      AmountController(),
+    AmountController amountController = Get.put(AmountController());
+    PaymentController paymentController = Get.put(
+      PaymentController(),
     );
 
     final _controller = NumpadController(
@@ -131,11 +133,8 @@ class AmountNumpadWidget extends GetView<AmountController> {
                             amountController.amountReceive.value - totalPrice >=
                                     0
                                 ? () {
-                                    Get.to(PaymentDoneScreen(), arguments: {
-                                      'totalPrice': totalPrice,
-                                      'amountReceive':
-                                          amountController.amountReceive.value,
-                                    });
+                                    paymentController.paymentOrder(totalPrice,
+                                        amountController.amountReceive.value);
                                   }
                                 : null,
                         child: Text(

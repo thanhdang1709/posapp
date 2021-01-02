@@ -6,6 +6,7 @@ import 'package:pos_app/data/binding/home_binding.dart';
 import 'package:pos_app/data/binding/order_binding.dart';
 import 'package:pos_app/data/binding/payment_binding.dart';
 import 'package:pos_app/data/binding/receipt_binding.dart';
+import 'package:pos_app/data/binding/transaction_binding.dart';
 import 'package:pos_app/screens/auth/welcome_page.dart';
 import 'package:pos_app/screens/cart/index.dart';
 import 'package:pos_app/screens/catelog/add/add.dart';
@@ -105,10 +106,6 @@ class AppPages {
       page: () => SettingScreen(),
     ),
     GetPage(
-      name: Routes.TRANSACTION,
-      page: () => TransactionScreen(),
-    ),
-    GetPage(
       name: Routes.CART,
       page: () => CartScreen(),
       binding: CartBinding(),
@@ -127,6 +124,11 @@ class AppPages {
       name: Routes.RECEIPT,
       page: () => ReceiptScreen(),
       binding: ReceiptBinding(),
+    ),
+    GetPage(
+      name: Routes.TRANSACTION,
+      page: () => TransactionScreen(),
+      binding: TransactionBinding(),
     ),
   ];
 }

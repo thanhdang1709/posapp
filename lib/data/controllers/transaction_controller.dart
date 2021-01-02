@@ -1,19 +1,18 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:get/get.dart';
-import 'package:pos_app/data/store/product_store.dart';
 import 'package:pos_app/models/order_model.dart';
 import 'package:pos_app/models/product_model.dart';
-import 'package:pos_app/screens/order/list/components/item_order.dart';
-import 'package:pos_app/screens/order/list/components/item_order_group_date.dart';
+import 'package:pos_app/screens/transaction/list/components/item_order.dart';
+import 'package:pos_app/screens/transaction/list/components/item_order_group_date.dart';
 import 'package:pos_app/services/order_service.dart';
 
-class OrderController extends GetxController {
+class TransactionController extends GetxController {
   final _obj = ''.obs;
   set obj(value) => this._obj.value = value;
   get obj => this._obj.value;
   RxList cartItem = [].obs;
-  ProductStore productStore = Get.put(ProductStore());
   RxList orders = [].obs;
   RxMap mapOrders = {}.obs;
   RxInt totalOrderItem = 0.obs;
@@ -21,8 +20,7 @@ class OrderController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    cartItem
-        .assignAll(productStore.cartItem.map((element) => element.id).toList());
+
     await getAll();
     mapOrders.assignAll(groupBy(orders, (obj) => obj.date));
     totalOrderItem.value = orders.length;
@@ -59,6 +57,8 @@ class OrderController extends GetxController {
           orderCode: e.orderCode,
           listProducts: e.products,
           buildItemName: buildItemName(e.products),
+          icon: FontAwesome.money,
+          iconColor: Colors.green,
         ));
     });
     return lists;
@@ -66,7 +66,8 @@ class OrderController extends GetxController {
 
   List<Widget> buildOrderItem(Map<dynamic, dynamic> mapOrders) {
     List<Widget> lists = [];
-
+    print('maporderitem');
+    print(mapOrders);
     mapOrders.forEach(
       (k, v) {
         int totalPrice = 0;

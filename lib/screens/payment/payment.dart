@@ -47,7 +47,7 @@ class PaymentScreen extends GetView<PaymentController> {
                   children: [
                     Container(
                       height: Get.height * 0.07,
-                      width: Get.width * .4,
+                      width: Get.width * .8,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10)),
                       child: FlatButton(
@@ -64,23 +64,23 @@ class PaymentScreen extends GetView<PaymentController> {
                         ),
                       ),
                     ),
-                    Container(
-                      height: Get.height * 0.07,
-                      width: Get.width * .4,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10)),
-                      child: FlatButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                            side: BorderSide(color: Pallate.primaryColor)),
-                        //color: Colors.grey[300],
-                        onPressed: () {},
-                        child: Text(
-                          'T.Toán sau',
-                          style: Pallate.titleProduct(),
-                        ),
-                      ),
-                    ),
+                    // Container(
+                    //   height: Get.height * 0.07,
+                    //   width: Get.width * .4,
+                    //   decoration: BoxDecoration(
+                    //       borderRadius: BorderRadius.circular(10)),
+                    //   child: FlatButton(
+                    //     shape: RoundedRectangleBorder(
+                    //         borderRadius: BorderRadius.circular(10.0),
+                    //         side: BorderSide(color: Pallate.primaryColor)),
+                    //     //color: Colors.grey[300],
+                    //     onPressed: () {},
+                    //     child: Text(
+                    //       'T.Toán sau',
+                    //       style: Pallate.titleProduct(),
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               ],
