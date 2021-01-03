@@ -12,6 +12,7 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pos_app/screens/receipt/components/pdf_viewer.dart';
 import 'package:pos_app/ultils/number.dart';
+import 'package:tiengviet/tiengviet.dart';
 
 class ReceiptController extends GetxController {
   RxList<dynamic> order = [].obs;
@@ -313,7 +314,7 @@ class ReceiptController extends GetxController {
                   crossAxisAlignment: pw.CrossAxisAlignment.start,
                   children: [
                     pw.Text(
-                      '${v['product_name']}',
+                      '${TiengViet.parse(v['product_name'])}',
                       style: pw.TextStyle(
                           fontSize: 7,
                           color: PdfColors.black,

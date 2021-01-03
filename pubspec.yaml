@@ -57,6 +57,8 @@ dependencies:
   timelines: ^0.0.2+1
   transparent_image: ^1.0.0
   uuid: ^2.2.2
+  tiengviet: ^0.4.1
+
 
 dev_dependencies:
   flutter_test:

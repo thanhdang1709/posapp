@@ -48,13 +48,20 @@ class TransactionScreen extends GetView<TransactionController> {
                   alignment: Alignment.bottomLeft,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Obx(() => Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            ...controller.buildOrderItem(controller.mapOrders),
-                          ],
-                        )),
+                    child: Obx(
+                      () => controller.mapOrders.length != 0
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                ...controller
+                                    .buildOrderItem(controller.mapOrders),
+                              ],
+                            )
+                          : Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                    ),
                   ),
                 ),
               ),

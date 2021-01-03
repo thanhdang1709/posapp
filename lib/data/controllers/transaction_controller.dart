@@ -32,7 +32,7 @@ class TransactionController extends GetxController {
   }
 
   Future getAll() async {
-    var response = (await OrderService().getAll());
+    var response = (await OrderService().getTrasactionAll());
     if (response != null && response.length != 0) {
       orders.assignAll(response.map((e) => OrderModel.fromJson(e)).toList());
     }

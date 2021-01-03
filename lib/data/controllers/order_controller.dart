@@ -12,6 +12,7 @@ class OrderController extends GetxController {
   final _obj = ''.obs;
   set obj(value) => this._obj.value = value;
   get obj => this._obj.value;
+
   RxList cartItem = [].obs;
   ProductStore productStore = Get.put(ProductStore());
   RxList orders = [].obs;
