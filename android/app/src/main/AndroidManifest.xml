@@ -9,7 +9,7 @@
         
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="pos_app"
+        android:label="POPOS"
         android:icon="@mipmap/ic_launcher"
         android:requestLegacyExternalStorage="true">
         <activity

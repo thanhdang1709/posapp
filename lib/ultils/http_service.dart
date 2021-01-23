@@ -1,11 +1,15 @@
+import 'package:fma/modules/tool_x/tool_x.dart';
+import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:pos_app/modules/http_services.dart';
+import 'package:pos_app/repositories/common.dart';
+import 'package:pos_app/widgets/common.dart';
+//import 'package:pos_app/modules/http_services.dart';
 
 class HttpService extends HttpServiceCore {
   /* DESC: Khi "url" bạn truyền vào cho mỗi request mà không có base url, ví dụ "/api/user/delete" thì sẽ được tự động gắn base url này */
-  //String baseUrl = 'http://localhost:8000';
-  String baseUrl = 'https://xemhd.xyz';
-  //var _box = GetStorage();
+  String baseUrl = BASE_DOMAIN;
+
   /* DESC: Thời gian chờ một request phản hồi trong trường hợp mạng yếu hoặc API xử lý chậm */
   int defaultTimeout = 30; //seconds
 
@@ -26,11 +30,39 @@ class HttpService extends HttpServiceCore {
 
   /* DESC: Mỗi request sẽ chạy qua hàm này trước khi gửi, bạn có thể cấu hình lấy token gắn vào header ở đây */
   Future interceptorRequest() async {
-    // defaultHeaders['token'] = 'token123';
+    if (isShowLoading) {
+      CommonWidget.progressIndicator();
+    }
   }
 
+  bool isShowLoading = false;
+
   /* DESC: Xử lý dữ liệu trả về  */
-  Future<Response> interceptorResponse(Response response) async {
+  Future<Res> interceptorResponse(Res response) async {
+    if (isShowLoading) {
+      Get.back();
+    }
+    print('''\n
+    =========== HTTP REQUEST ===========
+PATH: ${uriInfo.path}
+METHOD: $methodUsed
+HEADER: $defaultHeaders
+DATA: $defaultBody
+BODY: ${response.body}
+    ====================================\n
+''');
+
+    if (response.body['code'] == 500) {
+      ToolX().setTimeout(() {
+        if (Get.isSnackbarOpen) {
+          Get.back();
+        }
+
+        print(response.body);
+        ToolX().notify.error(title: 'common.request_error'.tr, message: 'common.server_error'.tr);
+      }, 10);
+    }
+
     return response;
   }
 }

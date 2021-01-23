@@ -96,12 +96,9 @@ class CartScreen extends GetView<CartController> {
               children: [
                 Container(
                   height: Get.height * 1 - 10,
-                  decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
                   child: FlatButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                          side: BorderSide(color: Pallate.primaryColor)),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0), side: BorderSide(color: Pallate.primaryColor)),
                       //color: Colors.grey[300],
                       onPressed: () {
                         cartModalBottomSheet(context);
@@ -126,7 +123,7 @@ class CartScreen extends GetView<CartController> {
                             alignment: Alignment.center,
                             child: Obx(() => InkWell(
                                   onTap: () {
-                                    Get.toNamed('payment');
+                                    Get.toNamed('payment', arguments: {'totalPrice': controller.totalPrice});
                                   },
                                   child: Text(
                                     '${productStore.cartItem.length} món = ${$Number.numberFormat(productStore.cartItem.length != 0 ? productStore.cartItem?.map((element) => element.price)?.reduce((a, b) => a + b) : 0)} đ',

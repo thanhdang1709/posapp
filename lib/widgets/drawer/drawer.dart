@@ -42,8 +42,7 @@ class DrawerApp extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        box.read('store_name') ??
-                            'Cà Phê Trung Nguyên Nguyên Nguyên',
+                        box.read('store_name') ?? 'Cà Phê Trung Nguyên Nguyên Nguyên',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: Pallate.textTitle1(),
@@ -74,8 +73,7 @@ class DrawerApp extends StatelessWidget {
                       backgroundColor: Colors.purple,
                       label: Text(
                         'Miễn phí',
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
+                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                       ),
                     )
                   ],
@@ -86,8 +84,7 @@ class DrawerApp extends StatelessWidget {
                 ItemMenuDraw(
                   imageUrl: 'assets/icons/pos.png',
                   title: 'Bán hàng',
-                  selectedColor:
-                      Get.currentRoute == '/pos' ? Pallate.primaryColor : null,
+                  selectedColor: Get.currentRoute == '/pos' ? Pallate.primaryColor : null,
                   onPress: () {
                     Get.put(PosController());
                     Get.offNamed(
@@ -98,28 +95,25 @@ class DrawerApp extends StatelessWidget {
                 ItemMenuDraw(
                   imageUrl: 'assets/icons/diet.png',
                   title: 'Đơn hàng',
-                  selectedColor:
-                      Get.currentRoute == 'order' ? Pallate.primaryColor : null,
+                  selectedColor: Get.currentRoute == 'order' ? Pallate.primaryColor : null,
                   onPress: () {
                     Get.offNamed('order');
                   },
                 ),
-                ItemMenuDraw(
-                  imageUrl: 'assets/icons/table.png',
-                  title: 'Bàn',
-                  onPress: () {},
-                ),
-                ItemMenuDraw(
-                  imageUrl: 'assets/icons/cooking.png',
-                  title: 'Bếp',
-                  onPress: () {},
-                ),
+                // ItemMenuDraw(
+                //   imageUrl: 'assets/icons/table.png',
+                //   title: 'Bàn',
+                //   onPress: () {},
+                // ),
+                // ItemMenuDraw(
+                //   imageUrl: 'assets/icons/cooking.png',
+                //   title: 'Bếp',
+                //   onPress: () {},
+                // ),
                 ItemMenuDraw(
                   imageUrl: 'assets/icons/diet.png',
                   title: 'Sản phẩm',
-                  selectedColor: Get.currentRoute == '/product'
-                      ? Pallate.primaryColor
-                      : null,
+                  selectedColor: Get.currentRoute == '/product' ? Pallate.primaryColor : null,
                   onPress: () {
                     Get.offNamed('/product');
                   },
@@ -132,9 +126,7 @@ class DrawerApp extends StatelessWidget {
                 ItemMenuDraw(
                   imageUrl: 'assets/icons/customer.png',
                   title: 'Khách hàng',
-                  selectedColor: Get.currentRoute == '/customer'
-                      ? Pallate.primaryColor
-                      : null,
+                  selectedColor: Get.currentRoute == '/customer' ? Pallate.primaryColor : null,
                   onPress: () {
                     Get.offNamed('/customer');
                   },
@@ -142,9 +134,7 @@ class DrawerApp extends StatelessWidget {
                 ItemMenuDraw(
                   imageUrl: 'assets/icons/transaction.png',
                   title: 'Giao dịch',
-                  selectedColor: Get.currentRoute == '/transaction'
-                      ? Pallate.primaryColor
-                      : null,
+                  selectedColor: Get.currentRoute == '/transaction' ? Pallate.primaryColor : null,
                   onPress: () {
                     Get.offNamed('/transaction');
                   },
@@ -154,17 +144,15 @@ class DrawerApp extends StatelessWidget {
                   title: 'Báo cáo',
                   onPress: () {},
                 ),
-                ItemMenuDraw(
-                  imageUrl: 'assets/icons/user.png',
-                  title: 'Nhân viên',
-                  onPress: () {},
-                ),
+                // ItemMenuDraw(
+                //   imageUrl: 'assets/icons/user.png',
+                //   title: 'Nhân viên',
+                //   onPress: () {},
+                // ),
                 ItemMenuDraw(
                   imageUrl: 'assets/icons/settings.png',
                   title: 'Cài đặt',
-                  selectedColor: Get.currentRoute == '/setting'
-                      ? Pallate.primaryColor
-                      : null,
+                  selectedColor: Get.currentRoute == '/setting' ? Pallate.primaryColor : null,
                   onPress: () {
                     Get.offNamed('/setting');
                     print(Get.currentRoute);
@@ -180,9 +168,7 @@ class DrawerApp extends StatelessWidget {
 }
 
 class ItemMenuDraw extends StatelessWidget {
-  const ItemMenuDraw(
-      {Key key, this.imageUrl, this.title, this.onPress, this.selectedColor})
-      : super(key: key);
+  const ItemMenuDraw({Key key, this.imageUrl, this.title, this.onPress, this.selectedColor}) : super(key: key);
 
   final String imageUrl;
   final String title;

@@ -14,7 +14,6 @@ Future savetoPdf({
   products,
 }) async {
   final pdf = pw.Document();
-  DateTime now = DateTime.now();
   pdf.addPage(
     pw.Page(
         pageFormat: PdfPageFormat(57 * PdfPageFormat.mm, double.infinity),

@@ -8,7 +8,7 @@ import 'package:pos_app/ultils/number.dart';
 class PaymentDoneScreen extends GetView<PaymentController> {
   @override
   Widget build(BuildContext context) {
-    CartController cartController = Get.find();
+    CartController cartController = Get.put(CartController());
     var agrs = Get.arguments;
     agrs = agrs ?? {'totalPrice': 0, 'amountReceive': 0, 'icon': (Icons.check)};
     print(agrs);
@@ -29,20 +29,14 @@ class PaymentDoneScreen extends GetView<PaymentController> {
                     size: 200,
                     color: agrs['color'],
                   ),
-                  Text(agrs['status_title'] ?? '',
-                      style: TextStyle(fontSize: 30)),
+                  Text(agrs['status_title'] ?? '', style: TextStyle(fontSize: 30)),
                   SizedBox(
                     height: 10,
                   ),
                   agrs != null
                       ? Text(
-                          agrs != null
-                              ? 'Đơn hàng: ' +
-                                  $Number.numberFormat(agrs['totalPrice']) +
-                                  ' đ'
-                              : '',
-                          style: TextStyle(
-                              fontSize: 20, color: Pallate.primaryColor),
+                          agrs != null ? 'Đơn hàng: ' + $Number.numberFormat(agrs['totalPrice']) + ' đ' : '',
+                          style: TextStyle(fontSize: 20, color: Pallate.primaryColor),
                         )
                       : Text(''),
                   SizedBox(
@@ -50,9 +44,7 @@ class PaymentDoneScreen extends GetView<PaymentController> {
                   ),
                   agrs['amountReceive'] != 0
                       ? Text(
-                          'Đã nhận: ' +
-                              $Number.numberFormat(agrs['amountReceive']) +
-                              ' đ',
+                          'Đã nhận: ' + $Number.numberFormat(agrs['amountReceive']) + ' đ',
                           style: TextStyle(fontSize: 20, color: Colors.grey),
                         )
                       : Text(''),
@@ -61,10 +53,7 @@ class PaymentDoneScreen extends GetView<PaymentController> {
                   ),
                   agrs['amountReceive'] != 0
                       ? Text(
-                          'Tiền thừa: ' +
-                              $Number.numberFormat(
-                                  agrs['amountReceive'] - agrs['totalPrice']) +
-                              ' đ',
+                          'Tiền thừa: ' + $Number.numberFormat(agrs['amountReceive'] - agrs['totalPrice']) + ' đ',
                           style: TextStyle(fontSize: 20, color: Colors.grey),
                         )
                       : Text(''),

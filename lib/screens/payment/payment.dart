@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:get/get.dart';
 import 'package:pos_app/config/pallate.dart';
-import 'package:pos_app/data/controllers/cart_controller.dart';
 import 'package:pos_app/data/controllers/payment_controller.dart';
 import 'package:pos_app/screens/payment/amount_received.dart';
 import 'package:pos_app/ultils/app_ultils.dart';
@@ -11,7 +10,9 @@ import 'package:pos_app/ultils/number.dart';
 class PaymentScreen extends GetView<PaymentController> {
   @override
   Widget build(BuildContext context) {
-    CartController cartController = Get.put(CartController());
+    // CartController cartController = Get.put(CartController());
+    var totalPrice = Get.arguments['totalPrice'];
+    var orderId = Get.arguments['orderId'];
     return Scaffold(
       appBar: AppUltils.buildAppBar(
         height: 50,
@@ -38,51 +39,52 @@ class PaymentScreen extends GetView<PaymentController> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  '${$Number.numberFormat(cartController.totalPrice)} đ',
+                  //  '${$Number.numberFormat(cartController.totalPrice)} đ',
+                  '${$Number.numberFormat(totalPrice)} đ',
+
                   style: TextStyle(fontSize: 40, color: Colors.cyan),
                 ),
                 SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Container(
-                      height: Get.height * 0.07,
-                      width: Get.width * .8,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10)),
-                      child: FlatButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                            side: BorderSide(color: Pallate.primaryColor)),
-                        //color: Colors.grey[300],
-                        onPressed: () {
-                          controller.saveOrder();
-                        },
-                        child: Text(
-                          'Lưu hoá đơn',
-                          style: Pallate.titleProduct(),
-                        ),
-                      ),
-                    ),
-                    // Container(
-                    //   height: Get.height * 0.07,
-                    //   width: Get.width * .4,
-                    //   decoration: BoxDecoration(
-                    //       borderRadius: BorderRadius.circular(10)),
-                    //   child: FlatButton(
-                    //     shape: RoundedRectangleBorder(
-                    //         borderRadius: BorderRadius.circular(10.0),
-                    //         side: BorderSide(color: Pallate.primaryColor)),
-                    //     //color: Colors.grey[300],
-                    //     onPressed: () {},
-                    //     child: Text(
-                    //       'T.Toán sau',
-                    //       style: Pallate.titleProduct(),
-                    //     ),
-                    //   ),
-                    // ),
-                  ],
-                ),
+                orderId == null
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Container(
+                            height: Get.height * 0.07,
+                            width: Get.width * .8,
+                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                            child: FlatButton(
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0), side: BorderSide(color: Pallate.primaryColor)),
+                              //color: Colors.grey[300],
+                              onPressed: () {
+                                controller.saveOrder();
+                              },
+                              child: Text(
+                                'Lưu hoá đơn',
+                                style: Pallate.titleProduct(),
+                              ),
+                            ),
+                          ),
+                          // Container(
+                          //   height: Get.height * 0.07,
+                          //   width: Get.width * .4,
+                          //   decoration: BoxDecoration(
+                          //       borderRadius: BorderRadius.circular(10)),
+                          //   child: FlatButton(
+                          //     shape: RoundedRectangleBorder(
+                          //         borderRadius: BorderRadius.circular(10.0),
+                          //         side: BorderSide(color: Pallate.primaryColor)),
+                          //     //color: Colors.grey[300],
+                          //     onPressed: () {},
+                          //     child: Text(
+                          //       'T.Toán sau',
+                          //       style: Pallate.titleProduct(),
+                          //     ),
+                          //   ),
+                          // ),
+                        ],
+                      )
+                    : Container(),
               ],
             ),
           ),
@@ -105,7 +107,9 @@ class PaymentScreen extends GetView<PaymentController> {
                       onPressed: () {
                         print('payment');
                         Get.to(AmountNumpadWidget(
-                          totalPrice: cartController.totalPrice,
+                          totalPrice: totalPrice,
+                          orderId: orderId,
+                          // totalPrice: cartController.totalPrice,
                           callbackSubmit: (e) {
                             print('$e');
                           },

@@ -3,19 +3,25 @@ import 'package:get/get.dart';
 import 'package:pos_app/config/pallate.dart';
 import 'package:pos_app/data/controllers/payment_controller.dart';
 import 'package:pos_app/screens/payment/amount_controller.dart';
-import 'package:pos_app/screens/payment/payment_done.dart';
 import 'package:pos_app/ultils/app_ultils.dart';
 import 'package:pos_app/ultils/number.dart';
+import 'package:pos_app/widgets/common.dart';
 import 'package:pos_app/widgets/numpad/numpad_widget.dart';
 
 // ignore: must_be_immutable
 class AmountNumpadWidget extends GetView<AmountController> {
 //Instantiate a NumpadController
-  AmountNumpadWidget({this.totalPrice, this.productId, this.callbackSubmit});
+  AmountNumpadWidget({
+    this.totalPrice,
+    this.productId,
+    this.callbackSubmit,
+    this.orderId,
+  });
 
   final int totalPrice;
   final int productId;
   final Function callbackSubmit;
+  final int orderId;
 
   @override
   // ignore: override_on_non_overriding_member
@@ -27,12 +33,7 @@ class AmountNumpadWidget extends GetView<AmountController> {
 
     final _controller = NumpadController(
       format: NumpadFormat.AMOUNT,
-      hintText: $Number
-              .numberFormat(amountController.amountReceive.value == 0
-                  ? totalPrice
-                  : amountController.amountReceive.value)
-              .toString() +
-          ' đ',
+      hintText: $Number.numberFormat(amountController.amountReceive.value == 0 ? totalPrice : amountController.amountReceive.value).toString() + ' đ',
     );
 
     //CartController cartController = Get.find();
@@ -92,10 +93,7 @@ class AmountNumpadWidget extends GetView<AmountController> {
                 alignment: Alignment.center,
                 child: Text(
                   'Tổng: ' + $Number.numberFormat(totalPrice).toString() + ' đ',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                      color: Colors.green),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.green),
                 ),
               ),
             ),
@@ -118,10 +116,7 @@ class AmountNumpadWidget extends GetView<AmountController> {
                   margin: EdgeInsets.only(left: 5, right: 5, bottom: 10),
                   padding: EdgeInsets.all(15),
                   decoration: BoxDecoration(
-                    color:
-                        amountController.amountReceive.value - totalPrice >= 0
-                            ? Pallate.colorCyan
-                            : Colors.grey,
+                    color: amountController.amountReceive.value - totalPrice >= 0 ? Pallate.colorCyan : Colors.grey,
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: Row(
@@ -129,14 +124,23 @@ class AmountNumpadWidget extends GetView<AmountController> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       InkWell(
-                        onTap:
-                            amountController.amountReceive.value - totalPrice >=
-                                    0
-                                ? () {
-                                    paymentController.paymentOrder(totalPrice,
-                                        amountController.amountReceive.value);
-                                  }
-                                : null,
+                        onTap: amountController.amountReceive.value - totalPrice >= 0
+                            ? () {
+                                CommonWidget.progressIndicator();
+                                if (orderId == null) {
+                                  paymentController.paymentOrder(
+                                    totalPrice,
+                                    amountController.amountReceive.value,
+                                  );
+                                } else {
+                                  paymentController.updatePaymentOrder(
+                                    orderId,
+                                    totalPrice,
+                                    amountController.amountReceive.value,
+                                  );
+                                }
+                              }
+                            : null,
                         child: Text(
                           'Thanh Toán',
                           maxLines: 1,

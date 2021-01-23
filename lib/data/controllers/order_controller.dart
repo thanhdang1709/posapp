@@ -4,15 +4,12 @@ import 'package:get/get.dart';
 import 'package:pos_app/data/store/product_store.dart';
 import 'package:pos_app/models/order_model.dart';
 import 'package:pos_app/models/product_model.dart';
+import 'package:pos_app/routes/pages.dart';
 import 'package:pos_app/screens/order/list/components/item_order.dart';
 import 'package:pos_app/screens/order/list/components/item_order_group_date.dart';
 import 'package:pos_app/services/order_service.dart';
 
 class OrderController extends GetxController {
-  final _obj = ''.obs;
-  set obj(value) => this._obj.value = value;
-  get obj => this._obj.value;
-
   RxList cartItem = [].obs;
   ProductStore productStore = Get.put(ProductStore());
   RxList orders = [].obs;
@@ -22,8 +19,7 @@ class OrderController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    cartItem
-        .assignAll(productStore.cartItem.map((element) => element.id).toList());
+    cartItem.assignAll(productStore.cartItem.map((element) => element.id).toList());
     await getAll();
     mapOrders.assignAll(groupBy(orders, (obj) => obj.date));
     totalOrderItem.value = orders.length;
@@ -54,12 +50,18 @@ class OrderController extends GetxController {
     List<Widget> lists = [];
     orders.forEach((e) {
       lists
-        ..add(ItemOrder(
-          orderPrice: e.products.map((e) => e.price).reduce((a, b) => a + b),
-          time: e.createdAt,
-          orderCode: e.orderCode,
-          listProducts: e.products,
-          buildItemName: buildItemName(e.products),
+        ..add(InkWell(
+          onTap: () {
+            print(e.note);
+            Get.toNamed(Routes.ORDER_DETAIL, arguments: e);
+          },
+          child: ItemOrder(
+            orderPrice: e.products.map((e) => e.price).reduce((a, b) => a + b),
+            time: e.createdAt,
+            orderCode: e.orderCode,
+            listProducts: e.products,
+            buildItemName: buildItemName(e.products),
+          ),
         ));
     });
     return lists;
@@ -67,13 +69,12 @@ class OrderController extends GetxController {
 
   List<Widget> buildOrderItem(Map<dynamic, dynamic> mapOrders) {
     List<Widget> lists = [];
-
+    print(mapOrders);
     mapOrders.forEach(
       (k, v) {
         int totalPrice = 0;
         v.forEach((e) {
-          totalPrice +=
-              e.products.map((e1) => e1.price)?.reduce((a, b) => a + b);
+          totalPrice += e.products.map((e1) => e1.price)?.reduce((a, b) => a + b);
           // v.totalPrice;
         });
         lists

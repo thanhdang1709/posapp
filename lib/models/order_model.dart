@@ -68,9 +68,9 @@ class OrderModel {
       json['products'].forEach((v) {
         products.add(new ProductModel.fromJson(v));
       });
-      createdAt = DateTime.parse(json['created_at']);
-      date = DateTime.parse(json['created_at']).day;
-      note = json['none'];
+      createdAt = DateTime.parse(json['created_at']).toLocal();
+      date = DateTime.parse(json['created_at']).toLocal().day;
+      note = json['note'];
     }
   }
 

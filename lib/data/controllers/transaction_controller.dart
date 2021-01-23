@@ -4,6 +4,7 @@ import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:get/get.dart';
 import 'package:pos_app/models/order_model.dart';
 import 'package:pos_app/models/product_model.dart';
+import 'package:pos_app/routes/pages.dart';
 import 'package:pos_app/screens/transaction/list/components/item_order.dart';
 import 'package:pos_app/screens/transaction/list/components/item_order_group_date.dart';
 import 'package:pos_app/services/order_service.dart';
@@ -51,14 +52,20 @@ class TransactionController extends GetxController {
     List<Widget> lists = [];
     orders.forEach((e) {
       lists
-        ..add(ItemOrder(
-          orderPrice: e.products.map((e) => e.price).reduce((a, b) => a + b),
-          time: e.createdAt,
-          orderCode: e.orderCode,
-          listProducts: e.products,
-          buildItemName: buildItemName(e.products),
-          icon: FontAwesome.money,
-          iconColor: Colors.green,
+        ..add(InkWell(
+          onTap: () {
+            print(e.note);
+            Get.toNamed(Routes.ORDER_DETAIL, arguments: e);
+          },
+          child: ItemOrder(
+            orderPrice: e.products.map((e) => e.price).reduce((a, b) => a + b),
+            time: e.createdAt,
+            orderCode: e.orderCode,
+            listProducts: e.products,
+            buildItemName: buildItemName(e.products),
+            icon: FontAwesome.money,
+            iconColor: Colors.green,
+          ),
         ));
     });
     return lists;
@@ -72,8 +79,7 @@ class TransactionController extends GetxController {
       (k, v) {
         int totalPrice = 0;
         v.forEach((e) {
-          totalPrice +=
-              e.products.map((e1) => e1.price)?.reduce((a, b) => a + b);
+          totalPrice += e.products.map((e1) => e1.price)?.reduce((a, b) => a + b);
           // v.totalPrice;
         });
         lists

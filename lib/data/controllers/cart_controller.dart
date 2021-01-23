@@ -5,9 +5,6 @@ import 'package:pos_app/models/customer_model.dart';
 import 'package:pos_app/models/product_model.dart';
 
 class CartController extends GetxController {
-  final _obj = ''.obs;
-  set obj(value) => this._obj.value = value;
-  get obj => this._obj.value;
   ProductStore productStore = Get.find<ProductStore>();
   int totalPrice;
   int totalItem;
@@ -29,9 +26,7 @@ class CartController extends GetxController {
   onCreate() {}
 
   remoteItemInCart(int id) {
-    productStore.cartItem
-      ..assignAll(
-          productStore.cartItem.where((element) => element.id != id).toList());
+    productStore.cartItem..assignAll(productStore.cartItem.where((element) => element.id != id).toList());
     extendRowId.value = 0;
     cart = productStore.cartItem;
     newMap = groupBy(cart, (obj) => obj.id);
@@ -53,8 +48,7 @@ class CartController extends GetxController {
 
   decrementCartItem(ProductModel product, int count) {
     for (var i = 0; i < count; i++) {
-      productStore.cartItem
-          .removeAt(productStore.cartItem.indexWhere((e) => e == product));
+      productStore.cartItem.removeAt(productStore.cartItem.indexWhere((e) => e == product));
     }
     reloadState();
   }
@@ -96,12 +90,7 @@ class CartController extends GetxController {
           );
       },
     );
-    totalPrice = productStore.cartItem.length != 0
-        ? productStore.cartItem
-                .map((element) => element.price)
-                .reduce((value, element) => value + element) -
-            discount.value
-        : 0;
+    totalPrice = productStore.cartItem.length != 0 ? productStore.cartItem.map((element) => element.price).reduce((value, element) => value + element) - discount.value : 0;
     totalItem = cart.length;
   }
 }

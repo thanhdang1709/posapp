@@ -80,9 +80,13 @@ class WelcomePage extends StatelessWidget {
                               onPressed: () => _openPage(context, LoginPage()),
                               child: Text(
                                 'Đăng nhập',
-                                style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 18,
+                                // style: GoogleFonts.poppins(
+                                //     fontWeight: FontWeight.w500,
+                                //     fontSize: 18,
+                                //     color: Colors.white),
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
                                     color: Colors.white),
                               ),
                             ),
@@ -95,9 +99,9 @@ class WelcomePage extends StatelessWidget {
                                   _openPage(context, RegisterPage()),
                               child: Text(
                                 'Đăng ký',
-                                style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 18,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
                                     color: Colors.white),
                               ),
                             ),
@@ -151,7 +155,7 @@ class RectangularButton extends StatelessWidget {
             side: BorderSide(color: Colors.white, width: 3)),
         child: Text(
           label,
-          style: GoogleFonts.poppins(
+          style: GoogleFonts.roboto(
             fontWeight: FontWeight.w500,
             fontSize: 18,
           ),

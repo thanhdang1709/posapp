@@ -1,15 +1,12 @@
+import 'dart:ffi';
 import 'dart:io';
 
 import 'package:pos_app/ultils/http_service.dart';
 
 class CustomerService {
-  Future addProduct({File file, Map<String, String> data}) async {
-    var response = await HttpService().fetch(
-        url: 'api/customer/add',
-        method: 'POST',
-        files: file == null ? null : [file],
-        body: data);
-    if (response.statusCode == 200) {
+  Future addProduct({File file, Map<String, dynamic> data}) async {
+    var response = await HttpService().fetch(url: 'api/customer/add', method: 'POST', files: file == null ? null : [file], body: data);
+    if (response.httpCode == 200) {
       var result = (response.body);
       if (result['alert'] == 'success') {
         return result['data'];
@@ -20,12 +17,8 @@ class CustomerService {
   }
 
   Future update({File file, Map<String, String> data}) async {
-    var response = await HttpService().fetch(
-        url: 'api/customer/update',
-        method: 'POST',
-        files: file == null ? null : [file],
-        body: data);
-    if (response.statusCode == 200) {
+    var response = await HttpService().fetch(url: 'api/customer/update', method: 'POST', files: file == null ? null : [file], body: data);
+    if (response.httpCode == 200) {
       var result = (response.body);
       if (result['alert'] == 'success') {
         return result['data'];
@@ -42,7 +35,7 @@ class CustomerService {
       method: 'GET',
     );
     print(response);
-    if (response.statusCode == 200) {
+    if (response.httpCode == 200) {
       var result = (response.body);
       if (result['alert'] == 'success') {
         return result['data'];
@@ -57,7 +50,7 @@ class CustomerService {
       url: 'api/customer/delete/$id',
       method: 'GET',
     );
-    if (response.statusCode == 200) {
+    if (response.httpCode == 200) {
       var result = (response.body);
       if (result['alert'] == 'success') {
         return result['id'];

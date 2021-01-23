@@ -40,17 +40,15 @@ class CustomerController extends GetxController {
 
   void submit() async {
     if (nameController.text.trim() == '') {
-      return AppUltils()
-          .getSnackBarError(message: 'Vui lòng điền tên khách hàng');
+      return AppUltils().getSnackBarError(message: 'Vui lòng điền tên khách hàng');
     }
-    Map<String, String> data = {
+    Map<String, dynamic> data = {
       'name': nameController.text.trim().toString(),
       'phone': phoneController.text.trim().toString(),
       'address': addressController.text.trim().toString(),
     };
     // ignore: unused_local_variable
-    var result = await CustomerService()
-        .addProduct(file: selectedImage ?? null, data: data);
+    var result = await CustomerService().addProduct(file: selectedImage ?? null, data: data);
     nameController.text = '';
     phoneController.text = '';
     addressController.text = '';
@@ -65,8 +63,7 @@ class CustomerController extends GetxController {
     var response = (await CustomerService().getAll());
     if (response != null && response.length != 0) {
       // customers.assignAll(
-      customers
-          .assignAll(response.map((e) => CustomerModel.fromJson(e)).toList());
+      customers.assignAll(response.map((e) => CustomerModel.fromJson(e)).toList());
       //);
       // return customers;
     }
@@ -83,8 +80,7 @@ class CustomerController extends GetxController {
       Get.back();
       AppUltils().getSnackBarSuccess(message: 'Xoá khách hàng thành công');
     } else {
-      AppUltils()
-          .getSnackBarError(message: 'Có lỗi xảy ra vui lòng thử lại sau');
+      AppUltils().getSnackBarError(message: 'Có lỗi xảy ra vui lòng thử lại sau');
     }
   }
 
@@ -96,9 +92,7 @@ class CustomerController extends GetxController {
       if (searchKeyword.text != '') {
         searchResults.assignAll(
           customers.where(
-            (element) => element.name
-                .toLowerCase()
-                .contains(searchKeyword.text.toLowerCase()),
+            (element) => element.name.toLowerCase().contains(searchKeyword.text.toLowerCase()),
           ),
         );
       } else {

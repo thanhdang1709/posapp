@@ -29,6 +29,8 @@ PODS:
     - Flutter
   - path_provider (0.0.1):
     - Flutter
+  - printing (0.0.1):
+    - Flutter
   - SDWebImage/Core (5.10.0)
   - SDWebImageWebPCoder (0.7.0):
     - libwebp (~> 1.0)
@@ -49,6 +51,7 @@ DEPENDENCIES:
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
   - native_pdf_renderer (from `.symlinks/plugins/native_pdf_renderer/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
+  - printing (from `.symlinks/plugins/printing/ios`)
   - searchable_dropdown (from `.symlinks/plugins/searchable_dropdown/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - vibration (from `.symlinks/plugins/vibration/ios`)
@@ -76,6 +79,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/native_pdf_renderer/ios"
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
+  printing:
+    :path: ".symlinks/plugins/printing/ios"
   searchable_dropdown:
     :path: ".symlinks/plugins/searchable_dropdown/ios"
   sqflite:
@@ -94,6 +99,7 @@ SPEC CHECKSUMS:
   Mantle: 4c0ed6ce47c96eccc4dc3bb071deb3def0e2c3be
   native_pdf_renderer: 3e81ffe3d40668cce75694596201bb9fb0fdb6e9
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
+  printing: 5ec249946ebbd51cead5ed9b0b48113bb5141bcf
   SDWebImage: 9169792e9eec3e45bba2a0c02f74bf8bd922d1ee
   SDWebImageWebPCoder: c359317c2e7cfec85d7ea137521c7a36ed239674
   searchable_dropdown: 5058be32fdc5e0481d300ff2087129072e71bd62

@@ -30,17 +30,15 @@ class EditCustomerController extends GetxController {
 
   void updateCustomer() async {
     if (nameController.text.trim() == '') {
-      return AppUltils()
-          .getSnackBarError(message: 'Vui lòng điền tên khách hàng');
+      return AppUltils().getSnackBarError(message: 'Vui lòng điền tên khách hàng');
     }
-    Map<String, String> data = {
+    Map<String, dynamic> data = {
       'name': nameController.text.trim().toString(),
       'phone': phoneController.text.trim().toString(),
       'address': addressController.text.trim().toString(),
       'id': oldCustomer.id.toString(),
     };
-    var result =
-        await CustomerService().update(file: selectedImage ?? null, data: data);
+    var result = await CustomerService().update(file: selectedImage ?? null, data: data);
     nameController.text = '';
     phoneController.text = '';
     addressController.text = '';
@@ -55,8 +53,7 @@ class EditCustomerController extends GetxController {
     var response = (await CustomerService().getAll());
     if (response != null && response.length != 0) {
       // customers.assignAll(
-      customers
-          .assignAll(response.map((e) => CustomerModel.fromJson(e)).toList());
+      customers.assignAll(response.map((e) => CustomerModel.fromJson(e)).toList());
       //);
       // return customers;
     }

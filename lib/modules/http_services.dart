@@ -12,10 +12,12 @@ class HttpServiceCore {
   Map<String, String> defaultHeaders;
   Map<String, String> defaultBody;
   List<File> defaultFiles;
+  Uri uriInfo;
+  String methodUsed;
 
   defaultFnOnTimeout() {}
   Future interceptorRequest() async {}
-  Future interceptorResponse(Response request) async => request;
+  Future interceptorResponse(Res request) async => request;
   // Future
 
   int _currentTimeRetry = 0;
@@ -29,7 +31,7 @@ class HttpServiceCore {
   // ignore: non_constant_identifier_names
   var DELETE = 'DELETE';
 
-  Future<Response> fetch({
+  Future<Res> fetch({
     String url,
     String method = 'GET',
     Map<String, dynamic> params,
@@ -40,15 +42,21 @@ class HttpServiceCore {
     List<File> files,
   }) async {
     Uri uri = await _getUrl(url, params);
+    uriInfo = uri;
+    methodUsed = method;
+
     await interceptorRequest();
+
+    mergeMaps(defaultBody, body);
+    mergeMaps(defaultHeaders, headers);
 
     return await _handleFetch(
       method: method,
       uri: uri,
       timeout: timeout ?? defaultTimeout,
       onTimeout: onTimeout ?? defaultFnOnTimeout,
-      headers: headers ?? defaultHeaders,
-      body: body ?? defaultBody,
+      headers: defaultHeaders,
+      body: defaultBody,
       files: files ?? defaultFiles,
     );
   }
@@ -67,7 +75,7 @@ class HttpServiceCore {
     return uriParsed;
   }
 
-  Future<Response> _handleFetch({
+  Future<Res> _handleFetch({
     String method,
     Uri uri,
     int timeout,
@@ -76,7 +84,7 @@ class HttpServiceCore {
     Map<String, String> body,
     List<File> files,
   }) async {
-    Completer completer = new Completer<Response>();
+    Completer completer = new Completer<Res>();
 
     try {
       var request;
@@ -105,16 +113,14 @@ class HttpServiceCore {
       //request = http.Request(method, uri);
       headers.addAll(defaultHeaders);
       request.headers.addAll(headers);
-      http.StreamedResponse res = await request
-          .send()
-          .timeout(Duration(seconds: timeout), onTimeout: () async {
+      http.StreamedResponse res = await request.send().timeout(Duration(seconds: timeout), onTimeout: () async {
         _currentTimeRetry++;
         onTimeout();
 
         if (_currentTimeRetry >= maxTimeRetry) {
           _currentTimeRetry = 0;
-          final response = Response(
-            statusCode: null,
+          final response = Res(
+            httpCode: null,
             body: null,
             isMap: null,
             hasError: true,
@@ -139,8 +145,8 @@ class HttpServiceCore {
 
       String responseBodyString = await res.stream.bytesToString();
       dynamic resultBody;
-      Response response = Response(
-        statusCode: res.statusCode,
+      Res response = Res(
+        httpCode: res.statusCode,
         hasError: false,
       );
 
@@ -159,16 +165,27 @@ class HttpServiceCore {
     return completer.future;
   }
 
-  Future<Response> _handleResponse(Response response) async {
+  Future<Res> _handleResponse(Res response) async {
     return await interceptorResponse(response);
+  }
+
+  mergeMaps(l, r) {
+    if (r != null) {
+      try {
+        l.addAll(r);
+      } catch (e) {
+        print(e);
+        print('merge failed');
+      }
+    }
   }
 }
 
-class Response {
-  int statusCode;
+class Res {
+  int httpCode;
   dynamic body;
   bool hasError;
   bool isMap;
 
-  Response({this.statusCode, this.body, this.hasError, this.isMap});
+  Res({this.httpCode, this.body, this.hasError, this.isMap});
 }

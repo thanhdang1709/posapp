@@ -3,7 +3,6 @@ import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:pos_app/data/controllers/order_controller.dart';
 import 'package:pos_app/data/controllers/transaction_controller.dart';
 import 'package:pos_app/models/status_model.dart';
 import 'package:pos_app/ultils/app_ultils.dart';

@@ -13,24 +13,21 @@ class FlexibleTopBackground extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(assetsImage),
-              fit: BoxFit.cover,
-              colorFilter: ColorFilter.linearToSrgbGamma(),
-            ),
-          ),
-        ),
+        // Container(
+        //   decoration: BoxDecoration(
+        //     image: DecorationImage(
+        //       image: AssetImage(assetsImage),
+        //       fit: BoxFit.cover,
+        //       colorFilter: ColorFilter.linearToSrgbGamma(),
+        //     ),
+        //   ),
+        // ),
         Container(
           // height: 350.0,
           decoration: BoxDecoration(
             color: titleColor,
             gradient: LinearGradient(
-              colors: [
-                Pallate.primaryColor.withOpacity(0.8),
-                Pallate.secondColor.withOpacity(0.9)
-              ],
+              colors: [Pallate.primaryColor.withOpacity(0.8), Pallate.secondColor.withOpacity(0.9)],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
@@ -38,11 +35,7 @@ class FlexibleTopBackground extends StatelessWidget {
         ),
         Container(
           decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage('assets/sakura.png'),
-                fit: BoxFit.cover,
-                colorFilter: ColorFilter.linearToSrgbGamma(),
-                alignment: Alignment.bottomRight),
+            image: DecorationImage(image: AssetImage('assets/sakura.png'), fit: BoxFit.cover, colorFilter: ColorFilter.linearToSrgbGamma(), alignment: Alignment.bottomRight),
           ),
         ),
       ],

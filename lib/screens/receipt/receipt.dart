@@ -1,12 +1,12 @@
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:pos_app/config/pallate.dart';
 import 'package:pos_app/data/controllers/cart_controller.dart';
 import 'package:pos_app/data/controllers/receipt_controller.dart';
 import 'package:pos_app/screens/receipt/components/row_action_receipt.dart';
 import 'package:pos_app/ultils/number.dart';
-import 'components/pdf.dart';
+import 'package:tiengviet/tiengviet.dart';
 
 // ignore: must_be_immutable
 class ReceiptScreen extends GetView<ReceiptController> {
@@ -45,7 +45,7 @@ class ReceiptScreen extends GetView<ReceiptController> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Image.asset(
-                                  'assets/img/logo.png',
+                                  'assets/img/logo-1.png',
                                   height: 40,
                                 ),
                                 Obx(() => Text(
@@ -63,10 +63,8 @@ class ReceiptScreen extends GetView<ReceiptController> {
                             Row(
                               children: [
                                 Text(
-                                  'Cà phê Panda',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20),
+                                  TiengViet.parse(GetStorage().read('store_name') ?? 'Ca Phe Vinatech'),
+                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                                 )
                               ],
                             ),
@@ -74,7 +72,7 @@ class ReceiptScreen extends GetView<ReceiptController> {
                               children: [
                                 Expanded(
                                   child: Text(
-                                    '85 Nguyễn Huệ, Thành Phố Long Xuyên, AG',
+                                    '154 Pham Van Chieu - P.9 - Q.Go Vap - HCM',
                                     maxLines: 2,
                                     style: TextStyle(fontSize: 13),
                                   ),
@@ -103,7 +101,23 @@ class ReceiptScreen extends GetView<ReceiptController> {
                                   children: [...controller.buildRowItem()],
                                 )),
                             SizedBox(
-                              height: 30,
+                              height: 10,
+                            ),
+                            Obx(
+                              () => controller.order.first.note != null
+                                  ? Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            "Ghi chú: ${controller.order.first.note ?? ''}",
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  : Container(),
+                            ),
+                            SizedBox(
+                              height: 10,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
@@ -111,10 +125,7 @@ class ReceiptScreen extends GetView<ReceiptController> {
                                 Obx(
                                   () => Text(
                                     'Tổng: ${$Number.numberFormat(controller.order?.first?.totalPrice ?? 0)} đ',
-                                    style: TextStyle(
-                                        color: Colors.blueGrey,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20),
+                                    style: TextStyle(color: Colors.blueGrey, fontWeight: FontWeight.bold, fontSize: 20),
                                   ),
                                 )
                               ],
@@ -126,20 +137,17 @@ class ReceiptScreen extends GetView<ReceiptController> {
                                   height: 5,
                                 ),
                                 Obx(
-                                  () =>
-                                      controller.order?.first.amountReceive != 0
-                                          ? Text(
-                                              'Nhận: ${$Number.numberFormat(controller.order?.first?.amountReceive)} đ',
-                                              style: TextStyle(
-                                                  color: Colors.blueGrey,
-                                                  fontSize: 16),
-                                            )
-                                          : Text(''),
+                                  () => controller.order?.first?.amountReceive != 0
+                                      ? Text(
+                                          'Nhận: ${$Number.numberFormat(controller.order?.first?.amountReceive)} đ',
+                                          style: TextStyle(color: Colors.blueGrey, fontSize: 16),
+                                        )
+                                      : Text(''),
                                 )
                               ],
                             ),
                             Obx(
-                              () => controller.order?.first.change != 0
+                              () => controller.order?.first?.change != 0
                                   ? Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
@@ -148,9 +156,7 @@ class ReceiptScreen extends GetView<ReceiptController> {
                                         ),
                                         Text(
                                           'Tiền thừa: ${$Number.numberFormat(controller.order?.first?.change)} đ',
-                                          style: TextStyle(
-                                              color: Colors.blueGrey,
-                                              fontSize: 16),
+                                          style: TextStyle(color: Colors.blueGrey, fontSize: 16),
                                         ),
                                         SizedBox(
                                           height: 30,
@@ -171,10 +177,7 @@ class ReceiptScreen extends GetView<ReceiptController> {
                               children: [
                                 Text(
                                   'Cảm ơn quý khách, hẹn gặp lại!',
-                                  style: TextStyle(
-                                      color: Colors.blueGrey,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15),
+                                  style: TextStyle(color: Colors.blueGrey, fontWeight: FontWeight.bold, fontSize: 15),
                                 )
                               ],
                             ),
@@ -183,22 +186,16 @@ class ReceiptScreen extends GetView<ReceiptController> {
                               children: [
                                 Text(
                                   // ignore: null_aware_before_operator
-                                  controller.order?.first?.createdAt?.day
-                                          ?.toString() +
+                                  controller.order?.first?.createdAt?.day?.toString() +
                                       ' tháng ' +
-                                      controller.order?.first?.createdAt?.month
-                                          ?.toString() +
+                                      controller.order?.first?.createdAt?.month?.toString() +
                                       ' ' +
-                                      controller.order?.first?.createdAt?.year
-                                          ?.toString() +
+                                      controller.order?.first?.createdAt?.year?.toString() +
                                       ' ' +
-                                      controller.order?.first?.createdAt?.hour
-                                          ?.toString() +
+                                      controller.order?.first?.createdAt?.hour?.toString() +
                                       ':' +
-                                      controller.order?.first?.createdAt?.minute
-                                          ?.toString(),
-                                  style: TextStyle(
-                                      color: Colors.blueGrey, fontSize: 15),
+                                      controller.order?.first?.createdAt?.minute?.toString(),
+                                  style: TextStyle(color: Colors.blueGrey, fontSize: 15),
                                 )
                               ],
                             ),

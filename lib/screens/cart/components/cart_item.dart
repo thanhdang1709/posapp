@@ -28,9 +28,9 @@ class RowTotalPrice extends StatelessWidget {
                 children: [
                   Text(
                     'Mã giảm giá?',
-                    style: GoogleFonts.poppins(
-                        fontSize: 20,
+                    style: TextStyle(
                         fontWeight: FontWeight.bold,
+                        fontSize: 20,
                         color: Colors.grey),
                   ),
                 ],
@@ -42,10 +42,10 @@ class RowTotalPrice extends StatelessWidget {
                 children: [
                   Text(
                     'TỔNG:',
-                    style: GoogleFonts.poppins(
-                        fontSize: 20,
+                    style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Colors.blueGrey),
+                        fontSize: 20,
+                        color: Colors.grey),
                   ),
                   SizedBox(
                     width: 10,
@@ -54,7 +54,7 @@ class RowTotalPrice extends StatelessWidget {
                     '${$Number.numberFormat(totalPrice)} đ',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.roboto(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
                         color: Colors.blueGrey),

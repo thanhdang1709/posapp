@@ -2,8 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos_app/data/controllers/receipt_controller.dart';
-import 'package:pos_app/screens/receipt/components/pdf.dart';
-import 'package:pos_app/widgets/common/dialog.dart';
 
 class BottomActionReceipt extends StatelessWidget {
   //BottomActionReceipt({this.savePdf});
@@ -64,23 +62,25 @@ class BottomActionReceipt extends StatelessWidget {
             ],
           ),
           InkWell(
-            onTap: () {
-              DialogConfirm()
-                  .info(
-                    context: context,
-                    title: "Thông báo",
-                    desc: "Không tìm thấy máy in",
-                  )
-                  .onCancel(
-                    text: "Đóng lại",
-                  )
-                  .onConfirm(
-                    text: "Cài đặt",
-                    onPress: () {
-                      print('onConfirm');
-                    },
-                  )
-                  .show(hideIcon: false);
+            onTap: () async {
+              // DialogConfirm()
+              //     .info(
+              //       context: context,
+              //       title: "Thông báo",
+              //       desc: "Không tìm thấy máy in",
+              //     )
+              //     .onCancel(
+              //       text: "Đóng lại",
+              //     )
+              //     .onConfirm(
+              //       text: "Cài đặt",
+              //       onPress: () {
+              //         print('onConfirm');
+              //       },
+              //     )
+              //     .show(hideIcon: false);
+              // Get.to(PdfPrinReviewScreen(''));
+              await receiptController.printPdf();
             },
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

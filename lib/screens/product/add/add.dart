@@ -23,8 +23,7 @@ class AddProductScreen extends StatefulWidget {
 class _AddProductScreenState extends State<AddProductScreen> {
   //final picker = ImagePicker();
 
-  AddProductController addProductController =
-      Get.put(AddProductController(), permanent: false);
+  AddProductController addProductController = Get.put(AddProductController(), permanent: false);
   ProductStore productStore = Get.find();
   @override
   Widget build(BuildContext context) {
@@ -51,11 +50,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                   children: [
                     Align(
                       alignment: Alignment.centerLeft,
-                      child: Text('Chi tiết sản phẩm',
-                          style: GoogleFonts.roboto(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.blueGrey)),
+                      child: Text('Chi tiết sản phẩm', style: GoogleFonts.roboto(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.blueGrey)),
                     ),
                     new DropdownSearch<CatelogModel>(
                       mode: Mode.BOTTOM_SHEET,
@@ -63,8 +58,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       items: productStore.catelogies,
                       dropdownSearchDecoration: InputDecoration(
                         border: InputBorder.none,
-                        contentPadding: EdgeInsets.only(
-                            left: 0, right: 0, bottom: 0, top: 5),
+                        contentPadding: EdgeInsets.only(left: 0, right: 0, bottom: 0, top: 5),
                       ),
                       label: "Danh mục",
                       itemAsString: (CatelogModel catelog) => catelog.name,
@@ -95,8 +89,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       controller: addProductController.barcodeController,
                       decoration: InputDecoration(
                           labelText: 'Code',
-                          labelStyle:
-                              GoogleFonts.roboto(color: Colors.blueGrey),
+                          labelStyle: GoogleFonts.roboto(color: Colors.blueGrey),
                           suffixIcon: Icon(
                             Mdi.barcode,
                             size: 40,
@@ -122,27 +115,20 @@ class _AddProductScreenState extends State<AddProductScreen> {
         ),
       ),
       floatingActionButton: FlatButton.icon(
-          //shape: ShapeBorder(),
-          onPressed: () {
-            Get.dialog(
-                Center(
-                  child: SizedBox(
-                      height: 50,
-                      width: 50,
-                      child: CircularProgressIndicator()),
-                ),
-                barrierDismissible: false);
-            addProductController.addProduct();
-          },
-          icon: Icon(
-            Icons.save,
-            color: Colors.white,
-          ),
-          label: Text(
-            'Lưu',
-            style: TextStyle(color: Colors.white),
-          ),
-          color: Pallate.primaryColor),
+        //shape: ShapeBorder(),
+        onPressed: () {
+          addProductController.addProduct();
+        },
+        icon: Icon(
+          Icons.save,
+          color: Colors.white,
+        ),
+        label: Text(
+          'Lưu',
+          style: TextStyle(color: Colors.white),
+        ),
+        color: Pallate.primaryColor,
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
@@ -157,16 +143,12 @@ class _AddProductScreenState extends State<AddProductScreen> {
             TextFormField(
                 controller: addProductController.nameProduct,
                 onChanged: addProductController.onChangeNameProduct,
-                decoration: InputDecoration(
-                    labelText: 'Tên sản phẩm ',
-                    labelStyle: GoogleFonts.roboto(color: Colors.blueGrey))),
+                decoration: InputDecoration(labelText: 'Tên sản phẩm ', labelStyle: GoogleFonts.roboto(color: Colors.blueGrey))),
             TextFormField(
                 keyboardType: TextInputType.number,
                 controller: addProductController.priceProduct,
                 onChanged: addProductController.onChangePriceProduct,
-                decoration: InputDecoration(
-                    labelText: 'Giá bán',
-                    labelStyle: GoogleFonts.roboto(color: Colors.blueGrey)))
+                decoration: InputDecoration(labelText: 'Giá bán', labelStyle: GoogleFonts.roboto(color: Colors.blueGrey)))
           ],
         ),
       ),
@@ -181,8 +163,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           FlatButton.icon(
-            shape: RoundedRectangleBorder(
-                borderRadius: new BorderRadius.circular(5.0)),
+            shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(5.0)),
             minWidth: 10,
             padding: EdgeInsets.zero,
             label: Text(''),
@@ -195,10 +176,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
             },
             // child: const Text(''),
             color: addProductController.currentColor.value,
-            textColor:
-                useWhiteForeground(addProductController.currentColor.value)
-                    ? const Color(0xffffffff)
-                    : const Color(0xffffffff),
+            textColor: useWhiteForeground(addProductController.currentColor.value) ? const Color(0xffffffff) : const Color(0xffffffff),
           ),
           SizedBox(
             width: 5,
@@ -220,19 +198,14 @@ class _AddProductScreenState extends State<AddProductScreen> {
                         child: Center(
                           child: Text(
                             addProductController.labelName.value,
-                            style: TextStyle(
-                                color: useWhiteForeground(
-                                        addProductController.currentColor.value)
-                                    ? const Color(0xffffffff)
-                                    : const Color(0xffffffff)),
+                            style: TextStyle(color: useWhiteForeground(addProductController.currentColor.value) ? const Color(0xffffffff) : const Color(0xffffffff)),
                           ),
                         ),
                       )
                     : ClipRRect(
                         borderRadius: BorderRadius.circular(5),
                         child: Image.file(
-                          File(addProductController.imagePickerPath.value) ??
-                              null,
+                          File(addProductController.imagePickerPath.value) ?? null,
                           fit: BoxFit.cover,
                           width: double.infinity,
                           height: Get.height * .12,
@@ -244,11 +217,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 ),
                 Text(
                   addProductController.labelName.value ?? 'Tên sản phẩm',
-                  style: TextStyle(
-                      color: useWhiteForeground(
-                              addProductController.currentColor.value)
-                          ? const Color(0xffffffff)
-                          : const Color(0xffffffff)),
+                  style: TextStyle(color: useWhiteForeground(addProductController.currentColor.value) ? const Color(0xffffffff) : const Color(0xffffffff)),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -257,11 +226,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 ),
                 Text(
                   '${$Number.numberFormat(int.tryParse(addProductController.labelPrice.value) ?? 0)} đ',
-                  style: TextStyle(
-                      color: useWhiteForeground(
-                              addProductController.currentColor.value)
-                          ? const Color(0xffffffff)
-                          : const Color(0xffffffff)),
+                  style: TextStyle(color: useWhiteForeground(addProductController.currentColor.value) ? const Color(0xffffffff) : const Color(0xffffffff)),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 )

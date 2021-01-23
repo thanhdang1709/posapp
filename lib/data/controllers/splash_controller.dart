@@ -27,20 +27,14 @@ class SplashController extends GetxController {
     var response = await ProductService().getCatelogAll();
     print(response);
     if (response != null && response.length != 0) {
-      catelogies
-          .assignAll(response.map((e) => CatelogModel.fromJson(e)).toList());
+      catelogies.assignAll(response.map((e) => CatelogModel.fromJson(e)).toList());
     }
-
-    //print(catelogies[0].name);
   }
 
   Future getProductAll() async {
     var response = (await ProductService().getProductAll());
-    // print(response);
     if (response != null && response.length != 0) {
-      products
-          .assignAll(response.map((e) => ProductModel.fromJson(e)).toList());
+      products.assignAll(response.map((e) => ProductModel.fromJson(e)).toList());
     }
-    //print(catelogies[0].name);
   }
 }

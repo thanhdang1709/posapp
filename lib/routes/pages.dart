@@ -4,6 +4,7 @@ import 'package:pos_app/data/binding/cart_binding.dart';
 import 'package:pos_app/data/binding/customer_binding.dart';
 import 'package:pos_app/data/binding/home_binding.dart';
 import 'package:pos_app/data/binding/order_binding.dart';
+import 'package:pos_app/data/binding/order_detail_binding.dart';
 import 'package:pos_app/data/binding/payment_binding.dart';
 import 'package:pos_app/data/binding/receipt_binding.dart';
 import 'package:pos_app/data/binding/transaction_binding.dart';
@@ -13,6 +14,7 @@ import 'package:pos_app/screens/catelog/add/add.dart';
 import 'package:pos_app/screens/customer/add/add.dart';
 import 'package:pos_app/screens/customer/detail/detail.dart';
 import 'package:pos_app/screens/customer/list/list.dart';
+import 'package:pos_app/screens/order/detail/detail.dart';
 import 'package:pos_app/screens/order/list/list.dart';
 import 'package:pos_app/screens/payment/payment.dart';
 import 'package:pos_app/screens/pos/pos.dart';
@@ -114,6 +116,11 @@ class AppPages {
       name: Routes.ORDER,
       page: () => ListOrderScreen(),
       binding: OrderBinding(),
+    ),
+    GetPage(
+      name: Routes.ORDER_DETAIL,
+      page: () => OrderDetailScreen(),
+      binding: OrderDetailBinding(),
     ),
     GetPage(
       name: Routes.PAYMENT,

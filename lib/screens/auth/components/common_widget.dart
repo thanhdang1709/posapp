@@ -30,7 +30,7 @@ class FindOutLogo extends StatelessWidget {
                 //       color: Colors.white),
                 // ),
                 child: Image.asset(
-                  'assets/img/logo.png',
+                  'assets/img/logo-1.png',
                   height: 80,
                 ),
               ),
@@ -127,18 +127,19 @@ class TitlePlace extends StatelessWidget {
         child: RichText(
           overflow: TextOverflow.fade,
           text: TextSpan(
-              text: place.typePlace,
-              style: GoogleFonts.poppins(
-                fontSize: baseFontSize * .6,
-              ),
-              children: [
-                TextSpan(
-                    text: '\n' + place.title,
-                    style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.w700,
-                        height: 1.2,
-                        fontSize: baseFontSize))
-              ]),
+            text: place.typePlace,
+            style: GoogleFonts.roboto(
+              fontSize: baseFontSize * .6,
+            ),
+            children: [
+              TextSpan(
+                  text: '\n' + place.title,
+                  style: GoogleFonts.roboto(
+                      fontWeight: FontWeight.w700,
+                      height: 1.2,
+                      fontSize: baseFontSize))
+            ],
+          ),
         ),
       ),
     );
