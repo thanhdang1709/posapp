@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:pos_app/data/binding/analytic_binding.dart';
 import 'package:pos_app/data/binding/cart_binding.dart';
 import 'package:pos_app/data/binding/customer_binding.dart';
 import 'package:pos_app/data/binding/home_binding.dart';
@@ -8,6 +9,7 @@ import 'package:pos_app/data/binding/order_detail_binding.dart';
 import 'package:pos_app/data/binding/payment_binding.dart';
 import 'package:pos_app/data/binding/receipt_binding.dart';
 import 'package:pos_app/data/binding/transaction_binding.dart';
+import 'package:pos_app/screens/analytics/analytic.dart';
 import 'package:pos_app/screens/auth/welcome_page.dart';
 import 'package:pos_app/screens/cart/index.dart';
 import 'package:pos_app/screens/catelog/add/add.dart';
@@ -136,6 +138,11 @@ class AppPages {
       name: Routes.TRANSACTION,
       page: () => TransactionScreen(),
       binding: TransactionBinding(),
+    ),
+    GetPage(
+      name: Routes.ANALYTIC,
+      page: () => AnalyticScreen(),
+      binding: AnalyticBinding(),
     ),
   ];
 }

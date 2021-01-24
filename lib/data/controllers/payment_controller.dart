@@ -49,6 +49,7 @@ class PaymentController extends GetxController {
       'table_id': 1.toString(),
       'customer_id': 1.toString(),
       'status': 1.toString(),
+      'status_title': 'payment',
       'amount_receive': amountReceive.toString(),
       'amount_change': (amountReceive - totalPrice).toString(),
       'total_price': totalPrice.toString(),

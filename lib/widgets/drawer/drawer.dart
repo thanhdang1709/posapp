@@ -22,8 +22,8 @@ class DrawerApp extends StatelessWidget {
           gradient: LinearGradient(
             colors: [
               Pallate.primaryColor.withOpacity(0.7),
-              Pallate.secondColor.withOpacity(0.7),
-              Pallate.secondColor.withOpacity(0.7),
+              // Pallate.secondColor.withOpacity(0.7),
+              // Pallate.secondColor.withOpacity(0.7),
               Pallate.primaryColor.withOpacity(0.7),
             ],
             begin: Alignment.topLeft,
@@ -93,7 +93,7 @@ class DrawerApp extends StatelessWidget {
                   },
                 ),
                 ItemMenuDraw(
-                  imageUrl: 'assets/icons/diet.png',
+                  imageUrl: 'assets/icons/checklist.png',
                   title: 'Đơn hàng',
                   selectedColor: Get.currentRoute == 'order' ? Pallate.primaryColor : null,
                   onPress: () {
@@ -142,13 +142,16 @@ class DrawerApp extends StatelessWidget {
                 ItemMenuDraw(
                   imageUrl: 'assets/icons/report.png',
                   title: 'Báo cáo',
+                  selectedColor: Get.currentRoute == '/analytic' ? Pallate.primaryColor : null,
+                  onPress: () {
+                    Get.offNamed('/analytic');
+                  },
+                ),
+                ItemMenuDraw(
+                  imageUrl: 'assets/icons/user.png',
+                  title: 'Nhân viên',
                   onPress: () {},
                 ),
-                // ItemMenuDraw(
-                //   imageUrl: 'assets/icons/user.png',
-                //   title: 'Nhân viên',
-                //   onPress: () {},
-                // ),
                 ItemMenuDraw(
                   imageUrl: 'assets/icons/settings.png',
                   title: 'Cài đặt',

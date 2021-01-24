@@ -21,7 +21,7 @@ class OrderService extends HttpService {
     if (response.httpCode == 200) {
       var result = (response.body);
       if (result['alert'] == 'success') {
-        return result;
+        return result['order_id'];
       }
     } else {
       return false;

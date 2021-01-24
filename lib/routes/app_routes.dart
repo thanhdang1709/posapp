@@ -21,4 +21,5 @@ abstract class Routes {
   static const ORDER_DETAIL = 'order/detail';
   static const PAYMENT = 'payment';
   static const RECEIPT = 'receipt';
+  static const ANALYTIC = 'analytic';
 }
