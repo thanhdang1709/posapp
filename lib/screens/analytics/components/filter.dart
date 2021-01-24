@@ -10,6 +10,8 @@ import 'package:intl/intl.dart';
 class FilterAnalytic extends GetView<AnalyticController> {
   @override
   Widget build(BuildContext context) {
+    //print(now. );
+    DateTime now = DateTime.now();
     AnalyticController controller = Get.find();
     return Scaffold(
       appBar: AppUltils.buildAppBar(
@@ -115,8 +117,9 @@ class FilterAnalytic extends GetView<AnalyticController> {
                               label: 'Hôm nay',
                               onPressed: () {
                                 controller.typeFilter.value = 'today';
-                                controller.startDate.value = '';
-                                controller.endDate.value = '';
+                                controller.startDate.value = DateFormat('yyyy-MM-dd').format(now);
+                                controller.endDate.value = DateFormat('yyyy-MM-dd').format(now.add(Duration(days: 1)));
+                                controller.getReport();
                                 Get.back();
                               },
                               active: controller.typeFilter.value == 'today',
@@ -125,8 +128,9 @@ class FilterAnalytic extends GetView<AnalyticController> {
                               label: 'Tuần này',
                               onPressed: () {
                                 controller.typeFilter.value = 'this_week';
-                                controller.startDate.value = '';
-                                controller.endDate.value = '';
+                                controller.startDate.value = DateFormat('yyyy-MM-dd').format(now.subtract(Duration(days: now.weekday - 1)));
+                                controller.endDate.value = DateFormat('yyyy-MM-dd').format(now.add(Duration(days: 1)));
+                                controller.getReport();
                                 Get.back();
                               },
                               active: controller.typeFilter.value == 'this_week',
@@ -135,8 +139,9 @@ class FilterAnalytic extends GetView<AnalyticController> {
                               label: 'Tháng này',
                               onPressed: () {
                                 controller.typeFilter.value = 'this_month';
-                                controller.startDate.value = '';
-                                controller.endDate.value = '';
+                                controller.startDate.value = DateFormat('yyyy-MM-dd').format(DateTime(now.year, now.month, 1));
+                                controller.endDate.value = DateFormat('yyyy-MM-dd').format(now.add(Duration(days: 1)));
+                                controller.getReport();
                                 Get.back();
                               },
                               active: controller.typeFilter.value == 'this_month',
@@ -145,8 +150,9 @@ class FilterAnalytic extends GetView<AnalyticController> {
                               label: 'Năm này',
                               onPressed: () {
                                 controller.typeFilter.value = 'this_year';
-                                controller.startDate.value = '';
-                                controller.endDate.value = '';
+                                controller.startDate.value = DateFormat('yyyy-MM-dd').format(DateTime(now.year, 1, 1));
+                                controller.endDate.value = DateFormat('yyyy-MM-dd').format(now.add(Duration(days: 1)));
+                                controller.getReport();
                                 Get.back();
                               },
                               active: controller.typeFilter.value == 'this_year',
@@ -162,8 +168,9 @@ class FilterAnalytic extends GetView<AnalyticController> {
                               label: 'Hôm qua',
                               onPressed: () {
                                 controller.typeFilter.value = 'yesterday';
-                                controller.startDate.value = '';
-                                controller.endDate.value = '';
+                                controller.startDate.value = DateFormat('yyyy-MM-dd').format(now.subtract(Duration(days: 1)));
+                                controller.endDate.value = DateFormat('yyyy-MM-dd').format(now);
+                                controller.getReport();
                                 Get.back();
                               },
                               active: controller.typeFilter.value == 'yesterday',
@@ -208,8 +215,10 @@ class FilterAnalytic extends GetView<AnalyticController> {
             ),
           ),
           InkWell(
-            onTap: () {
+            onTap: () async {
               controller.typeFilter.value = '';
+              await controller.getReport();
+
               Get.back();
             },
             child: Container(

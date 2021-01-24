@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:pos_app/config/pallate.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 
 // ignore: must_be_immutable
@@ -117,6 +115,7 @@ class TimeLineStatus extends StatelessWidget {
   }
 }
 
+// ignore: unused_element
 class _IconIndicator extends StatelessWidget {
   const _IconIndicator({
     Key key,

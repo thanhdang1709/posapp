@@ -30,6 +30,7 @@ class PaymentController extends GetxController {
       'table_id': 1.toString(),
       'customer_id': 1.toString(),
       'status': 0.toString(),
+      'status_title': 'pending',
       'amount_receive': 0.toString(),
       'amount_change': 0.toString(),
       'total_price': totalPrice.value.toString(),
@@ -83,7 +84,7 @@ class PaymentController extends GetxController {
         'totalPrice': totalPrice,
         'amountReceive': (amountReceive),
         'icon': MdiIcons.check,
-        'order_id': result['order_id'],
+        'order_id': int.tryParse(result['order_id']),
         'status_title': 'Thanh toán thành công',
         'color': Colors.green
       });

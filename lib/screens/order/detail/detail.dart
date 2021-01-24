@@ -6,6 +6,7 @@ import 'package:pos_app/data/controllers/order_detail_controller.dart';
 import 'package:pos_app/ultils/app_ultils.dart';
 import 'package:intl/intl.dart';
 import 'package:pos_app/ultils/number.dart';
+import 'package:pos_app/widgets/tab_view/tab_heading.dart';
 
 import 'package:sliding_button/sliding_button.dart';
 
@@ -204,45 +205,6 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                   child: CircularProgressIndicator(),
                 ),
               ),
-      ),
-    );
-  }
-}
-
-class TabHeading extends StatelessWidget {
-  const TabHeading({
-    Key key,
-    @required this.controller,
-  }) : super(key: key);
-
-  final OrderDetailController controller;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Pallate.secondColor.withOpacity(0.7),
-            Pallate.primaryColor.withOpacity(0.7),
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-      ),
-      child: TabBar(
-        unselectedLabelColor: Colors.white,
-        labelColor: Colors.pink,
-        indicator: UnderlineTabIndicator(
-            borderSide: BorderSide(
-              width: 4,
-              color: Colors.pink,
-            ),
-            insets: EdgeInsets.only(left: 0, right: 8, bottom: 0)),
-        tabs: controller.tabItem,
-        controller: controller.tabController,
-        indicatorColor: Colors.white,
-        indicatorSize: TabBarIndicatorSize.tab,
       ),
     );
   }

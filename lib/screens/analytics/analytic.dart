@@ -22,72 +22,76 @@ class AnalyticScreen extends GetView<AnalyticController> {
       drawer: DrawerApp(),
       body: Padding(
         padding: const EdgeInsets.all(15),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Obx(() => FilterDateContainer(
-                  label: controller.typeFilterLabel ?? 'Hôm nay',
-                )),
-            SizedBox(
-              height: 20,
-            ),
-            Expanded(
-                child: SingleChildScrollView(
-                    child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                AnalyticItem(
-                  label: 'Doanh thu',
-                  amount: 400000,
-                  bestDay: DateTime.now(),
-                  onPressed: () {
-                    Get.to(AnalyticDetailScreen(
-                      title: 'Doanh thu',
-                      dateRange: controller.typeFilterLabel,
-                    ));
-                  },
-                ),
-                AnalyticItem(
-                  label: 'Đơn',
-                  amount: 40,
-                  isNumber: true,
-                  bestDay: DateTime.now(),
-                  onPressed: () {},
-                ),
-                AnalyticItem(
-                  label: 'Trung bình 1 đơn',
-                  amount: 400000,
-                  bestDay: DateTime.now(),
-                  onPressed: () {},
-                ),
-                AnalyticItem(
-                  label: 'Lợi nhuận',
-                  amount: 400000,
-                  bestDay: DateTime.now(),
-                  onPressed: () {},
-                ),
-                AnalyticItem(
-                  label: 'Sản phẩm bán tốt nhất',
-                  title: 'Bún bò',
-                  bestAmount: 30000,
-                  onPressed: () {},
-                ),
-                AnalyticItem(
-                  label: 'Nhân viên ',
-                  title: 'Cao Thanh Đẳng',
-                  bestAmount: 40000000,
-                  onPressed: () {},
-                ),
-                AnalyticItem(
-                  label: 'Khách hàng',
-                  title: '',
-                  bestAmount: 30000,
-                  onPressed: () {},
-                ),
-              ],
-            )))
-          ],
+        child: Obx(
+          () => !controller.isLoading.value
+              ? Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Obx(() => FilterDateContainer(
+                          label: controller.typeFilterLabel ?? 'Hôm nay',
+                        )),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Expanded(
+                        child: SingleChildScrollView(
+                            child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        AnalyticItem(
+                          label: 'Doanh thu',
+                          amount: controller.revenue.value,
+                          bestDay: controller.bestDayRevenue.value,
+                          onPressed: () {
+                            Get.to(AnalyticDetailScreen(
+                              title: 'Doanh thu',
+                              dateRange: controller.typeFilterLabel,
+                            ));
+                          },
+                        ),
+                        AnalyticItem(
+                          label: 'Đơn',
+                          amount: controller.sales.value,
+                          isNumber: true,
+                          bestDay: controller.bestDaysales.value,
+                          onPressed: () {},
+                        ),
+                        AnalyticItem(
+                          label: 'Trung bình 1 đơn',
+                          amount: controller.avgSale.value,
+                          bestDay: controller.bestDaysales.value,
+                          onPressed: () {},
+                        ),
+                        AnalyticItem(
+                          label: 'Lợi nhuận',
+                          amount: controller.profit.value,
+                          bestDay: '',
+                          onPressed: () {},
+                        ),
+                        AnalyticItem(
+                          label: 'Sản phẩm bán chạy',
+                          title: controller.bestProduct.value,
+                          bestAmount: 30000,
+                          onPressed: () {},
+                        ),
+                        AnalyticItem(
+                          label: 'Nhân viên ',
+                          title: 'admin',
+                          bestAmount: controller.revenue.value,
+                          onPressed: () {},
+                        ),
+                        AnalyticItem(
+                          label: 'Khách hàng',
+                          title: '',
+                          bestAmount: 30000,
+                          onPressed: () {},
+                        ),
+                      ],
+                    )))
+                  ],
+                )
+              : CircularProgressIndicator(),
         ),
       ),
     );
@@ -108,7 +112,7 @@ class AnalyticItem extends StatelessWidget {
   final String label;
   final int amount;
   final String title;
-  final DateTime bestDay;
+  final String bestDay;
   final Function onPressed;
   final bool isNumber;
   final int bestAmount;
@@ -142,8 +146,9 @@ class AnalyticItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 bestDay != null
-                    ? Text('Ngày cao nhất: ${bestDay.day} tháng ${bestDay.month}', style: TextStyle(color: Pallate.colorCyan, fontWeight: FontWeight.w500))
-                    : Text('Đơn cao nhất: ${$Number.numberFormat(bestAmount)} đ', style: TextStyle(color: Pallate.colorCyan, fontWeight: FontWeight.w500)),
+                    ? Text('Ngày cao nhất: ${bestDay}', style: TextStyle(color: Pallate.colorCyan, fontWeight: FontWeight.w500))
+                    // : Text('Đơn cao nhất: ${$Number.numberFormat(bestAmount)} đ', style: TextStyle(color: Pallate.colorCyan, fontWeight: FontWeight.w500)),
+                    : Text(''),
                 Icon(
                   MdiIcons.chevronRight,
                   color: Pallate.colorCyan,

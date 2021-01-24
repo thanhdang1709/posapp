@@ -5,14 +5,28 @@ import 'package:pos_app/data/controllers/analytic_controller.dart';
 import 'package:pos_app/ultils/app_ultils.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:intl/intl.dart';
+import 'package:pos_app/ultils/number.dart';
 import 'package:pos_app/ultils/time.dart';
 
 class AnalyticDetailScreen extends GetView<AnalyticController> {
   AnalyticDetailScreen({this.title, this.dateRange});
   final String title;
   final String dateRange;
+
   @override
   Widget build(BuildContext context) {
+    print(controller.mapSale);
+    List<MyRow> _builData(mapSale) {
+      List<MyRow> _lists = [];
+      mapSale.forEach((v) {
+        _lists.add(
+          new MyRow((DateTime.parse(v['createdAt'])), v['sale']),
+        );
+      });
+      return _lists;
+    }
+
+    final data = _builData(controller.mapSale);
     return Scaffold(
       appBar: AppUltils.buildAppBar(
         height: 40,
@@ -33,7 +47,7 @@ class AnalyticDetailScreen extends GetView<AnalyticController> {
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: Colors.blueGrey),
                 ),
                 Text(
-                  '50.000.000 đ',
+                  '${$Number.numberFormat(controller.revenue.value)} đ',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: Pallate.primaryColor),
                 )
               ],
@@ -52,9 +66,9 @@ class AnalyticDetailScreen extends GetView<AnalyticController> {
             Container(
               height: Get.height * .4,
               child: CustomAxisTickFormatters(
-                _createSampleData(),
+                _createSampleData(data),
                 animate: true,
-                isToday: true,
+                isToday: false,
               ),
             ),
             Divider(),
@@ -67,16 +81,16 @@ class AnalyticDetailScreen extends GetView<AnalyticController> {
                       scrollDirection: Axis.horizontal,
                       child: DataTable(
                           columns: _buildHeaderTable(),
-                          rows: map
+                          rows: controller.mapSale
                               .map((e) => DataRow(cells: <DataCell>[
-                                    DataCell(Text(e.m.toString())),
-                                    DataCell(Text(e.m.toString())),
-                                    DataCell(Text(e.m.toString())),
+                                    DataCell(Text(e['createdAt'].toString())),
+                                    DataCell(Text(e['sale'].toString())),
+                                    DataCell(Text(e['sale'].toString())),
                                   ]))
                               .toList()),
                     ),
                     Divider(),
-                    Text('Hello'),
+                    // Text('Hello'),
                     SizedBox(
                       height: 50,
                     )
@@ -111,30 +125,7 @@ _buildHeaderTable() {
   ];
 }
 
-var map = {
-  new MyMap(m: 1),
-  new MyMap(m: 1),
-  new MyMap(m: 1),
-  new MyMap(m: 1),
-  new MyMap(m: 1),
-};
-
-class MyMap {
-  int m;
-
-  MyMap({this.m});
-}
-
-List<charts.Series<MyRow, DateTime>> _createSampleData() {
-  final data = [
-    new MyRow(new DateTime.now(), 600000),
-    new MyRow(new DateTime.now().add(Duration(hours: 1)), 300000),
-    new MyRow(new DateTime.now().add(Duration(hours: 2)), 200000),
-    new MyRow(new DateTime.now().add(Duration(hours: 3)), 100000),
-    new MyRow(new DateTime.now().add(Duration(hours: 4)), 500000),
-    new MyRow(new DateTime.now().add(Duration(days: 5)), 200000),
-  ];
-
+List<charts.Series<MyRow, DateTime>> _createSampleData(data) {
   return [
     new charts.Series<MyRow, DateTime>(
       id: 'Cost',
@@ -161,7 +152,7 @@ class CustomAxisTickFormatters extends StatelessWidget {
     final simpleCurrencyFormatter = new charts.BasicNumericTickFormatterSpec.fromNumberFormat(new NumberFormat.compactSimpleCurrency(locale: Locale('vi', 'VN').languageCode));
     return new charts.TimeSeriesChart(seriesList,
         animate: animate,
-        primaryMeasureAxis: new charts.NumericAxisSpec(tickFormatterSpec: simpleCurrencyFormatter),
+        primaryMeasureAxis: isToday ? new charts.NumericAxisSpec(tickFormatterSpec: simpleCurrencyFormatter) : new charts.NumericAxisSpec(),
         dateTimeFactory: LocalizedTimeFactory(Locale('vi', 'VN')),
         domainAxis: new charts.DateTimeAxisSpec(
           tickFormatterSpec: new charts.AutoDateTimeTickFormatterSpec(
