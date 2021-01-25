@@ -5,7 +5,6 @@ import 'package:pos_app/data/store/product_store.dart';
 import 'package:pos_app/models/order_model.dart';
 import 'package:pos_app/models/product_model.dart';
 import 'package:pos_app/routes/pages.dart';
-import 'package:pos_app/screens/cart/components/cart_item.dart';
 import 'package:pos_app/screens/order/list/components/item_order.dart';
 import 'package:pos_app/screens/order/list/components/item_order_group_date.dart';
 import 'package:pos_app/services/order_service.dart';
@@ -60,12 +59,13 @@ class OrderController extends GetxController {
             Get.toNamed(Routes.ORDER_DETAIL, arguments: e);
           },
           child: ItemOrder(
-            orderPrice: e.products.map((e) => e.price).reduce((a, b) => a + b),
-            time: e.createdAt,
-            orderCode: e.orderCode,
-            listProducts: e.products,
-            buildItemName: buildItemName(e.products),
-          ),
+              orderPrice: e.products.map((e) => e.price).reduce((a, b) => a + b),
+              time: e.createdAt,
+              orderCode: e.orderCode,
+              listProducts: e.products,
+              buildItemName: buildItemName(e.products),
+              iconData: e.status.last.statusIcon,
+              iconColor: e.status.last.statusColor),
         ));
     });
     return lists;

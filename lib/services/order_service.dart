@@ -28,6 +28,19 @@ class OrderService extends HttpService {
     }
   }
 
+  Future removeOrder({File file, Map<String, dynamic> data}) async {
+    isShowLoading = false;
+    var response = await fetch(url: 'api/order/delete/' + data['order_id'], method: 'GET', files: file == null ? null : [file]);
+    if (response.httpCode == 200) {
+      var result = (response.body);
+      if (result['alert'] == 'success') {
+        return result;
+      }
+    } else {
+      return 0;
+    }
+  }
+
   Future getAll() async {
     var response = await fetch(
       url: 'api/order/all',

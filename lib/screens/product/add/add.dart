@@ -89,7 +89,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       controller: addProductController.costController,
                       onChanged: addProductController.onChangePriceProduct,
                       decoration: InputDecoration(
-                        labelText: 'Giá vốn',
+                        labelText: 'Giá gốc',
                         labelStyle: GoogleFonts.roboto(color: Colors.blueGrey),
                       ),
                     ),

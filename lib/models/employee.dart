@@ -1,3 +1,5 @@
+import 'package:pos_app/models/order_model.dart';
+
 class EmployeeModel {
   int id;
   String name;
@@ -7,6 +9,7 @@ class EmployeeModel {
   int role;
   int status;
   String description;
+  int totalOrder;
   EmployeeModel({
     this.id,
     this.name,
@@ -16,6 +19,7 @@ class EmployeeModel {
     this.description,
     this.role,
     this.status,
+    this.totalOrder,
   });
 
   factory EmployeeModel.fromJson(json) {
@@ -29,6 +33,7 @@ class EmployeeModel {
       role: json['role'],
       status: json['status'],
       description: json['description'],
+      totalOrder: (json['orders'] != null) ? json['orders'].length : 0,
     );
   }
   Map<String, dynamic> toJson() {
@@ -36,5 +41,24 @@ class EmployeeModel {
     data['id'] = this.id;
     data['name'] = this.name;
     return data;
+  }
+
+  String get roleLabel {
+    switch (role) {
+      case 1:
+        return 'Admin';
+        break;
+      case 2:
+        return 'Thu ngân';
+        break;
+      case 3:
+        return 'Bếp';
+        break;
+      case 4:
+        return 'Menu';
+        break;
+      default:
+        return null;
+    }
   }
 }

@@ -11,12 +11,16 @@ class ItemOrder extends StatelessWidget {
     this.orderPrice,
     this.time,
     this.buildItemName,
+    this.iconData,
+    this.iconColor,
   }) : super(key: key);
   final int orderPrice;
   final DateTime time;
   final List listProducts;
   final String orderCode;
   final List<Widget> buildItemName;
+  final IconData iconData;
+  final Color iconColor;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -25,7 +29,7 @@ class ItemOrder extends StatelessWidget {
       children: [
         Row(
           children: [
-            Icon(MdiIcons.clock, color: Colors.cyan),
+            Icon(iconData, color: iconColor),
             SizedBox(width: 5),
             Text(
               '${$Number.numberFormat(orderPrice ?? 0)} đ',

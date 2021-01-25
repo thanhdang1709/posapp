@@ -16,6 +16,8 @@ class OrderDetailController extends GetxController with SingleGetTickerProviderM
   Rx<OrderModel> order = OrderModel().obs;
   RxBool isLoading = true.obs;
   int orderId = 0;
+  //OrderController orderController = Get.put(OrderController());
+  TextEditingController noteController = new TextEditingController();
   @override
   void onInit() async {
     super.onInit();
@@ -34,11 +36,24 @@ class OrderDetailController extends GetxController with SingleGetTickerProviderM
   }
 
   updateStatusOrder() {}
-  confirmStatusOrder() async {
+  confirmStatusOrder({statusTitle, status}) async {
+    isLoading.value = true;
     Map<String, String> data = {
       'order_id': order.value.id.toString(),
-      'status_title': 'confirm',
-      'status': 2.toString(),
+      'status_title': statusTitle,
+      'status': status,
+    };
+    var _result = await OrderService().updatePayment(data: data);
+    print(_result);
+    await getOrderById(orderId);
+    isLoading.value = false;
+  }
+
+  updateNoteOrder({statusTitle, status}) async {
+    isLoading.value = true;
+    Map<String, String> data = {
+      'order_id': order.value.id.toString(),
+      'note': noteController.text,
     };
     var _result = await OrderService().updatePayment(data: data);
     print(_result);
@@ -50,6 +65,20 @@ class OrderDetailController extends GetxController with SingleGetTickerProviderM
     var result = await OrderService().getOrder(id);
     order.value = OrderModel.fromJson(result);
     return OrderModel.fromJson(result);
+  }
+
+  cancelOrder() async {
+    isLoading.value = true;
+    Map<String, String> data = {
+      'order_id': order.value.id.toString(),
+    };
+    var _result = await OrderService().removeOrder(data: data);
+    print(_result);
+
+    //await orderController.getAll();
+    //Get.back();
+    isLoading.value = false;
+    Get.offAllNamed('pos');
   }
 
   List<Widget> buildItemName(List<ProductModel> products) {
@@ -95,7 +124,7 @@ class OrderDetailController extends GetxController with SingleGetTickerProviderM
                 isFirst: index == 0 ? true : false,
                 isLast: false,
                 hour: '',
-                title: status[index].title,
+                title: status[index].statusLabel,
                 content: DateFormat('dd/MM/yyyy - hh:mm').format(DateTime.parse(status[index].createdAt).toLocal()),
               ))
             });

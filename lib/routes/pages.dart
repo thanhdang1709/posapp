@@ -3,6 +3,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:pos_app/data/binding/analytic_binding.dart';
 import 'package:pos_app/data/binding/cart_binding.dart';
 import 'package:pos_app/data/binding/customer_binding.dart';
+import 'package:pos_app/data/binding/employee_binding.dart';
 import 'package:pos_app/data/binding/home_binding.dart';
 import 'package:pos_app/data/binding/order_binding.dart';
 import 'package:pos_app/data/binding/order_detail_binding.dart';
@@ -16,6 +17,8 @@ import 'package:pos_app/screens/catelog/add/add.dart';
 import 'package:pos_app/screens/customer/add/add.dart';
 import 'package:pos_app/screens/customer/detail/detail.dart';
 import 'package:pos_app/screens/customer/list/list.dart';
+import 'package:pos_app/screens/employee/add/add.dart';
+import 'package:pos_app/screens/employee/list/list.dart';
 import 'package:pos_app/screens/order/detail/detail.dart';
 import 'package:pos_app/screens/order/list/list.dart';
 import 'package:pos_app/screens/payment/payment.dart';
@@ -104,6 +107,20 @@ class AppPages {
     GetPage(
       name: Routes.ADD_CUSTOMER,
       page: () => AddCustomerScreen(),
+    ),
+    GetPage(
+      name: Routes.EMPLOYEE,
+      page: () => EmployeeScreen(),
+      binding: EmployeeBinding(),
+    ),
+    GetPage(
+      name: Routes.EMPLOYEE_DETAIL,
+      page: () => CustomerDetailScreen(),
+      binding: CustomerBinding(),
+    ),
+    GetPage(
+      name: Routes.ADD_EMPLOYEE,
+      page: () => AddEmployeeScreen(),
     ),
     GetPage(
       name: Routes.SETTING,
