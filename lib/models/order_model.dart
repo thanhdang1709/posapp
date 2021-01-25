@@ -1,3 +1,4 @@
+import 'package:pos_app/models/customer_model.dart';
 import 'package:pos_app/models/employee.dart';
 import 'package:pos_app/models/product_model.dart';
 import 'package:pos_app/models/status_model.dart';
@@ -15,25 +16,28 @@ class OrderModel {
   int change;
   TableModel table;
   EmployeeModel employee;
+  CustomerModel customer;
   DateTime createdAt;
   int date;
   String note;
 
-  OrderModel(
-      {this.id,
-      this.orderCode,
-      this.products,
-      this.status,
-      this.timeStart,
-      this.timeEnd,
-      this.totalPrice,
-      this.amountReceive,
-      this.change,
-      this.employee,
-      this.table,
-      this.createdAt,
-      this.date,
-      this.note});
+  OrderModel({
+    this.id,
+    this.orderCode,
+    this.products,
+    this.status,
+    this.timeStart,
+    this.timeEnd,
+    this.totalPrice,
+    this.amountReceive,
+    this.change,
+    this.employee,
+    this.customer,
+    this.table,
+    this.createdAt,
+    this.date,
+    this.note,
+  });
 
   // factory OrderModel.fromJson(json) {
   //   return new OrderModel(
@@ -72,6 +76,9 @@ class OrderModel {
       date = DateTime.parse(json['created_at']).toLocal().day;
       note = json['note'];
     }
+
+    customer = CustomerModel.fromJson(json['customer']);
+    employee = EmployeeModel.fromJson(json['user']);
   }
 
   List<ProductModel> mapJsonProduct(json) {

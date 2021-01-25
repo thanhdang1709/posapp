@@ -15,12 +15,14 @@ class CartController extends GetxController {
   RxList<dynamic> newCart = [].obs;
   RxList cart = [].obs;
   Map<dynamic, List<dynamic>> newMap;
-  Rx<CustomerModel> selectedCustomer = null.obs;
+  Rx<CustomerModel> selectedCustomer = CustomerModel().obs;
 
   @override
   void onInit() {
     super.onInit();
     reloadState();
+    print(newCart);
+    print('init cart controller');
   }
 
   onCreate() {}
@@ -64,6 +66,7 @@ class CartController extends GetxController {
   clearCart() {
     productStore.cartItem.clear();
     Get.back();
+    reloadState();
     Get.offAllNamed('pos');
   }
 

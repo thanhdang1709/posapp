@@ -20,8 +20,7 @@ class ListProductScreen extends StatefulWidget {
   _ListProductScreenState createState() => _ListProductScreenState();
 }
 
-class _ListProductScreenState extends State<ListProductScreen>
-    with SingleTickerProviderStateMixin {
+class _ListProductScreenState extends State<ListProductScreen> with SingleTickerProviderStateMixin {
   TabController _controller;
   // ignore: unused_field
   int _selectedIndex = 0;
@@ -100,8 +99,7 @@ class ColumnListCatelog extends StatefulWidget {
 
 class _ColumnListCatelogState extends State<ColumnListCatelog> {
   TextEditingController _catelogNameController = new TextEditingController();
-  ListProductController controller =
-      Get.put(ListProductController(), permanent: true);
+  ListProductController controller = Get.put(ListProductController(), permanent: true);
 
   bool isOpenAddCat = false;
   @override
@@ -193,8 +191,7 @@ class ColumnListProductStock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ListProductController listProductController =
-        Get.put(ListProductController());
+    ListProductController listProductController = Get.put(ListProductController());
     ProductStore posStore = Get.find<ProductStore>();
     return Column(
       children: [
@@ -234,8 +231,7 @@ class ColumnListProductStock extends StatelessWidget {
                                 child: SlideAnimation(
                                   verticalOffset: 50.0,
                                   child: FadeInAnimation(
-                                    child: ItemProductStock(
-                                        product: posStore.products[index]),
+                                    child: ItemProductStock(product: posStore.products[index]),
                                   ),
                                 ),
                               );
@@ -255,9 +251,7 @@ class ColumnListProductStock extends StatelessWidget {
                                 child: SlideAnimation(
                                   verticalOffset: 50.0,
                                   child: FadeInAnimation(
-                                    child: ItemProductStock(
-                                        product:
-                                            posStore.searchProducts[index]),
+                                    child: ItemProductStock(product: posStore.searchProducts[index]),
                                   ),
                                 ),
                               );
@@ -351,8 +345,7 @@ class ColumnListProduct extends GetView<ListProductController> {
                                 child: SlideAnimation(
                                   verticalOffset: 50.0,
                                   child: FadeInAnimation(
-                                    child: ItemProduct(
-                                        product: posStore.products[index]),
+                                    child: ItemProduct(product: posStore.products[index]),
                                   ),
                                 ),
                               );
@@ -372,9 +365,7 @@ class ColumnListProduct extends GetView<ListProductController> {
                                 child: SlideAnimation(
                                   verticalOffset: 50.0,
                                   child: FadeInAnimation(
-                                    child: ItemProduct(
-                                        product:
-                                            posStore.searchProducts[index]),
+                                    child: ItemProduct(product: posStore.searchProducts[index]),
                                   ),
                                 ),
                               );

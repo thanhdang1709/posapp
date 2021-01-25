@@ -84,11 +84,11 @@ class DrawerApp extends StatelessWidget {
                 ItemMenuDraw(
                   imageUrl: 'assets/icons/pos.png',
                   title: 'Bán hàng',
-                  selectedColor: Get.currentRoute == '/pos' ? Pallate.primaryColor : null,
+                  selectedColor: Get.currentRoute == 'pos' ? Pallate.primaryColor : null,
                   onPress: () {
                     Get.put(PosController());
                     Get.offNamed(
-                      '/pos',
+                      'pos',
                     );
                   },
                 ),

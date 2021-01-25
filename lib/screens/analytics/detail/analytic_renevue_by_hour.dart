@@ -8,25 +8,25 @@ import 'package:intl/intl.dart';
 import 'package:pos_app/ultils/number.dart';
 import 'package:pos_app/ultils/time.dart';
 
-class AnalyticDetailScreen extends GetView<AnalyticController> {
-  AnalyticDetailScreen({this.title, this.dateRange});
+class AnalyticRenevueByHourDetailScreen extends GetView<AnalyticController> {
+  AnalyticRenevueByHourDetailScreen({this.title, this.dateRange});
   final String title;
   final String dateRange;
 
   @override
   Widget build(BuildContext context) {
-    print(controller.mapSale);
-    List<MyRow> _builData(mapSale) {
+    print(controller.mapRevenueByHour);
+    List<MyRow> _builData(mapRevenueByHour) {
       List<MyRow> _lists = [];
-      mapSale.forEach((v) {
+      mapRevenueByHour.forEach((v) {
         _lists.add(
-          new MyRow((DateTime.parse(v['createdAt'])), v['sale']),
+          new MyRow((DateTime.parse(v['hour'])), v['revenue']),
         );
       });
       return _lists;
     }
 
-    final data = _builData(controller.mapSale);
+    final data = _builData(controller.mapRevenueByHour);
     return Scaffold(
       appBar: AppUltils.buildAppBar(
         height: 40,
@@ -68,7 +68,7 @@ class AnalyticDetailScreen extends GetView<AnalyticController> {
               child: CustomAxisTickFormatters(
                 _createSampleData(data),
                 animate: true,
-                isToday: false,
+                isToday: true,
               ),
             ),
             Divider(),
@@ -81,10 +81,10 @@ class AnalyticDetailScreen extends GetView<AnalyticController> {
                       scrollDirection: Axis.horizontal,
                       child: DataTable(
                           columns: _buildHeaderTable(),
-                          rows: controller.mapSale
+                          rows: controller.mapRevenueByHour
                               .map((e) => DataRow(cells: <DataCell>[
-                                    DataCell(Text(e['createdAt'].toString())),
-                                    DataCell(Text(e['sale'].toString())),
+                                    DataCell(Text(e['hour'].toString().split(' ')[1] + 'h')),
+                                    DataCell(Text($Number.numberFormat(e['revenue']))),
                                     DataCell(Text(e['sale'].toString())),
                                   ]))
                               .toList()),
@@ -109,7 +109,7 @@ _buildHeaderTable() {
   return [
     DataColumn(
         label: Text(
-      "Ngày",
+      "Giờ",
       style: TextStyle(fontWeight: FontWeight.bold),
     )),
     DataColumn(

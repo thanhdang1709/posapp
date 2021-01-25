@@ -13,6 +13,7 @@ class CartScreen extends GetView<CartController> {
   @override
   Widget build(BuildContext context) {
     ProductStore productStore = Get.find();
+
     List<Widget> buildCartItem(CartController controller) {
       List<Widget> results = [];
       controller.newCart.forEach(
@@ -42,16 +43,28 @@ class CartScreen extends GetView<CartController> {
 
     return Scaffold(
       appBar: AppUltils.buildAppBar(
-        height: 50,
+        height: 40,
         centerTitle: false,
         title: 'Giỏ hàng',
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 10),
-            child: Icon(
-              FontAwesome.plus_square,
-            ),
-          ),
+          Obx(() => controller.selectedCustomer.value.name != null
+              ? Container(
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.only(left: 5, right: 5),
+                  margin: EdgeInsets.only(bottom: 5, top: 5),
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                    color: Colors.white,
+                  )),
+                  child: Text(controller.selectedCustomer.value.name, style: TextStyle(fontWeight: FontWeight.w700)),
+                )
+              : Text('')),
+          // Padding(
+          //   padding: const EdgeInsets.only(right: 10),
+          //   child: Icon(
+          //     FontAwesome.plus_square,
+          //   ),
+          // ),
           SizedBox(
             width: 20,
           ),
@@ -157,16 +170,25 @@ class CartScreen extends GetView<CartController> {
           child: new Wrap(
             children: <Widget>[
               new ListTile(
-                leading: Icon(Icons.note_add),
-                title: new Text('Thêm ghi chú'),
+                leading: Icon(
+                  Icons.note_add,
+                  color: Colors.cyan,
+                ),
+                title: new Text(
+                  'Thêm ghi chú',
+                  style: TextStyle(color: Colors.cyan),
+                ),
                 onTap: () {
                   // controller.clearCart();
                   Get.to(AddNoteScreen());
                 },
               ),
               new ListTile(
-                leading: Icon(Icons.close),
-                title: new Text('Xoá giỏ hàng'),
+                leading: Icon(Icons.close, color: Colors.red),
+                title: new Text(
+                  'Xoá giỏ hàng',
+                  style: TextStyle(color: Colors.red),
+                ),
                 onTap: () {
                   controller.clearCart();
                 },

@@ -8,7 +8,7 @@ import 'package:pos_app/models/customer_model.dart';
 import 'package:pos_app/ultils/app_ultils.dart';
 import 'package:pos_app/widgets/drawer/drawer.dart';
 
-class CustomerScreen extends GetView<CustomerController> {
+class EmployeeScreen extends GetView<CustomerController> {
   @override
   Widget build(BuildContext context) {
     //print(Get.previousRoute);
@@ -21,11 +21,11 @@ class CustomerScreen extends GetView<CustomerController> {
           appBar: AppUltils.buildAppBar(
             // leading: Icon(Mdi.menu),
             height: 40,
-            title: 'Khách hàng (${controller.customers.length ?? 0})',
+            title: 'Nhân viên (${controller.customers.length ?? 0})',
             actions: [
               InkWell(
                 onTap: () {
-                  Get.toNamed('customer/add');
+                  Get.toNamed('employee/add');
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(10),
@@ -44,13 +44,13 @@ class CustomerScreen extends GetView<CustomerController> {
                   child: TextFormField(
                     focusNode: FocusNode(),
                     controller: controller.searchKeyword,
-                    decoration: InputDecoration(prefixIcon: Icon(Icons.search, size: 35), border: InputBorder.none, hintText: 'Tìm tên hoặc thông tin liên hệ'),
+                    decoration: InputDecoration(prefixIcon: Icon(Icons.search, size: 35), border: InputBorder.none, hintText: 'Tìm tên nhân viên'),
                   ),
                 ),
               ),
               Expanded(
                 child: SingleChildScrollView(
-                  child: Obx(() => !controller.isLoading.value
+                  child: Obx(() => controller.isLoading.value
                       ? Padding(
                           padding: const EdgeInsets.all(15),
                           child: controller.customers.length != 0
@@ -98,16 +98,7 @@ class RowContactItem extends StatelessWidget {
     CartController cartController = Get.put(CartController());
     print(Get.previousRoute);
     return InkWell(
-      onTap: () {
-        if (Get.previousRoute == 'cart' || Get.previousRoute == 'payment') {
-          cartController.selectedCustomer.value = customer;
-          Get.back();
-        } else {
-          // cartController.selectCustomer(customer);
-
-          Get.toNamed('customer/detail', arguments: customer);
-        }
-      },
+      onTap: () {},
       child: Container(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,

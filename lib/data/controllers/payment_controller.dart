@@ -28,7 +28,7 @@ class PaymentController extends GetxController {
   saveOrder() async {
     Map<String, String> data = {
       'table_id': 1.toString(),
-      'customer_id': 1.toString(),
+      'customer_id': cartController.selectedCustomer.value.id == null ? "0" : cartController.selectedCustomer.value.id.toString(),
       'status': 0.toString(),
       'status_title': 'pending',
       'amount_receive': 0.toString(),
@@ -48,7 +48,7 @@ class PaymentController extends GetxController {
   paymentOrder(totalPrice, amountReceive) async {
     Map<String, String> data = {
       'table_id': 1.toString(),
-      'customer_id': 1.toString(),
+      'customer_id': cartController.selectedCustomer.value.id == null ? "0" : cartController.selectedCustomer.value.id.toString(),
       'status': 1.toString(),
       'status_title': 'payment',
       'amount_receive': amountReceive.toString(),

@@ -22,6 +22,7 @@ class CustomerController extends GetxController {
 
   Timer _debounce;
   RxBool isSearchActive = false.obs;
+  RxBool isLoading = true.obs;
   @override
   onInit() async {
     super.onInit();
@@ -29,6 +30,7 @@ class CustomerController extends GetxController {
     //print(customers);
     print('onInit agrument');
     searchKeyword.addListener(_onSearchChanged);
+    print(isLoading.value);
   }
 
   @override
@@ -60,13 +62,17 @@ class CustomerController extends GetxController {
   }
 
   Future getAll() async {
+    isLoading.value = true;
+
     var response = (await CustomerService().getAll());
     if (response != null && response.length != 0) {
       // customers.assignAll(
       customers.assignAll(response.map((e) => CustomerModel.fromJson(e)).toList());
+      isLoading.value = false;
       //);
       // return customers;
     }
+    isLoading.value = false;
   }
 
   deleteCustomer(int id) async {

@@ -4,7 +4,9 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:pos_app/config/pallate.dart';
 import 'package:pos_app/data/controllers/analytic_controller.dart';
 import 'package:pos_app/screens/analytics/components/filter.dart';
-import 'package:pos_app/screens/analytics/detail/analytic_detail.dart';
+import 'package:pos_app/screens/analytics/detail/analytic_renevue_by_date.dart';
+import 'package:pos_app/screens/analytics/detail/analytic_renevue_by_hour.dart';
+import 'package:pos_app/screens/analytics/detail/analytic_sale_by_hour.dart';
 import 'package:pos_app/ultils/app_ultils.dart';
 import 'package:pos_app/ultils/number.dart';
 import 'package:pos_app/widgets/drawer/drawer.dart';
@@ -44,10 +46,17 @@ class AnalyticScreen extends GetView<AnalyticController> {
                           amount: controller.revenue.value,
                           bestDay: controller.bestDayRevenue.value,
                           onPressed: () {
-                            Get.to(AnalyticDetailScreen(
-                              title: 'Doanh thu',
-                              dateRange: controller.typeFilterLabel,
-                            ));
+                            if (controller.inDays == 0 || controller.inDays == -1) {
+                              Get.to(AnalyticRenevueByHourDetailScreen(
+                                title: 'Doanh thu',
+                                dateRange: controller.typeFilterLabel,
+                              ));
+                            } else {
+                              Get.to(AnalyticRenevueByDateDetailScreen(
+                                title: 'Doanh thu',
+                                dateRange: controller.typeFilterLabel,
+                              ));
+                            }
                           },
                         ),
                         AnalyticItem(
@@ -55,7 +64,19 @@ class AnalyticScreen extends GetView<AnalyticController> {
                           amount: controller.sales.value,
                           isNumber: true,
                           bestDay: controller.bestDaysales.value,
-                          onPressed: () {},
+                          onPressed: () {
+                            if (controller.inDays == 0 || controller.inDays == -1) {
+                              Get.to(AnalyticSaleByHourDetailScreen(
+                                title: 'Số đơn',
+                                dateRange: controller.typeFilterLabel,
+                              ));
+                            } else {
+                              Get.to(AnalyticRenevueByDateDetailScreen(
+                                title: 'Số đơn',
+                                dateRange: controller.typeFilterLabel,
+                              ));
+                            }
+                          },
                         ),
                         AnalyticItem(
                           label: 'Trung bình 1 đơn',
@@ -91,7 +112,7 @@ class AnalyticScreen extends GetView<AnalyticController> {
                     )))
                   ],
                 )
-              : CircularProgressIndicator(),
+              : Center(child: CircularProgressIndicator()),
         ),
       ),
     );

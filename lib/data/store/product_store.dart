@@ -7,10 +7,8 @@ class ProductStore extends GetXState {
   RxString inital = '100'.obs;
   RxList<ProductModel> products = <ProductModel>[].obs;
   RxList<ProductModel> searchProducts = <ProductModel>[].obs;
-
   RxList<CatelogModel> catelogies = <CatelogModel>[].obs;
   RxList<CatelogModel> searchCatelogies = <CatelogModel>[].obs;
-
   RxList<ProductModel> cartItem = <ProductModel>[].obs;
 
   @override
@@ -23,8 +21,7 @@ class ProductStore extends GetXState {
   Future getCatelogAll() async {
     var response = (await ProductService().getCatelogAll());
     print(response);
-    catelogies
-        .assignAll(response.map((e) => CatelogModel.fromJson(e)).toList());
+    catelogies.assignAll(response.map((e) => CatelogModel.fromJson(e)).toList());
   }
 
   Future getProductAll() async {

@@ -20,9 +20,17 @@ class OrderDetailController extends GetxController with SingleGetTickerProviderM
   void onInit() async {
     super.onInit();
     orderId = Get.arguments.id;
-    tabController = TabController(length: 2, vsync: this);
+
     await getOrderById(orderId);
     isLoading.value = false;
+    print(order.value.customer);
+    if (order.value.customer != null) {
+      tabItem.add(Tab(
+        child: Text('Khách hàng'),
+      ));
+    }
+    tabController = TabController(length: tabItem.length, vsync: this);
+    print(order.value.employee.name);
   }
 
   updateStatusOrder() {}
@@ -108,6 +116,6 @@ class OrderDetailController extends GetxController with SingleGetTickerProviderM
     ),
     Tab(
       child: Text("Chi tiết"),
-    )
+    ),
   ];
 }

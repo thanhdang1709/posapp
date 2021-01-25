@@ -5,6 +5,7 @@ import 'package:pos_app/data/store/product_store.dart';
 import 'package:pos_app/models/order_model.dart';
 import 'package:pos_app/models/product_model.dart';
 import 'package:pos_app/routes/pages.dart';
+import 'package:pos_app/screens/cart/components/cart_item.dart';
 import 'package:pos_app/screens/order/list/components/item_order.dart';
 import 'package:pos_app/screens/order/list/components/item_order_group_date.dart';
 import 'package:pos_app/services/order_service.dart';
@@ -16,6 +17,7 @@ class OrderController extends GetxController {
   RxMap mapOrders = {}.obs;
   RxInt totalOrderItem = 0.obs;
   RxInt totalOrderPrice = 0.obs;
+  RxBool isLoading = true.obs;
   @override
   void onInit() async {
     super.onInit();
@@ -31,10 +33,12 @@ class OrderController extends GetxController {
   }
 
   Future getAll() async {
+    isLoading.value = true;
     var response = (await OrderService().getAll());
     if (response != null && response.length != 0) {
       orders.assignAll(response.map((e) => OrderModel.fromJson(e)).toList());
     }
+    isLoading.value = false;
   }
 
   List<Widget> buildItemName(List<ProductModel> products) {

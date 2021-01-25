@@ -16,8 +16,7 @@ class PosScreen extends StatefulWidget {
   _PosScreenState createState() => _PosScreenState();
 }
 
-class _PosScreenState extends State<PosScreen>
-    with SingleTickerProviderStateMixin {
+class _PosScreenState extends State<PosScreen> with SingleTickerProviderStateMixin {
   TabController _controller;
   // ignore: unused_field
   int _selectedIndex = 0;
@@ -31,6 +30,7 @@ class _PosScreenState extends State<PosScreen>
   var box = GetStorage();
   ProductStore posStore = Get.find<ProductStore>();
   PosController posController = Get.find<PosController>();
+  //CartController cartController = Get.put(CartController());
   @override
   void initState() {
     posStore.catelogies.forEach(
@@ -41,8 +41,7 @@ class _PosScreenState extends State<PosScreen>
           ),
         ),
     );
-    _controller =
-        TabController(length: posStore.catelogies.length + 1, vsync: this);
+    _controller = TabController(length: posStore.catelogies.length + 1, vsync: this);
     _controller.addListener(() {
       setState(() {
         _selectedIndex = _controller.index;
@@ -85,19 +84,33 @@ class _PosScreenState extends State<PosScreen>
           assetsImage: 'assets/waiter.png',
         ),
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 20),
-            child: Icon(FontAwesome.table),
-          ),
-          InkWell(
-            onTap: () {
-              Get.toNamed("customer");
-            },
-            child: Padding(
-              padding: const EdgeInsets.only(right: 20),
-              child: Icon(FontAwesome.user),
-            ),
-          )
+          // Padding(
+          //   padding: const EdgeInsets.only(right: 20),
+          //   child: Icon(FontAwesome.table),
+          // ),
+          // Obx(() => cartController.selectedCustomer.value.name != null
+          //     ? Container(
+          //         alignment: Alignment.center,
+          //         padding: EdgeInsets.only(left: 5, right: 5),
+          //         decoration: BoxDecoration(
+          //             border: Border.all(
+          //           color: Colors.white,
+          //         )),
+          //         child: Text(cartController.selectedCustomer.value.name, style: TextStyle(fontWeight: FontWeight.w700)),
+          //       )
+          //     : Text('')),
+          // SizedBox(
+          //   width: 5,
+          // ),
+          // InkWell(
+          //   onTap: () {
+          //     Get.toNamed("customer");
+          //   },
+          //   child: Padding(
+          //     padding: const EdgeInsets.only(right: 10),
+          //     child: Icon(FontAwesome.user),
+          //   ),
+          // )
         ],
         bottom: TabBar(
           isScrollable: true,

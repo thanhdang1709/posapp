@@ -71,7 +71,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                                                     style: TextStyle(
                                                       color: Colors.green,
                                                     ))
-                                                : Text(controller.order.value.status.first.title)
+                                                : Text(controller.order.value.status.last.title)
                                           ],
                                         ),
                                         Spacer(),
@@ -81,7 +81,10 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                                               '#' + controller.order.value.orderCode,
                                               style: TextStyle(color: Colors.blue),
                                             ),
-                                            Text('Nhân viên')
+                                            Text(
+                                              controller.order.value.employee.name,
+                                              style: TextStyle(color: Colors.cyan),
+                                            )
                                           ],
                                         ),
                                       ],
@@ -114,17 +117,48 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                                   ),
                                   TabHeading(controller: controller),
                                   Expanded(
-                                    child: TabBarView(
-                                      controller: controller.tabController,
-                                      children: [
-                                        SingleChildScrollView(
-                                          child: Column(
-                                            children: [...controller.buildItemName(controller.order.value.products)],
+                                    child: controller.order.value.customer != null
+                                        ? TabBarView(
+                                            controller: controller.tabController,
+                                            children: [
+                                              SingleChildScrollView(
+                                                child: Column(
+                                                  children: [...controller.buildItemName(controller.order.value.products)],
+                                                ),
+                                              ),
+                                              SingleChildScrollView(child: Column(children: [...controller.buildTimeLineStatus(controller.order.value.status, controller.order.value)])),
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Expanded(
+                                                      child: Container(
+                                                    margin: EdgeInsets.only(top: 20),
+                                                    // height: 100,
+                                                    //alignment: Alignment.center,
+                                                    decoration: BoxDecoration(border: Border.all(color: Pallate.primaryColor)),
+                                                    padding: EdgeInsets.all(10),
+                                                    child: Text(
+                                                      controller.order.value.customer.name,
+                                                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Pallate.primaryColor),
+                                                      textAlign: TextAlign.center,
+                                                    ),
+                                                  )),
+                                                ],
+                                              )
+                                            ],
+                                          )
+                                        : TabBarView(
+                                            controller: controller.tabController,
+                                            children: [
+                                              SingleChildScrollView(
+                                                child: Column(
+                                                  children: [...controller.buildItemName(controller.order.value.products)],
+                                                ),
+                                              ),
+                                              SingleChildScrollView(child: Column(children: [...controller.buildTimeLineStatus(controller.order.value.status, controller.order.value)])),
+                                            ],
                                           ),
-                                        ),
-                                        Column(children: [...controller.buildTimeLineStatus(controller.order.value.status, controller.order.value)]),
-                                      ],
-                                    ),
                                   ),
                                 ],
                               ),
@@ -137,16 +171,21 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                                         InkWell(
                                           onTap: () {},
                                           child: Container(
+                                            margin: EdgeInsets.only(left: 5),
                                             width: 60,
                                             height: 50,
-                                            color: Colors.white,
+                                            decoration: BoxDecoration(
+                                              border: Border.all(color: Pallate.primaryColor),
+                                              borderRadius: BorderRadius.circular(10),
+                                              color: Colors.white,
+                                            ),
                                             child: Icon(
                                               Icons.more_horiz,
                                               size: 30,
                                             ),
                                           ),
                                         ),
-                                        SizedBox(width: 10),
+                                        SizedBox(width: 5),
                                         Expanded(
                                           child: controller.order.value.status.last.title == 'pending'
                                               ? SlidingButton(

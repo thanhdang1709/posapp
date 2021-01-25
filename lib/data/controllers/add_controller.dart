@@ -34,6 +34,7 @@ class AddProductController extends GetxController {
   TextEditingController noteController = new TextEditingController();
   TextEditingController barcodeController = new TextEditingController();
   TextEditingController promoPriceController = new TextEditingController();
+  TextEditingController costController = new TextEditingController();
 
   onChangeNameProduct(value) {
     labelName.value = value;
@@ -77,6 +78,7 @@ class AddProductController extends GetxController {
       'barcode': barcodeController.text.toString().trim(),
       'stock': stockController.text.toString().trim(),
       'catelog_id': catelogId.toString().trim(),
+      'cost': costController.text.toString().trim(),
       'color': ColorFormat.colorToString(pickerColor.value).toString().trim()
     };
 

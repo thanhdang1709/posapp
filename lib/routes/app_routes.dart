@@ -15,6 +15,9 @@ abstract class Routes {
   static const CUSTOMER = 'customer';
   static const ADD_CUSTOMER = 'customer/add';
   static const CUSTOMER_DETAIL = 'customer/detail';
+  static const EMPLOYEE = 'employee';
+  static const ADD_EMPLOYEE = 'employee/add';
+  static const EMPLOYEE_DETAIL = 'employee/detail';
   static const TRANSACTION = 'transaction';
   static const CART = 'cart';
   static const ORDER = 'order';

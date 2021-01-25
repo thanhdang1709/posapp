@@ -13,15 +13,13 @@ class PinCodeVerificationScreen extends StatefulWidget {
   PinCodeVerificationScreen(this.phoneNumber);
 
   @override
-  _PinCodeVerificationScreenState createState() =>
-      _PinCodeVerificationScreenState();
+  _PinCodeVerificationScreenState createState() => _PinCodeVerificationScreenState();
 }
 
 class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
   var onTapRecognizer;
 
-  TextEditingController textEditingController =
-      TextEditingController(); //..text = "123456";
+  TextEditingController textEditingController = TextEditingController(); //..text = "123456";
 
   StreamController<ErrorAnimationType> errorController;
 
@@ -79,18 +77,12 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                 ),
               ),
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 30.0, vertical: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 8),
                 child: RichText(
                   text: TextSpan(
                       text: "Điền mã được gửi đến số:  ",
                       children: [
-                        TextSpan(
-                            text: widget.phoneNumber,
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15)),
+                        TextSpan(text: widget.phoneNumber, style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15)),
                       ],
                       style: TextStyle(color: Colors.black54, fontSize: 15)),
                   textAlign: TextAlign.center,
@@ -102,8 +94,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
               Form(
                 key: formKey,
                 child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 8.0, horizontal: 30),
+                    padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 30),
                     child: PinCodeTextField(
                       appContext: context,
                       pastedTextStyle: TextStyle(
@@ -126,8 +117,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                         borderRadius: BorderRadius.circular(5),
                         fieldHeight: 60,
                         fieldWidth: 50,
-                        activeFillColor:
-                            hasError ? Colors.orange : Colors.white,
+                        activeFillColor: hasError ? Colors.orange : Colors.white,
                       ),
                       cursorColor: Colors.black,
                       animationDuration: Duration(milliseconds: 300),
@@ -168,10 +158,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: Text(
                   hasError ? "* Mã xác minh không đúngff" : "",
-                  style: TextStyle(
-                      color: Colors.red,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400),
+                  style: TextStyle(color: Colors.red, fontSize: 12, fontWeight: FontWeight.w400),
                 ),
               ),
               SizedBox(
@@ -182,22 +169,13 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                 text: TextSpan(
                     text: "Bạn không nhận được mã? ",
                     style: TextStyle(color: Colors.black54, fontSize: 15),
-                    children: [
-                      TextSpan(
-                          text: " GỬI LẠI",
-                          recognizer: onTapRecognizer,
-                          style: TextStyle(
-                              color: Color(0xFF91D3B3),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16))
-                    ]),
+                    children: [TextSpan(text: " GỬI LẠI", recognizer: onTapRecognizer, style: TextStyle(color: Color(0xFF91D3B3), fontWeight: FontWeight.bold, fontSize: 16))]),
               ),
               SizedBox(
                 height: 14,
               ),
               Container(
-                margin:
-                    const EdgeInsets.symmetric(vertical: 16.0, horizontal: 30),
+                margin: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 30),
                 child: ButtonTheme(
                   height: 50,
                   child: FlatButton(
@@ -205,8 +183,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                       formKey.currentState.validate();
                       // conditions for validating
                       if (currentText.length != 6 || currentText != "123456") {
-                        errorController.add(ErrorAnimationType
-                            .shake); // Triggering error shake animation
+                        errorController.add(ErrorAnimationType.shake); // Triggering error shake animation
                         setState(() {
                           hasError = true;
                         });
@@ -221,33 +198,21 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                           //     CupertinoPageRoute(builder: (_) {
                           //   return PosScreen();
                           // }));
-                          Get.offAllNamed('/pos');
+                          Get.offAllNamed('pos');
                         });
                       }
                     },
                     child: Center(
                         child: Text(
                       "XÁC MINH".toUpperCase(),
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold),
+                      style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
                     )),
                   ),
                 ),
                 decoration: BoxDecoration(
                     color: Colors.green.shade300,
                     borderRadius: BorderRadius.circular(5),
-                    boxShadow: [
-                      BoxShadow(
-                          color: Colors.green.shade200,
-                          offset: Offset(1, -2),
-                          blurRadius: 5),
-                      BoxShadow(
-                          color: Colors.green.shade200,
-                          offset: Offset(-1, 2),
-                          blurRadius: 5)
-                    ]),
+                    boxShadow: [BoxShadow(color: Colors.green.shade200, offset: Offset(1, -2), blurRadius: 5), BoxShadow(color: Colors.green.shade200, offset: Offset(-1, 2), blurRadius: 5)]),
               ),
               SizedBox(
                 height: 16,

@@ -16,6 +16,7 @@ class CustomerModel {
     this.avatar,
   });
   factory CustomerModel.fromJson(json) {
+    if (json == null || json == 0) return null;
     return CustomerModel(
       id: json['id'],
       name: json['name'],

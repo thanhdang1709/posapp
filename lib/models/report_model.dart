@@ -1,3 +1,5 @@
+import 'package:pos_app/models/customer_model.dart';
+
 class ReportModel {
   int id;
   int userId;
@@ -16,27 +18,28 @@ class ReportModel {
   DateTime updatedAt;
   List<Products> products;
   User user;
-  Null customer;
+  CustomerModel customer;
 
-  ReportModel(
-      {this.id,
-      this.userId,
-      this.storeId,
-      this.tableId,
-      this.orderCode,
-      this.status,
-      this.amountReceive,
-      this.amountChange,
-      this.totalPrice,
-      this.note,
-      this.timeStart,
-      this.timeEnd,
-      this.deleted,
-      this.createdAt,
-      this.updatedAt,
-      this.products,
-      this.user,
-      this.customer});
+  ReportModel({
+    this.id,
+    this.userId,
+    this.storeId,
+    this.tableId,
+    this.orderCode,
+    this.status,
+    this.amountReceive,
+    this.amountChange,
+    this.totalPrice,
+    this.note,
+    this.timeStart,
+    this.timeEnd,
+    this.deleted,
+    this.createdAt,
+    this.updatedAt,
+    this.products,
+    this.user,
+    this.customer,
+  });
 
   ReportModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -61,7 +64,7 @@ class ReportModel {
       });
     }
     user = json['user'] != null ? new User.fromJson(json['user']) : null;
-    customer = json['customer'];
+    customer = CustomerModel.fromJson(json['customer']);
   }
 
   Map<String, dynamic> toJson() {
@@ -100,35 +103,40 @@ class Products {
   int catelogId;
   int stock;
   int price;
-  Null promoprice;
+  int promoprice;
+  int cost;
+  int public;
   String defaultImage;
   String color;
   int deleted;
-  Null thumbImage;
-  Null barcode;
-  Null note;
-  Null createdAt;
-  Null updatedAt;
+  String thumbImage;
+  String barcode;
+  String note;
+  String createdAt;
+  String updatedAt;
   Pivot pivot;
 
-  Products(
-      {this.id,
-      this.name,
-      this.userId,
-      this.storeId,
-      this.catelogId,
-      this.stock,
-      this.price,
-      this.promoprice,
-      this.defaultImage,
-      this.color,
-      this.deleted,
-      this.thumbImage,
-      this.barcode,
-      this.note,
-      this.createdAt,
-      this.updatedAt,
-      this.pivot});
+  Products({
+    this.id,
+    this.name,
+    this.userId,
+    this.storeId,
+    this.catelogId,
+    this.stock,
+    this.price,
+    this.promoprice,
+    this.cost,
+    this.public,
+    this.defaultImage,
+    this.color,
+    this.deleted,
+    this.thumbImage,
+    this.barcode,
+    this.note,
+    this.createdAt,
+    this.updatedAt,
+    this.pivot,
+  });
 
   Products.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -139,6 +147,10 @@ class Products {
     stock = json['stock'];
     price = json['price'];
     promoprice = json['promoprice'];
+
+    cost = json['cost'];
+
+    public = json['public'];
     defaultImage = json['default_image'];
     color = json['color'];
     deleted = json['deleted'];

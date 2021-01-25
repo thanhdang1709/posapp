@@ -6,18 +6,22 @@ import 'package:pos_app/models/report_model.dart';
 import 'package:pos_app/services/analytic_services.dart';
 
 class AnalyticController extends GetxController with SingleGetTickerProviderMixin {
+  final now = DateTime.now();
   TabController tabController;
   RxBool isLoading = true.obs;
-  RxString startDate = '2021-01-24'.obs;
-  RxString endDate = '2021-01-26'.obs;
+  RxString startDate = DateFormat('yyyy-MM-dd').format(DateTime.now()).obs;
+  RxString endDate = DateFormat('yyyy-MM-dd').format(DateTime.now()).obs;
   RxString typeFilter = 'today'.obs;
   RxList<ReportModel> reportLists = <ReportModel>[].obs;
   RxInt revenue = 0.obs;
   RxString bestDayRevenue = ''.obs;
   RxInt sales = 0.obs;
   RxString bestDaysales = ''.obs;
-  RxList<Map> mapRevenue = <Map>[].obs;
-  RxList<Map> mapSale = <Map>[].obs;
+  RxList<Map> mapRevenueByDate = <Map>[].obs;
+  RxList<Map> mapRevenueByDateTabHour = <Map>[].obs;
+  RxList<Map> mapSaleByDate = <Map>[].obs;
+  RxList<Map> mapRevenueByHour = <Map>[].obs;
+  RxList<Map> mapSaleByHour = <Map>[].obs;
   RxInt avgSale = 0.obs;
   RxInt profit = 0.obs;
   RxString bestProduct = ''.obs;
@@ -34,6 +38,7 @@ class AnalyticController extends GetxController with SingleGetTickerProviderMixi
     var _results = await AnalyticServices().getReport(body: {"start_date": startDate.value, "end_date": endDate.value});
     if (_results.length == 0) {
       reportLists.clear();
+      mapResponseToIndex();
       isLoading.value = false;
       return;
     }
@@ -46,29 +51,39 @@ class AnalyticController extends GetxController with SingleGetTickerProviderMixi
   mapResponseToIndex() {
     //tạo map doanh thu
     if (reportLists.length != 0) {
-      mapRevenue.assignAll(reportLists.map((v) {
+      //group by date;
+      // map doanh thu này để tính toán analytic screen
+      mapRevenueByDate.assignAll(reportLists.map((v) {
         return {'totalPrice': v.totalPrice, 'createdAt': v.createdAt, 'sale': 1};
       }).toList());
-      revenue.value = mapRevenue.map((e) => e['totalPrice']).reduce((a, b) => a + b);
-      dynamic maxRevenue = mapRevenue.first;
-      mapRevenue.forEach((e) {
+
+      revenue.value = mapRevenueByDate.map((e) => e['totalPrice']).reduce((a, b) => a + b);
+      dynamic maxRevenue = mapRevenueByDate.first;
+      mapRevenueByDate.forEach((e) {
         if (e['totalPrice'] > maxRevenue['totalPrice']) maxRevenue = e;
       });
       bestDayRevenue.value = DateFormat('dd-MM-yyyy').format(maxRevenue['createdAt']);
-      sales.value = mapRevenue.length;
+      sales.value = mapRevenueByDate.length;
 
-      var groupMapRevenue = groupBy(mapRevenue, (obj) => DateFormat('yyyy-MM-dd').format(obj['createdAt']));
-      groupMapRevenue.forEach((k, v) {
-        return mapSale.add({'sale': v.length, 'createdAt': k});
+      //map by date dùng để show biểu đồ chi tiết theo ngày
+      var groupMapRevenueByDate = groupBy(mapRevenueByDate, (obj) => DateFormat('yyyy-MM-dd').format(obj['createdAt']));
+      mapSaleByDate.clear();
+      groupMapRevenueByDate.forEach((k, v) {
+        return mapSaleByDate.add({
+          'sale': v.length,
+          'createdAt': k,
+          'revenue': v.map((e) => e['totalPrice']).reduce((a, b) => a + b),
+        });
       });
       var max = 0;
-      mapSale.forEach((v) {
+      mapSaleByDate.forEach((v) {
         if (v['sale'] > max) {
           max = v['sale'];
           bestDaysales.value = DateFormat('dd-MM-yyyy').format(DateTime.parse(v['createdAt']));
         }
       });
 
+      //best product
       var getListProduct = ((reportLists.map((v) {
         var result;
         v.products.forEach((product) {
@@ -78,23 +93,42 @@ class AnalyticController extends GetxController with SingleGetTickerProviderMixi
       })));
 
       var groupListProduct = groupBy(getListProduct, (obj) => obj['productId']);
-      print(groupListProduct);
       var maxProduct = 0;
-      groupListProduct.forEach((k, v) {
-        if (v.length > maxProduct) {
-          maxProduct = v.length;
-          bestProduct.value = v.first['product'];
-        }
+      groupListProduct
+        ..forEach((k, v) {
+          if (v.length > maxProduct) {
+            maxProduct = v.length;
+            bestProduct.value = v.first['product'];
+          }
+        });
+      //group by hour
+      mapRevenueByHour.assignAll(reportLists.map((v) {
+        return {'totalPrice': v.totalPrice, 'createdAt': v.createdAt};
+      }).toList());
+      var groupRevenueByHour;
+      if (inDays == 0 || inDays == -1) {
+        groupRevenueByHour = groupBy(mapRevenueByHour, (obj) => DateFormat('yyyy-MM-dd HH').format(obj['createdAt']));
+      } else {
+        groupRevenueByHour = groupBy(mapRevenueByHour, (obj) => DateFormat('HH').format(obj['createdAt']));
+      }
+
+      mapRevenueByHour.clear();
+      var maxSale = 0;
+      groupRevenueByHour.forEach((k, v) {
+        mapRevenueByHour.add({'hour': k, 'revenue': v.map((e) => e['totalPrice']).reduce((a, b) => a + b), 'sale': v.length, 'max': false});
       });
-      print(bestProduct.value);
+      //print(mapRevenueByHour);
     } else {
       revenue.value = 0;
       bestDayRevenue.value = '';
       sales.value = 0;
       bestDaysales.value = '';
-      mapRevenue.clear();
-      mapSale.clear();
+      mapRevenueByDate.clear();
+      mapSaleByDate.clear();
+      mapRevenueByHour.clear();
+      mapSaleByHour.clear();
     }
+    // print(reportLists);
   }
 
   List<Widget> tabItem = [
@@ -105,14 +139,14 @@ class AnalyticController extends GetxController with SingleGetTickerProviderMixi
       child: Text("Mỗi ngày"),
     )
   ];
-
+  int get inDays => (DateTime.parse(startDate.value).difference(DateTime.parse(endDate.value)).inDays);
   String get typeFilterLabel {
     switch (typeFilter.value) {
       case 'today':
         return 'Hôm nay (${DateFormat('dd-MM').format(DateTime.now())})';
         break;
       case 'this_week':
-        return 'Tuần này';
+        return 'Tuần này ';
         break;
       case 'this_month':
         return 'Tháng này (tháng ${DateFormat('MM').format(DateTime.now())})';
