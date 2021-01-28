@@ -161,7 +161,7 @@ class ReceiptController extends GetxController {
                         mainAxisAlignment: pw.MainAxisAlignment.center,
                         children: [
                           pw.Text(
-                            '154 Pham Van Chieu - P.9 - Q.Go Vap - HCM',
+                            TiengViet.parse(GetStorage().read('address') ?? 'Không có'),
                             maxLines: 2,
                             style: pw.TextStyle(fontSize: 8),
                           ),
@@ -171,7 +171,7 @@ class ReceiptController extends GetxController {
                         mainAxisAlignment: pw.MainAxisAlignment.center,
                         children: [
                           pw.Text(
-                            'Hotline: 0979159779',
+                            'Hotline: ${TiengViet.parse(GetStorage().read('phone') ?? '')}',
                             maxLines: 2,
                             style: pw.TextStyle(fontSize: 8),
                           ),
@@ -355,7 +355,7 @@ class ReceiptController extends GetxController {
                         mainAxisAlignment: pw.MainAxisAlignment.center,
                         children: [
                           pw.Text(
-                            '154 Pham Van Chieu - P.9 - Q.Go Vap - HCM',
+                            TiengViet.parse(GetStorage().read('address') ?? 'Không có'),
                             maxLines: 2,
                             style: pw.TextStyle(fontSize: 8),
                           ),
@@ -365,7 +365,7 @@ class ReceiptController extends GetxController {
                         mainAxisAlignment: pw.MainAxisAlignment.center,
                         children: [
                           pw.Text(
-                            'Hotline: 0979159779',
+                            'Hotline: ${TiengViet.parse(GetStorage().read('phone') ?? 'Không có')}',
                             maxLines: 2,
                             style: pw.TextStyle(fontSize: 8),
                           ),

@@ -44,10 +44,10 @@ class _ListProductScreenState extends State<ListProductScreen> with SingleTicker
         height: 80,
         title: 'Menu (${productStore.products.length})',
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 10),
-            child: Icon(Mdi.plus),
-          )
+          // Padding(
+          //   padding: const EdgeInsets.only(right: 10),
+          //   child: Icon(Mdi.plus),
+          // )
         ],
         tabBar: TabBar(
           isScrollable: false,

@@ -16,7 +16,6 @@ class OrderDetailController extends GetxController with SingleGetTickerProviderM
   Rx<OrderModel> order = OrderModel().obs;
   RxBool isLoading = true.obs;
   int orderId = 0;
-  //OrderController orderController = Get.put(OrderController());
   TextEditingController noteController = new TextEditingController();
   @override
   void onInit() async {
@@ -24,15 +23,20 @@ class OrderDetailController extends GetxController with SingleGetTickerProviderM
     orderId = Get.arguments.id;
 
     await getOrderById(orderId);
-    isLoading.value = false;
+
     print(order.value.customer);
     if (order.value.customer != null) {
       tabItem.add(Tab(
         child: Text('Khách hàng'),
       ));
     }
+    if (order.value.client != null) {
+      tabItem.add(Tab(
+        child: Text('Đơn App'),
+      ));
+    }
     tabController = TabController(length: tabItem.length, vsync: this);
-    print(order.value.employee.name);
+    //  print(order.value.client.name);
   }
 
   updateStatusOrder() {}
@@ -46,7 +50,6 @@ class OrderDetailController extends GetxController with SingleGetTickerProviderM
     var _result = await OrderService().updatePayment(data: data);
     print(_result);
     await getOrderById(orderId);
-    isLoading.value = false;
   }
 
   updateNoteOrder({statusTitle, status}) async {
@@ -55,15 +58,16 @@ class OrderDetailController extends GetxController with SingleGetTickerProviderM
       'order_id': order.value.id.toString(),
       'note': noteController.text,
     };
-    var _result = await OrderService().updatePayment(data: data);
+    var _result = await OrderService().updateNote(data: data);
     print(_result);
     await getOrderById(orderId);
-    isLoading.value = false;
   }
 
   Future<OrderModel> getOrderById(id) async {
     var result = await OrderService().getOrder(id);
     order.value = OrderModel.fromJson(result);
+    isLoading.value = false;
+
     return OrderModel.fromJson(result);
   }
 
@@ -77,7 +81,7 @@ class OrderDetailController extends GetxController with SingleGetTickerProviderM
 
     //await orderController.getAll();
     //Get.back();
-    isLoading.value = false;
+
     Get.offAllNamed('pos');
   }
 

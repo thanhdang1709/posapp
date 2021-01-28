@@ -17,10 +17,16 @@ class OrderController extends GetxController {
   RxInt totalOrderItem = 0.obs;
   RxInt totalOrderPrice = 0.obs;
   RxBool isLoading = true.obs;
+
+  TextEditingController searchController = TextEditingController();
   @override
   void onInit() async {
     super.onInit();
     cartItem.assignAll(productStore.cartItem.map((element) => element.id).toList());
+    await loadData();
+  }
+
+  Future loadData() async {
     await getAll();
     mapOrders.assignAll(groupBy(orders, (obj) => obj.date));
     totalOrderItem.value = orders.length;
@@ -59,13 +65,10 @@ class OrderController extends GetxController {
             Get.toNamed(Routes.ORDER_DETAIL, arguments: e);
           },
           child: ItemOrder(
-              orderPrice: e.products.map((e) => e.price).reduce((a, b) => a + b),
-              time: e.createdAt,
-              orderCode: e.orderCode,
-              listProducts: e.products,
-              buildItemName: buildItemName(e.products),
-              iconData: e.status.last.statusIcon,
-              iconColor: e.status.last.statusColor),
+            orderPrice: e.products.map((e) => e.price).reduce((a, b) => a + b),
+            order: e,
+            buildItemName: buildItemName(e.products),
+          ),
         ));
     });
     return lists;

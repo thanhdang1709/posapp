@@ -21,10 +21,13 @@ class AnalyticController extends GetxController with SingleGetTickerProviderMixi
   RxList<Map> mapRevenueByDateTabHour = <Map>[].obs;
   RxList<Map> mapSaleByDate = <Map>[].obs;
   RxList<Map> mapRevenueByHour = <Map>[].obs;
+  RxList<Map> mapRevenueByUser = <Map>[].obs;
   RxList<Map> mapSaleByHour = <Map>[].obs;
   RxInt avgSale = 0.obs;
   RxInt profit = 0.obs;
   RxString bestProduct = ''.obs;
+  RxString bestUser = ''.obs;
+
   @override
   onInit() async {
     super.onInit();
@@ -113,11 +116,32 @@ class AnalyticController extends GetxController with SingleGetTickerProviderMixi
       }
 
       mapRevenueByHour.clear();
-      var maxSale = 0;
+      //var maxSale = 0;
       groupRevenueByHour.forEach((k, v) {
         mapRevenueByHour.add({'hour': k, 'revenue': v.map((e) => e['totalPrice']).reduce((a, b) => a + b), 'sale': v.length, 'max': false});
       });
-      //print(mapRevenueByHour);
+      print(mapRevenueByHour);
+      mapRevenueByHour.sort((a, b) => a['hour'].compareTo(b['hour']));
+
+      //bestUser
+      var groupRevenueByEmployee;
+      groupRevenueByEmployee = groupBy(reportLists, (obj) => obj.user.id);
+      mapRevenueByUser.clear();
+      groupRevenueByEmployee.forEach((k, v) {
+        mapRevenueByUser.add({
+          'user_id': k,
+          'user_name': reportLists.value.firstWhere((e) => e.user.id == k).user.name,
+          'revenue': v.map((e) => e.totalPrice).reduce((a, b) => a + b),
+          'sale': v.length,
+          'max': false,
+          'percent': ((v.length) / (sales.value ?? 1) * 100).toStringAsFixed(0)
+        });
+      });
+
+      mapRevenueByUser.sort((a, b) => a['revenue'].compareTo(b['revenue']));
+      mapRevenueByUser.assignAll(mapRevenueByUser.reversed.toList());
+      bestUser.value = mapRevenueByUser.first['user_name'];
+      print(mapRevenueByUser);
     } else {
       revenue.value = 0;
       bestDayRevenue.value = '';
@@ -127,6 +151,7 @@ class AnalyticController extends GetxController with SingleGetTickerProviderMixi
       mapSaleByDate.clear();
       mapRevenueByHour.clear();
       mapSaleByHour.clear();
+      mapRevenueByUser.clear();
     }
     // print(reportLists);
   }

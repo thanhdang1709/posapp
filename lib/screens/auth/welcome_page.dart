@@ -84,10 +84,7 @@ class WelcomePage extends StatelessWidget {
                                 //     fontWeight: FontWeight.w500,
                                 //     fontSize: 18,
                                 //     color: Colors.white),
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                    color: Colors.white),
+                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white),
                               ),
                             ),
                           ),
@@ -95,14 +92,10 @@ class WelcomePage extends StatelessWidget {
                           Expanded(
                             child: SnakeButton(
                               borderColor: Colors.orange,
-                              onPressed: () =>
-                                  _openPage(context, RegisterPage()),
+                              onPressed: () => _openPage(context, RegisterPage()),
                               child: Text(
                                 'Đăng ký',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                    color: Colors.white),
+                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white),
                               ),
                             ),
                           ),
@@ -151,8 +144,7 @@ class RectangularButton extends StatelessWidget {
         onPressed: onPressed,
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
-        shape: RoundedRectangleBorder(
-            side: BorderSide(color: Colors.white, width: 3)),
+        shape: RoundedRectangleBorder(side: BorderSide(color: Colors.white, width: 3)),
         child: Text(
           label,
           style: GoogleFonts.roboto(

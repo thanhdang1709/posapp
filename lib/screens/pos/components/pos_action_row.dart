@@ -33,11 +33,11 @@ class _PosActionRowState extends State<PosActionRow> {
               SizedBox(
                 width: 20,
               ),
-              Icon(
-                Mdi.viewGridOutline,
-                size: 30,
-                color: Pallate.iconActionColor,
-              )
+              // Icon(
+              //   Mdi.viewGridOutline,
+              //   size: 30,
+              //   color: Pallate.iconActionColor,
+              // )
             ],
           )
         : Row(children: [

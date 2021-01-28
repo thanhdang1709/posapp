@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:get/get.dart';
 import 'package:mdi/mdi.dart';
 import 'package:pos_app/config/pallate.dart';
+import 'package:pos_app/screens/setting/account/info.dart';
 import 'package:pos_app/ultils/app_ultils.dart';
 import 'package:pos_app/widgets/drawer/drawer.dart';
 
@@ -29,30 +31,35 @@ class _SettingScreenState extends State<SettingScreen> {
                 SizedBox(
                   height: 20,
                 ),
-                RowSettingItem(
-                  title: 'Cài đặt chung',
-                  icon: Icons.settings,
+                // RowSettingItem(
+                //   title: 'Cài đặt chung',
+                //   icon: Icons.settings,
+                // ),
+                InkWell(
+                  onTap: () {
+                    Get.to(AccountScreen());
+                  },
+                  child: RowSettingItem(
+                    title: 'Thông tin cửa hàng',
+                    icon: Icons.house,
+                  ),
                 ),
-                RowSettingItem(
-                  title: 'Thông tin cửa hàng',
-                  icon: Icons.house,
-                ),
-                RowSettingItem(
-                  title: 'Đặt hàng và danh mục',
-                  icon: Mdi.cart,
-                ),
-                RowSettingItem(
-                  title: 'Hoá đơn',
-                  icon: Icons.receipt,
-                ),
-                RowSettingItem(
-                  title: 'Tài chính',
-                  icon: FontAwesome.dollar,
-                ),
-                RowSettingItem(
-                  title: 'Xuất báo cáo',
-                  icon: Mdi.export,
-                ),
+                // RowSettingItem(
+                //   title: 'Đặt hàng và danh mục',
+                //   icon: Mdi.cart,
+                // ),
+                // RowSettingItem(
+                //   title: 'Hoá đơn',
+                //   icon: Icons.receipt,
+                // ),
+                // RowSettingItem(
+                //   title: 'Tài chính',
+                //   icon: FontAwesome.dollar,
+                // ),
+                // RowSettingItem(
+                //   title: 'Xuất báo cáo',
+                //   icon: Mdi.export,
+                // ),
                 // RowSettingItem(
                 //   title: 'Hoá đơn',
                 //   icon: Icons.receipt,

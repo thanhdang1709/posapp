@@ -65,17 +65,21 @@ class PaymentScreen extends GetView<PaymentController> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Container(
-                            height: Get.height * 0.07,
+                            height: 60,
                             width: Get.width * .8,
                             decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
-                            child: FlatButton(
+                            child: FlatButton.icon(
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0), side: BorderSide(color: Pallate.primaryColor)),
                               //color: Colors.grey[300],
                               onPressed: () {
                                 controller.saveOrder();
                               },
-                              child: Text(
-                                'Lưu hoá đơn',
+                              icon: Icon(
+                                Icons.save,
+                                color: Colors.blueGrey,
+                              ),
+                              label: Text(
+                                'Lưu  đơn',
                                 style: Pallate.titleProduct(),
                               ),
                             ),
@@ -83,12 +87,9 @@ class PaymentScreen extends GetView<PaymentController> {
                           // Container(
                           //   height: Get.height * 0.07,
                           //   width: Get.width * .4,
-                          //   decoration: BoxDecoration(
-                          //       borderRadius: BorderRadius.circular(10)),
+                          //   decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
                           //   child: FlatButton(
-                          //     shape: RoundedRectangleBorder(
-                          //         borderRadius: BorderRadius.circular(10.0),
-                          //         side: BorderSide(color: Pallate.primaryColor)),
+                          //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0), side: BorderSide(color: Pallate.primaryColor)),
                           //     //color: Colors.grey[300],
                           //     onPressed: () {},
                           //     child: Text(
@@ -103,8 +104,29 @@ class PaymentScreen extends GetView<PaymentController> {
               ],
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                MethodPaymentContainer(
+                  title: 'Tiền mặt',
+                  icon: FontAwesome.money,
+                  active: true,
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                MethodPaymentContainer(
+                  title: 'Chuyển khoản',
+                  icon: FontAwesome.credit_card,
+                  active: false,
+                ),
+              ],
+            ),
+          ),
           Container(
-            margin: EdgeInsets.all(10),
+            margin: EdgeInsets.all(5),
             padding: EdgeInsets.all(10),
             decoration: BoxDecoration(
               color: Pallate.primaryColor,
@@ -116,10 +138,8 @@ class PaymentScreen extends GetView<PaymentController> {
                 Expanded(
                   child: Align(
                     alignment: Alignment.center,
-                    child: FlatButton(
-                      height: 10,
-                      padding: EdgeInsets.all(0),
-                      onPressed: () {
+                    child: InkWell(
+                      onTap: () {
                         print('payment');
                         Get.to(AmountNumpadWidget(
                           totalPrice: totalPrice,
@@ -130,22 +150,26 @@ class PaymentScreen extends GetView<PaymentController> {
                           },
                         ));
                       },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Spacer(),
-                          Text(
-                            'Tiếp tục',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: Pallate.textTitle1(),
-                          ),
-                          Spacer(),
-                          Icon(
-                            FontAwesome.chevron_right,
-                            color: Colors.white,
-                          )
-                        ],
+                      child: Container(
+                        height: 35,
+                        padding: EdgeInsets.all(0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Spacer(),
+                            Text(
+                              'Tiếp tục',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: Pallate.textTitle1(),
+                            ),
+                            Spacer(),
+                            Icon(
+                              FontAwesome.chevron_right,
+                              color: Colors.white,
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -154,6 +178,47 @@ class PaymentScreen extends GetView<PaymentController> {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class MethodPaymentContainer extends StatelessWidget {
+  const MethodPaymentContainer({
+    Key key,
+    this.title,
+    this.active = false,
+    this.onPressed,
+    this.icon,
+  }) : super(key: key);
+  final String title;
+  final bool active;
+  final Function onPressed;
+  final IconData icon;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 60,
+      // width: Get.width * .8,
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+      child: FlatButton.icon(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            side: BorderSide(
+              color: active ? Pallate.primaryColor : Colors.grey,
+            )),
+        //color: Colors.grey[300],
+        onPressed: onPressed,
+        icon: Icon(
+          icon,
+          color: active ? Pallate.primaryColor : Colors.grey,
+        ),
+        label: Text(
+          title ?? '',
+          style: TextStyle(
+            color: active ? Pallate.primaryColor : Colors.grey,
+          ),
+        ),
       ),
     );
   }

@@ -85,30 +85,37 @@ class CartScreen extends GetView<CartController> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Expanded(
-            child: SingleChildScrollView(
-              child: Obx(
-                () => Column(
-                  children: [
-                    ...buildCartItem(controller),
-                    RowTotalPrice(
-                      totalPrice: controller.totalPrice,
-                    ),
-                    SizedBox(
-                      height: 10,
-                    )
-                  ],
+            child: RefreshIndicator(
+              onRefresh: () {
+                print('refreshed');
+                return;
+              },
+              child: SingleChildScrollView(
+                child: Obx(
+                  () => Column(
+                    children: [
+                      ...buildCartItem(controller),
+                      RowTotalPrice(
+                        totalPrice: controller.totalPrice,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
           Obx(() => Text(controller.note.value.toString())),
           Container(
-            height: Get.height * .1,
-            padding: EdgeInsets.all(10),
+            height: 70,
+            padding: EdgeInsets.all(5),
+            // margin: EdgeInsets.only(bottom: 5),
             child: Row(
               children: [
                 Container(
-                  height: Get.height * 1 - 10,
+                  height: 60,
                   decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
                   child: FlatButton(
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0), side: BorderSide(color: Pallate.primaryColor)),
@@ -123,10 +130,10 @@ class CartScreen extends GetView<CartController> {
                 ),
                 Expanded(
                   child: Container(
-                    padding: EdgeInsets.all(10),
+                    padding: EdgeInsets.all(0),
                     decoration: BoxDecoration(
                       color: Pallate.primaryColor,
-                      borderRadius: BorderRadius.circular(15),
+                      borderRadius: BorderRadius.circular(10),
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -154,9 +161,9 @@ class CartScreen extends GetView<CartController> {
               ],
             ),
           ),
-          SizedBox(
-            height: 10,
-          )
+          // SizedBox(
+          //   height: 10,
+          // )
         ],
       ),
     );

@@ -72,10 +72,21 @@ class ReceiptScreen extends GetView<ReceiptController> {
                               children: [
                                 Expanded(
                                   child: Text(
-                                    '154 Pham Van Chieu - P.9 - Q.Go Vap - HCM',
+                                    TiengViet.parse(GetStorage().read('address') ?? 'Không có'),
                                     maxLines: 2,
                                     style: TextStyle(fontSize: 13),
                                   ),
+                                )
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  'Hotline: ${TiengViet.parse(GetStorage().read('phone') ?? '')}',
+                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                                 )
                               ],
                             ),

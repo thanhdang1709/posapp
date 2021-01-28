@@ -4,6 +4,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:pos_app/config/pallate.dart';
 import 'package:pos_app/data/controllers/analytic_controller.dart';
 import 'package:pos_app/screens/analytics/components/filter.dart';
+import 'package:pos_app/screens/analytics/detail/analytic_best_seller.dart';
 import 'package:pos_app/screens/analytics/detail/analytic_renevue_by_date.dart';
 import 'package:pos_app/screens/analytics/detail/analytic_renevue_by_hour.dart';
 import 'package:pos_app/screens/analytics/detail/analytic_sale_by_hour.dart';
@@ -93,19 +94,24 @@ class AnalyticScreen extends GetView<AnalyticController> {
                         AnalyticItem(
                           label: 'Sản phẩm bán chạy',
                           title: controller.bestProduct.value,
-                          bestAmount: 30000,
+                          bestAmount: 0,
                           onPressed: () {},
                         ),
                         AnalyticItem(
                           label: 'Nhân viên ',
-                          title: 'admin',
-                          bestAmount: controller.revenue.value,
-                          onPressed: () {},
+                          title: controller.bestUser.value ?? '',
+                          bestAmount: controller.mapRevenueByUser.length != 0 ? controller.mapRevenueByUser?.last['revenue'] : 0,
+                          onPressed: () {
+                            Get.to(AnalyticBestSellerScreen(
+                              title: 'Nhân viên',
+                              dateRange: controller.typeFilterLabel,
+                            ));
+                          },
                         ),
                         AnalyticItem(
                           label: 'Khách hàng',
                           title: '',
-                          bestAmount: 30000,
+                          bestAmount: 0,
                           onPressed: () {},
                         ),
                       ],
@@ -168,8 +174,8 @@ class AnalyticItem extends StatelessWidget {
               children: [
                 bestDay != null
                     ? Text('Ngày cao nhất: ${bestDay}', style: TextStyle(color: Pallate.colorCyan, fontWeight: FontWeight.w500))
-                    // : Text('Đơn cao nhất: ${$Number.numberFormat(bestAmount)} đ', style: TextStyle(color: Pallate.colorCyan, fontWeight: FontWeight.w500)),
-                    : Text(''),
+                    : Text('Doanh số' + ': ${$Number.numberFormat(bestAmount ?? 0)} đ', style: TextStyle(color: Pallate.colorCyan, fontWeight: FontWeight.w500)),
+                //: Text(''),
                 Icon(
                   MdiIcons.chevronRight,
                   color: Pallate.colorCyan,

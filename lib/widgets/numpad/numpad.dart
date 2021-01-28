@@ -69,16 +69,10 @@ class Numpad extends StatelessWidget {
   }
 
   Widget _buildNumRow(BuildContext context, List<int> numbers) {
-    List<Widget> buttonList = numbers
-        .map((buttonNum) =>
-            _buildNumButton(context: context, displayNum: buttonNum))
-        .toList();
+    List<Widget> buttonList = numbers.map((buttonNum) => _buildNumButton(context: context, displayNum: buttonNum)).toList();
     return Container(
       child: Expanded(
-        child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: buttonList),
+        child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.stretch, children: buttonList),
       ),
     );
   }
@@ -96,7 +90,7 @@ class Numpad extends StatelessWidget {
                 icon: Icon(
                   Icons.backspace,
                   size: buttonTextSize,
-                  color: Colors.yellow,
+                  color: Colors.orange,
                 )),
             _buildNumButton(context: context, displayNum: 0),
             _buildNumButton(

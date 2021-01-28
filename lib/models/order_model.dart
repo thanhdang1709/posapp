@@ -3,6 +3,7 @@ import 'package:pos_app/models/employee.dart';
 import 'package:pos_app/models/product_model.dart';
 import 'package:pos_app/models/status_model.dart';
 import 'package:pos_app/models/table_model.dart';
+import 'package:pos_app/models/user_model.dart';
 
 class OrderModel {
   int id;
@@ -20,6 +21,9 @@ class OrderModel {
   DateTime createdAt;
   int date;
   String note;
+  UserModel client;
+  int paymentMethod;
+  int orderMethod;
 
   OrderModel({
     this.id,
@@ -37,6 +41,9 @@ class OrderModel {
     this.createdAt,
     this.date,
     this.note,
+    this.client,
+    this.orderMethod,
+    this.paymentMethod,
   });
 
   // factory OrderModel.fromJson(json) {
@@ -79,9 +86,48 @@ class OrderModel {
 
     customer = CustomerModel.fromJson(json['customer']);
     employee = EmployeeModel.fromJson(json['user']);
+    if (json['client'] != null) {
+      client = UserModel.fromJson(json['client']);
+    }
+    paymentMethod = json['payment_method'];
+    orderMethod = json['order_method'];
   }
 
   List<ProductModel> mapJsonProduct(json) {
     return json.map((e) => ProductModel.fromJson(e)).toList();
+  }
+
+  String get orderMethoLabel {
+    switch (orderMethod) {
+      case 1:
+        return 'Dùng tại chỗ';
+        break;
+      case 2:
+        return 'Mang về';
+        break;
+      case 3:
+        return 'Giao hàng';
+        break;
+
+      default:
+        return '';
+    }
+  }
+
+  String get paymentMethodLabel {
+    switch (paymentMethod) {
+      case 1:
+        return 'Tiền mặt';
+        break;
+      case 2:
+        return 'ATM';
+        break;
+      case 3:
+        return 'Ghi nợ';
+        break;
+
+      default:
+        return '';
+    }
   }
 }

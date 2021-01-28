@@ -66,7 +66,7 @@ class PaymentDoneScreen extends GetView<PaymentController> {
             padding: EdgeInsets.all(15),
             decoration: BoxDecoration(
               color: Colors.grey[300],
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(10),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -97,7 +97,7 @@ class PaymentDoneScreen extends GetView<PaymentController> {
             padding: EdgeInsets.all(15),
             decoration: BoxDecoration(
               color: Colors.cyan,
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(10),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,

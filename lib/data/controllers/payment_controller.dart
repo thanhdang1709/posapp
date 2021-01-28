@@ -70,6 +70,7 @@ class PaymentController extends GetxController {
     Map<String, String> data = {
       'order_id': orderId.toString(),
       'amount_receive': amountReceive.toString(),
+      'customer_id': cartController.selectedCustomer.value.id == null ? "0" : cartController.selectedCustomer.value.id.toString(),
       'amount_change': (amountReceive - totalPrice).toString(),
       'total_price': totalPrice.toString(),
       'status_title': 'payment',

@@ -43,7 +43,16 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                               ),
                             ),
                           )
-                        : Container()
+                        : Container(),
+                    InkWell(
+                      onTap: () {
+                        controller.getOrderById(controller.orderId);
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.only(right: 10),
+                        child: Icon(Icons.refresh),
+                      ),
+                    )
                   ],
                 ),
                 body: Obx(
@@ -121,48 +130,10 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                                   ),
                                   TabHeading(controller: controller),
                                   Expanded(
-                                    child: controller.order.value.customer != null
-                                        ? TabBarView(
-                                            controller: controller.tabController,
-                                            children: [
-                                              SingleChildScrollView(
-                                                child: Column(
-                                                  children: [...controller.buildItemName(controller.order.value.products)],
-                                                ),
-                                              ),
-                                              SingleChildScrollView(child: Column(children: [...controller.buildTimeLineStatus(controller.order.value.status, controller.order.value)])),
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Expanded(
-                                                      child: Container(
-                                                    margin: EdgeInsets.only(top: 20),
-                                                    // height: 100,
-                                                    //alignment: Alignment.center,
-                                                    decoration: BoxDecoration(border: Border.all(color: Pallate.primaryColor)),
-                                                    padding: EdgeInsets.all(10),
-                                                    child: Text(
-                                                      controller.order.value.customer.name,
-                                                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Pallate.primaryColor),
-                                                      textAlign: TextAlign.center,
-                                                    ),
-                                                  )),
-                                                ],
-                                              )
-                                            ],
-                                          )
-                                        : TabBarView(
-                                            controller: controller.tabController,
-                                            children: [
-                                              SingleChildScrollView(
-                                                child: Column(
-                                                  children: [...controller.buildItemName(controller.order.value.products)],
-                                                ),
-                                              ),
-                                              SingleChildScrollView(child: Column(children: [...controller.buildTimeLineStatus(controller.order.value.status, controller.order.value)])),
-                                            ],
-                                          ),
+                                    child: TabBarView(
+                                      controller: controller.tabController,
+                                      children: _buildTabViewDefault(),
+                                    ),
                                   ),
                                 ],
                               ),
@@ -173,7 +144,9 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                                     child: Row(
                                       children: [
                                         InkWell(
-                                          onTap: () {},
+                                          onTap: () {
+                                            orderModalBottomSheet();
+                                          },
                                           child: Container(
                                             margin: EdgeInsets.only(left: 5),
                                             width: 60,
@@ -247,6 +220,231 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                 ),
               ),
       ),
+    );
+  }
+
+  orderModalBottomSheet() {
+    showModalBottomSheet(
+      context: Get.context,
+      builder: (BuildContext bc) {
+        return Container(
+          child: new Wrap(
+            children: <Widget>[
+              new ListTile(
+                leading: Icon(
+                  Icons.note_add,
+                  color: Colors.cyan,
+                ),
+                title: new Text(
+                  'Thêm ghi chú',
+                  style: TextStyle(color: Colors.cyan),
+                ),
+                onTap: () {
+                  Get.bottomSheet(Container(
+                    height: Get.height * .5,
+                    color: Colors.white,
+                    padding: EdgeInsets.all(20),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                controller.updateNoteOrder();
+                                Get.back();
+                              },
+                              child: Text('Sửa',
+                                  style: TextStyle(
+                                    color: Pallate.primaryColor,
+                                    fontSize: 20,
+                                  )),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 30),
+                        TextFormField(
+                          controller: controller.noteController,
+                          decoration: InputDecoration(
+                            labelText: 'Ghi chú đơn hàng',
+                          ),
+                          maxLines: 5,
+                        ),
+                      ],
+                    ),
+                  ));
+                },
+              ),
+              new ListTile(
+                leading: Icon(
+                  Icons.edit,
+                  color: Colors.purple,
+                ),
+                title: new Text(
+                  'Sửa đơn',
+                  style: TextStyle(color: Colors.purple),
+                ),
+                onTap: () {
+                  // controller.clearCart();
+                  // Get.to(AddNoteScreen());
+                },
+              ),
+              new ListTile(
+                leading: Icon(Icons.close, color: Colors.red),
+                title: new Text(
+                  'Xoá đơn hàng',
+                  style: TextStyle(color: Colors.red),
+                ),
+                onTap: () {
+                  //controller.clearCart();
+                  controller.cancelOrder();
+                  Get.back();
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  _buildTabViewDefault() {
+    List<Widget> lists = [];
+
+    lists.add(
+      SingleChildScrollView(
+        child: Column(
+          children: [...controller.buildItemName(controller.order.value.products)],
+        ),
+      ),
+    );
+    lists.add(
+      SingleChildScrollView(child: Column(children: [...controller.buildTimeLineStatus(controller.order.value.status, controller.order.value)])),
+    );
+    if (controller.order.value.customer != null) {
+      lists.add(
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+                child: Container(
+              margin: EdgeInsets.only(top: 20),
+              // height: 100,
+              //alignment: Alignment.center,
+              decoration: BoxDecoration(border: Border.all(color: Pallate.primaryColor)),
+              padding: EdgeInsets.all(10),
+              child: Text(
+                controller.order.value.customer.name,
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Pallate.primaryColor),
+                textAlign: TextAlign.center,
+              ),
+            )),
+          ],
+        ),
+      );
+    }
+
+    if (controller.order.value.client != null) {
+      lists.add(
+        Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                "Tên khách hàng: ",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Pallate.colorCyan),
+              ),
+              Text(
+                controller.order.value.client.name ?? '',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Pallate.primaryColor),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                "Số điện thoại: ",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Pallate.colorCyan),
+              ),
+              Text(
+                controller.order.value.client.phone ?? '',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Pallate.primaryColor),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                "Địa chỉ: ",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Pallate.colorCyan),
+              ),
+              Text(
+                controller.order.value.client.address ?? '',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Pallate.primaryColor),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                "Loại đơn: ",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Pallate.colorCyan),
+              ),
+              Text(
+                controller.order.value.orderMethoLabel ?? '',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Pallate.primaryColor),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+    return lists;
+  }
+}
+
+class TabViewWithCustomer extends StatelessWidget {
+  const TabViewWithCustomer({
+    Key key,
+    @required this.controller,
+  }) : super(key: key);
+
+  final OrderDetailController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return TabBarView(
+      controller: controller.tabController,
+      children: [
+        SingleChildScrollView(
+          child: Column(
+            children: [...controller.buildItemName(controller.order.value.products)],
+          ),
+        ),
+        SingleChildScrollView(child: Column(children: [...controller.buildTimeLineStatus(controller.order.value.status, controller.order.value)])),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+                child: Container(
+              margin: EdgeInsets.only(top: 20),
+              // height: 100,
+              //alignment: Alignment.center,
+              decoration: BoxDecoration(border: Border.all(color: Pallate.primaryColor)),
+              padding: EdgeInsets.all(10),
+              child: Text(
+                controller.order.value.customer.name,
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Pallate.primaryColor),
+                textAlign: TextAlign.center,
+              ),
+            )),
+          ],
+        )
+      ],
     );
   }
 }

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:pos_app/data/binding/home_binding.dart';
 import 'package:pos_app/data/binding/welcome_binding.dart';
+import 'package:pos_app/repositories/notification_service.dart';
 import 'package:pos_app/routes/pages.dart';
 import 'package:pos_app/screens/auth/welcome_page.dart';
 import 'package:pos_app/screens/splashscreen/splash_screen.dart';
@@ -11,9 +12,21 @@ import 'package:pos_app/screens/welcome/onboarding_page.dart';
 import 'package:intl/date_symbol_data_local.dart'; // for other locales
 
 void main() async {
-  SystemChrome.setSystemUIOverlayStyle(
-    SystemUiOverlayStyle.light.copyWith(statusBarColor: Colors.transparent),
+  Future.delayed(
+    Duration(milliseconds: 200),
+    () {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          systemNavigationBarColor: Colors.transparent,
+          systemNavigationBarIconBrightness: Brightness.dark,
+          statusBarColor: Colors.transparent,
+          statusBarIconBrightness: Brightness.dark,
+          statusBarBrightness: Brightness.light,
+        ),
+      );
+    },
   );
+
   initializeDateFormatting('vi');
 
   await GetStorage.init();

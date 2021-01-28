@@ -44,7 +44,7 @@ class CustomerController extends GetxController {
     if (nameController.text.trim() == '') {
       return AppUltils().getSnackBarError(message: 'Vui lòng điền tên khách hàng');
     }
-    Map<String, dynamic> data = {
+    Map<String, String> data = {
       'name': nameController.text.trim().toString(),
       'phone': phoneController.text.trim().toString(),
       'address': addressController.text.trim().toString(),

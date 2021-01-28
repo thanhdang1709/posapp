@@ -178,11 +178,12 @@ class DrawerApp extends StatelessWidget {
                   ),
 
                 ItemMenuDraw(
-                  imageUrl: 'assets/icons/settings.png',
+                  imageUrl: 'assets/icons/log-out.png',
                   title: 'Đăng xuất',
-                  selectedColor: Get.currentRoute == '/setting' ? Pallate.primaryColor : null,
+                  //selectedColor: Get.currentRoute == '/setting' ? Pallate.primaryColor : null,
                   onPress: () {
                     box.erase();
+                    Get.reset();
                     Get.offAll(WelcomePage());
                   },
                 ),

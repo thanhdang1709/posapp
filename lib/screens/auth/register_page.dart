@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:get/get.dart';
 import 'package:pos_app/screens/auth/components/clippers/inverted_top_border.dart';
 import 'package:pos_app/screens/auth/components/common_widget.dart';
 import 'package:pos_app/screens/auth/components/text_input_find_out.dart';
@@ -14,16 +15,14 @@ class RegisterPage extends StatefulWidget {
   _RegisterPageState createState() => _RegisterPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage>
-    with TickerProviderStateMixin {
+class _RegisterPageState extends State<RegisterPage> with TickerProviderStateMixin {
   AnimationController _registerButtonController;
   var animationStatus = 0;
 
   @override
   void initState() {
     super.initState();
-    _registerButtonController = new AnimationController(
-        duration: new Duration(milliseconds: 1000), vsync: this);
+    _registerButtonController = new AnimationController(duration: new Duration(milliseconds: 1000), vsync: this);
   }
 
   @override
@@ -35,11 +34,9 @@ class _RegisterPageState extends State<RegisterPage>
   TextEditingController _nameController = new TextEditingController();
   TextEditingController _emailController = new TextEditingController();
   TextEditingController _passwordController = new TextEditingController();
-
   TextEditingController _phoneController = new TextEditingController();
-
   TextEditingController _shopNameController = new TextEditingController();
-  //TextEditingController _nameController = new TextEditingController();
+  TextEditingController _addressController = new TextEditingController();
 
   // ignore: unused_element
   Future<Null> _playAnimation() async {
@@ -49,6 +46,7 @@ class _RegisterPageState extends State<RegisterPage>
     } on TickerCanceled {}
   }
 
+  bool first = true;
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -98,11 +96,10 @@ class _RegisterPageState extends State<RegisterPage>
                           child: ClipPath(
                             clipper: InvertedTopBorder(circularRadius: 40),
                             child: Container(
-                              height: 490,
+                              height: Get.size.height * .7,
                               width: double.infinity,
                               color: Colors.white,
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 20),
+                              padding: const EdgeInsets.symmetric(horizontal: 20),
                               child: SingleChildScrollView(
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
@@ -132,6 +129,13 @@ class _RegisterPageState extends State<RegisterPage>
                                     TextInputFindOut(
                                       controller: _shopNameController,
                                       label: 'Tên cửa hàng',
+                                      iconData: FontAwesome.building,
+                                      textInputType: TextInputType.text,
+                                    ),
+                                    const SizedBox(height: 10),
+                                    TextInputFindOut(
+                                      controller: _addressController,
+                                      label: 'Địa chỉ',
                                       iconData: FontAwesome.map,
                                       textInputType: TextInputType.text,
                                     ),
@@ -142,8 +146,7 @@ class _RegisterPageState extends State<RegisterPage>
                                       controller: _passwordController,
                                       label: 'Mật khẩu',
                                       iconData: Icons.lock_outline,
-                                      textInputType:
-                                          TextInputType.visiblePassword,
+                                      textInputType: TextInputType.visiblePassword,
                                     ),
                                     const SizedBox(height: 5),
                                     _AcceptTerms(),
@@ -153,22 +156,24 @@ class _RegisterPageState extends State<RegisterPage>
                                         print('hello');
                                       },
                                       child: StaggerAnimation(
-                                        buttonController:
-                                            _registerButtonController.view,
+                                        buttonController: _registerButtonController.view,
                                         onPress: () {
-                                          Map<String, dynamic> body = {
-                                            'email': _emailController.text,
-                                            'phone': _phoneController.text,
-                                            'name': _nameController.text,
-                                            'store_name':
-                                                _shopNameController.text,
-                                            'store_id': Uuid().v4(),
-                                            'password':
-                                                _passwordController.text,
-                                          };
-
-                                          // ignore: unnecessary_statements
-                                          RegisterController().register(body);
+                                          if (first) {
+                                            Map<String, dynamic> body = {
+                                              'email': _emailController.text.trim(),
+                                              'phone': _phoneController.text.trim(),
+                                              'name': _nameController.text.trim(),
+                                              'address': _addressController.text.trim(),
+                                              'store_name': _shopNameController.text.trim(),
+                                              'store_id': Uuid().v4(),
+                                              'password': _passwordController.text.trim(),
+                                            };
+                                            // ignore: unnecessary_statements
+                                            setState(() {
+                                              first = false;
+                                            });
+                                            RegisterController().register(body);
+                                          }
                                         },
                                       ),
                                     ),
@@ -202,13 +207,11 @@ class _DragDownIndication extends StatelessWidget {
       children: [
         Text(
           'Đăng ký',
-          style: TextStyle(
-              fontSize: 20, fontWeight: FontWeight.w600, color: Colors.white),
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Colors.white),
         ),
         Text(
           'Vuốt để quay lại',
-          style: TextStyle(
-              height: 2, fontSize: 12, color: Colors.white.withOpacity(.9)),
+          style: TextStyle(height: 2, fontSize: 12, color: Colors.white.withOpacity(.9)),
         ),
         Icon(
           Icons.keyboard_arrow_down,

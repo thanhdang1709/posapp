@@ -1,5 +1,3 @@
-import 'package:pos_app/models/order_model.dart';
-
 class EmployeeModel {
   int id;
   String name;

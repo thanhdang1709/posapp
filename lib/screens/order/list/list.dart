@@ -21,7 +21,17 @@ class ListOrderScreen extends GetView<OrderController> {
           height: 50,
           centerTitle: false,
           title: 'Đơn hàng',
-          actions: [],
+          actions: [
+            InkWell(
+              onTap: () {
+                controller.loadData();
+              },
+              child: Padding(
+                padding: EdgeInsets.only(right: 10),
+                child: Icon(Icons.refresh),
+              ),
+            )
+          ],
         ),
         drawer: DrawerApp(),
         body: Column(
@@ -31,38 +41,47 @@ class ListOrderScreen extends GetView<OrderController> {
               child: Padding(
                 padding: const EdgeInsets.all(5),
                 child: TextFormField(
+                  controller: controller.searchController,
                   focusNode: FocusNode(),
                   // controller: controller.searchKeyword,
-                  decoration: InputDecoration(prefixIcon: Icon(Icons.search, size: 35), border: InputBorder.none, hintText: 'Sản phẩm, khách hàng, giá, barcode'),
+                  decoration: InputDecoration(prefixIcon: Icon(Icons.search, size: 35), border: InputBorder.none, hintText: 'Sản phẩm, khách hàng, giá.'),
                 ),
               ),
             ),
-            RowFilterStatus(),
+            // RowFilterStatus(),
+            SizedBox(
+              height: 15,
+            ),
             Expanded(
-              child: SingleChildScrollView(
-                child: Align(
-                  alignment: Alignment.bottomLeft,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Obx(
-                      () => !controller.isLoading.value
-                          ? controller.mapOrders.length != 0
-                              ? Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    ...controller.buildOrderItem(controller.mapOrders),
-                                  ],
-                                )
-                              : Center(
-                                  child: Image.asset(
-                                    'assets/img/empty.png',
-                                    height: Get.height * .15,
-                                  ),
-                                )
-                          : Center(
-                              child: CircularProgressIndicator(),
-                            ),
+              child: RefreshIndicator(
+                onRefresh: () async {
+                  controller.loadData();
+                },
+                child: SingleChildScrollView(
+                  child: Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Obx(
+                        () => !controller.isLoading.value
+                            ? controller.mapOrders.length != 0
+                                ? Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      ...controller.buildOrderItem(controller.mapOrders),
+                                    ],
+                                  )
+                                : Center(
+                                    child: Image.asset(
+                                      'assets/img/empty.png',
+                                      height: Get.height * .15,
+                                    ),
+                                  )
+                            : Center(
+                                child: CircularProgressIndicator(),
+                              ),
+                      ),
                     ),
                   ),
                 ),

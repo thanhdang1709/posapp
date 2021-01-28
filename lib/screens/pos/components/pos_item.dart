@@ -114,10 +114,11 @@ class _TabPosItemState extends State<TabPosItem> with SingleTickerProviderStateM
             scale: _scale,
             child: Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(10),
                 color: Pallate.primaryColor,
               ),
               width: Get.size.width - 20,
+              height: 50,
               padding: EdgeInsets.all(7),
               margin: EdgeInsets.all(0),
               child: Center(
