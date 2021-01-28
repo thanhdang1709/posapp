@@ -56,9 +56,12 @@ class _TabPosItemState extends State<TabPosItem> with SingleTickerProviderStateM
     products = widget.catelogId != 0 ? posStore.products.where((element) => element.catelogId == widget.catelogId).toList() : posStore.products;
 
     return Column(children: [
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-        child: PosActionRow(),
+      // Padding(
+      //   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+      //   child: PosActionRow(),
+      // ),
+      SizedBox(
+        height: 20,
       ),
       Expanded(
         child: Padding(

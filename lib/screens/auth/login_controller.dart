@@ -25,12 +25,12 @@ class LoginController extends GetxController {
           box.write('token', result['token']);
           box.write('user_info', result['user']);
           box.write('store_name', result['user']['store_name']);
-          box.write('phone', result['user']['phone']);
+          box.write('phone', result['user']['store'] != null ? result['user']['store']['phone'] : result['user']['phone']);
           box.write('name', result['user']['name']);
           box.write('role', result['user']['role']);
-          box.write('address', result['user']['store'] ?? result['user']['address']);
-          box.write('email', result['user']['store'] ?? result['user']['email']);
-          box.write('logo', result['user']['store'] ?? result['user']['logo']);
+          box.write('address', result['user']['store'] != null ? result['user']['store']['address'] : result['user']['address']);
+          box.write('email', result['user']['store'] != null ? result['user']['store']['email'] : result['user']['email']);
+          box.write('logo', result['user']['store'] != null ? result['user']['store']['logo'] : result['user']['logo']);
           await getCatelogAll();
           await getProductAll();
 

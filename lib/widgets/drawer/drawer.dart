@@ -166,16 +166,16 @@ class DrawerApp extends StatelessWidget {
                       Get.offNamed('employee');
                     },
                   ),
-                if (role == 1)
-                  ItemMenuDraw(
-                    imageUrl: 'assets/icons/settings.png',
-                    title: 'Cài đặt',
-                    selectedColor: Get.currentRoute == '/setting' ? Pallate.primaryColor : null,
-                    onPress: () {
-                      Get.offNamed('/setting');
-                      print(Get.currentRoute);
-                    },
-                  ),
+                // if (role == 1)
+                //   ItemMenuDraw(
+                //     imageUrl: 'assets/icons/settings.png',
+                //     title: 'Cài đặt',
+                //     selectedColor: Get.currentRoute == '/setting' ? Pallate.primaryColor : null,
+                //     onPress: () {
+                //       Get.offNamed('/setting');
+                //       print(Get.currentRoute);
+                //     },
+                //   ),
 
                 ItemMenuDraw(
                   imageUrl: 'assets/icons/log-out.png',
