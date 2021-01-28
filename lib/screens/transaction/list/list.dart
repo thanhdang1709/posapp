@@ -26,21 +26,24 @@ class TransactionScreen extends GetView<TransactionController> {
         drawer: DrawerApp(),
         body: Column(
           children: [
-            Container(
-              color: Colors.grey[200],
-              child: Padding(
-                padding: const EdgeInsets.all(5),
-                child: TextFormField(
-                  focusNode: FocusNode(),
-                  // controller: controller.searchKeyword,
-                  decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.search, size: 35),
-                      border: InputBorder.none,
-                      hintText: 'Sản phẩm, khách hàng, giá, barcode'),
-                ),
-              ),
+            // Container(
+            //   color: Colors.grey[200],
+            //   child: Padding(
+            //     padding: const EdgeInsets.all(5),
+            //     child: TextFormField(
+            //       focusNode: FocusNode(),
+            //       // controller: controller.searchKeyword,
+            //       decoration: InputDecoration(
+            //           prefixIcon: Icon(Icons.search, size: 35),
+            //           border: InputBorder.none,
+            //           hintText: 'Sản phẩm, khách hàng, giá, barcode'),
+            //     ),
+            //   ),
+            // ),
+            // RowFilterStatus(),
+            SizedBox(
+              height: 15,
             ),
-            RowFilterStatus(),
             Expanded(
               child: SingleChildScrollView(
                 child: Align(
@@ -53,8 +56,7 @@ class TransactionScreen extends GetView<TransactionController> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                ...controller
-                                    .buildOrderItem(controller.mapOrders),
+                                ...controller.buildOrderItem(controller.mapOrders),
                               ],
                             )
                           : Center(

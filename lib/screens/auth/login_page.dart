@@ -25,8 +25,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    _loginButtonController = new AnimationController(
-        duration: new Duration(milliseconds: 2000), vsync: this);
+    _loginButtonController = new AnimationController(duration: new Duration(milliseconds: 2000), vsync: this);
   }
 
   @override
@@ -98,8 +97,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                               height: size.height * .6,
                               width: double.infinity,
                               color: Colors.white,
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 40),
+                              padding: const EdgeInsets.symmetric(horizontal: 40),
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
@@ -115,17 +113,16 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                                     controller: _passwordController,
                                     label: 'Mật khẩu',
                                     iconData: Icons.lock_outline,
-                                    textInputType:
-                                        TextInputType.visiblePassword,
+                                    textInputType: TextInputType.visiblePassword,
                                   ),
                                   const SizedBox(height: 5),
-                                  Text(
-                                    "Quên mật khẩu?",
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.grey[600],
-                                    ),
-                                  ),
+                                  // Text(
+                                  //   "Quên mật khẩu?",
+                                  //   style: TextStyle(
+                                  //     fontSize: 12,
+                                  //     color: Colors.grey[600],
+                                  //   ),
+                                  // ),
                                   const SizedBox(height: 20),
                                   // animationStatus == 0
                                   //     ? new Padding(
@@ -172,20 +169,11 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                                     onTap: () {},
                                     child: SizedBox(
                                       child: StaggerAnimation(
-                                        buttonController:
-                                            _loginButtonController.view,
+                                        buttonController: _loginButtonController.view,
                                         onPress: () {
-                                          Map<String, dynamic> body = {
-                                            'email': _emailController.text,
-                                            'password':
-                                                _passwordController.text,
-                                            'device_name': 'test'
-                                          };
-                                          if (_emailController.text.isEmpty ||
-                                              _passwordController.text.isEmpty)
-                                            AppUltils().getSnackBarError(
-                                                message:
-                                                    'Vui lòng điền đầy đủ thông tin');
+                                          Map<String, dynamic> body = {'email': _emailController.text, 'password': _passwordController.text, 'device_name': 'test'};
+                                          if (_emailController.text.isEmpty || _passwordController.text.isEmpty)
+                                            AppUltils().getSnackBarError(message: 'Vui lòng điền đầy đủ thông tin');
                                           else
                                             LoginController().login(body);
                                         },
@@ -237,13 +225,11 @@ class _DragDownIndication extends StatelessWidget {
       children: [
         Text(
           'Đăng nhập',
-          style: TextStyle(
-              fontSize: 20, fontWeight: FontWeight.w600, color: Colors.white),
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Colors.white),
         ),
         Text(
           'Vuốt để quay lại',
-          style: TextStyle(
-              height: 2, fontSize: 14, color: Colors.white.withOpacity(.7)),
+          style: TextStyle(height: 2, fontSize: 14, color: Colors.white.withOpacity(.7)),
         ),
         Icon(
           Icons.keyboard_arrow_down,

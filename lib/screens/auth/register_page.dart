@@ -148,8 +148,8 @@ class _RegisterPageState extends State<RegisterPage> with TickerProviderStateMix
                                       iconData: Icons.lock_outline,
                                       textInputType: TextInputType.visiblePassword,
                                     ),
-                                    const SizedBox(height: 5),
-                                    _AcceptTerms(),
+                                    // const SizedBox(height: 5),
+                                    // // _AcceptTerms(),
                                     const SizedBox(height: 10),
                                     GestureDetector(
                                       onTap: () {

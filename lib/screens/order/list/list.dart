@@ -36,18 +36,18 @@ class ListOrderScreen extends GetView<OrderController> {
         drawer: DrawerApp(),
         body: Column(
           children: [
-            Container(
-              color: Colors.grey[200],
-              child: Padding(
-                padding: const EdgeInsets.all(5),
-                child: TextFormField(
-                  controller: controller.searchController,
-                  focusNode: FocusNode(),
-                  // controller: controller.searchKeyword,
-                  decoration: InputDecoration(prefixIcon: Icon(Icons.search, size: 35), border: InputBorder.none, hintText: 'Sản phẩm, khách hàng, giá.'),
-                ),
-              ),
-            ),
+            // Container(
+            //   color: Colors.grey[200],
+            //   child: Padding(
+            //     padding: const EdgeInsets.all(5),
+            //     child: TextFormField(
+            //       controller: controller.searchController,
+            //       focusNode: FocusNode(),
+            //       // controller: controller.searchKeyword,
+            //       decoration: InputDecoration(prefixIcon: Icon(Icons.search, size: 35), border: InputBorder.none, hintText: 'Sản phẩm, khách hàng, giá.'),
+            //     ),
+            //   ),
+            // ),
             // RowFilterStatus(),
             SizedBox(
               height: 15,
