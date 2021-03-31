@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:pos_app/data/store/master_storage.dart';
 
 class PushNotificationsManager {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
@@ -36,10 +37,10 @@ class PushNotificationsManager {
       // });
 
       _firebaseMessaging.subscribeToTopic('all');
+      Map notification;
+
       _firebaseMessaging.configure(
         onMessage: (message) async {
-          Map notification;
-
           // if (message['notification'] == null) {
           //   notification = message['aps']['alert'];
           // } else {
@@ -84,6 +85,10 @@ class PushNotificationsManager {
         onResume: (Map<String, dynamic> message) async {
           print("onResume: $message");
           // _navigateToItemDetail(message);
+          notification = message['notification'];
+          print('onMesssage: $message');
+
+          _handleOpenNotify(1);
         },
       );
       print('initial config');
@@ -146,12 +151,12 @@ class PushNotificationsManager {
     bool isLogged = box.hasData('token');
 
     if (isLogged) {
-      var role = box.read('role');
+      // var role = MasterConfig().userInfo?.role;
       // Navigator.push(
       //     _context, MaterialPageRoute(builder: (_) => NotifyListScreen()));
-      if (role == 1 || role == 2 || role == 3) {
-        Get.offAllNamed('order');
-      }
+      //if (role == 1 || role == 2 || role == 3) {
+      Get.offAllNamed('order');
+      //}
     } else {
       // Get.offAll(BottomBarScreen(
       //   tabIndex: 2,

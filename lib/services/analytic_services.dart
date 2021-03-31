@@ -2,7 +2,7 @@ import 'package:pos_app/ultils/http_service.dart';
 
 class AnalyticServices extends HttpService {
   // ignore: missing_return
-  Future<List> getReport({Map<String, String> body}) async {
+  Future<List> getReport({Map<String, dynamic> body}) async {
     var response = await fetch(
       url: 'api/report/list',
       method: 'POST',

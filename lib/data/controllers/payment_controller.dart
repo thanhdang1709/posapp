@@ -12,7 +12,7 @@ class PaymentController extends GetxController {
   RxInt totalPrice = 0.obs;
   RxInt totalItem = 0.obs;
   List<int> listItemId = [];
-  ProductStore productStore = Get.find();
+  MasterStore masterStore = Get.find();
   CartController cartController = Get.put(CartController());
   RxInt amountReceive = 0.obs;
   RxInt change = 0.obs;
@@ -26,8 +26,8 @@ class PaymentController extends GetxController {
   }
 
   saveOrder() async {
-    Map<String, String> data = {
-      'table_id': 1.toString(),
+    Map<String, dynamic> data = {
+      'table_id': cartController.selectedTable.value.id,
       'customer_id': cartController.selectedCustomer.value.id == null ? "0" : cartController.selectedCustomer.value.id.toString(),
       'status': 0.toString(),
       'status_title': 'pending',
@@ -46,8 +46,8 @@ class PaymentController extends GetxController {
   }
 
   paymentOrder(totalPrice, amountReceive) async {
-    Map<String, String> data = {
-      'table_id': 1.toString(),
+    Map<String, dynamic> data = {
+      'table_id': cartController.selectedTable.value.id,
       'customer_id': cartController.selectedCustomer.value.id == null ? "0" : cartController.selectedCustomer.value.id.toString(),
       'status': 1.toString(),
       'status_title': 'payment',

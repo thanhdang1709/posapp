@@ -21,7 +21,7 @@ class EmployeeService extends HttpService {
   }
 
   Future addEmployee({File file, Map<String, dynamic> data}) async {
-    var response = await fetch(url: 'api/employee/add', method: 'POST', files: file == null ? null : [file], body: data);
+    var response = await fetch(url: 'api/employee/add', method: 'POST', images: file == null ? null : [file], body: data);
     if (response.httpCode == 200) {
       var result = (response.body);
       if (result['type'] == 'RESPONSE_OK') {

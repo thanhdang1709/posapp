@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pos_app/config/pallate.dart';
+import 'package:pos_app/config/palette.dart';
 
 class TabHeading extends StatelessWidget {
   TabHeading({
@@ -15,8 +15,8 @@ class TabHeading extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Pallate.secondColor.withOpacity(0.7),
-            Pallate.primaryColor.withOpacity(0.7),
+            Palette.secondColor.withOpacity(0.7),
+            Palette.primaryColor.withOpacity(0.7),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -24,11 +24,11 @@ class TabHeading extends StatelessWidget {
       ),
       child: TabBar(
         unselectedLabelColor: Colors.white,
-        labelColor: Colors.pink,
+        labelColor: Colors.orange,
         indicator: UnderlineTabIndicator(
             borderSide: BorderSide(
               width: 4,
-              color: Colors.pink,
+              color: Colors.orange,
             ),
             insets: EdgeInsets.only(left: 0, right: 8, bottom: 0)),
         tabs: controller.tabItem,

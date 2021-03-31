@@ -6,11 +6,10 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mdi/mdi.dart';
-import 'package:pos_app/config/pallate.dart';
+import 'package:pos_app/config/palette.dart';
 import 'package:pos_app/data/store/product_store.dart';
 import 'package:pos_app/models/catelog_model.dart';
 import 'package:pos_app/models/product_model.dart';
-import 'package:pos_app/repositories/common.dart';
 import 'package:pos_app/data/controllers/edit_product_controller.dart';
 import 'package:pos_app/ultils/app_ultils.dart';
 import 'package:pos_app/ultils/number.dart';
@@ -30,10 +29,9 @@ class EditProductScreen extends StatefulWidget {
 class _EditProductScreenState extends State<EditProductScreen> {
   //final picker = ImagePicker();
 
-  EditProductController editProductController =
-      Get.put(EditProductController(), permanent: false);
+  EditProductController editProductController = Get.put(EditProductController(), permanent: false);
 
-  ProductStore productStore = Get.find();
+  MasterStore masterStore = Get.put(MasterStore());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,30 +64,22 @@ class _EditProductScreenState extends State<EditProductScreen> {
                   children: [
                     Align(
                       alignment: Alignment.centerLeft,
-                      child: Text('Chi tiết món',
-                          style: GoogleFonts.roboto(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.blueGrey)),
+                      child: Text('Chi tiết món', style: GoogleFonts.roboto(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.blueGrey)),
                     ),
                     new DropdownSearch<CatelogModel>(
                       mode: Mode.BOTTOM_SHEET,
                       showSelectedItem: false,
-                      items: productStore.catelogies,
+                      items: masterStore.catelogies,
                       dropdownSearchDecoration: InputDecoration(
                         border: InputBorder.none,
-                        contentPadding: EdgeInsets.only(
-                            left: 0, right: 0, bottom: 0, top: 5),
+                        contentPadding: EdgeInsets.only(left: 0, right: 0, bottom: 0, top: 5),
                       ),
                       label: "Danh mục",
                       itemAsString: (CatelogModel catelog) => catelog.name,
                       onChanged: (v) {
                         editProductController.setCatelogId(v.id);
                       },
-                      selectedItem: editProductController.catelogId.value == 0
-                          ? null
-                          : productStore.catelogies.firstWhere((e) =>
-                              editProductController.catelogId.value == e.id),
+                      selectedItem: editProductController.catelogId.value == 0 ? null : masterStore.catelogies.firstWhere((e) => editProductController.catelogId.value == e.id),
                     ),
                     Divider(
                       color: Colors.black,
@@ -114,8 +104,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       controller: editProductController.barcodeController,
                       decoration: InputDecoration(
                           labelText: 'Code',
-                          labelStyle:
-                              GoogleFonts.roboto(color: Colors.blueGrey),
+                          labelStyle: GoogleFonts.roboto(color: Colors.blueGrey),
                           suffixIcon: Icon(
                             Mdi.barcode,
                             size: 40,
@@ -145,10 +134,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
           onPressed: () {
             Get.dialog(
                 Center(
-                  child: SizedBox(
-                      height: 50,
-                      width: 50,
-                      child: CircularProgressIndicator()),
+                  child: SizedBox(height: 50, width: 50, child: CircularProgressIndicator()),
                 ),
                 barrierDismissible: false);
             editProductController.updateProduct();
@@ -161,7 +147,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
             'Lưu',
             style: TextStyle(color: Colors.white),
           ),
-          color: Pallate.primaryColor),
+          color: Palette.primaryColor),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
@@ -176,16 +162,12 @@ class _EditProductScreenState extends State<EditProductScreen> {
             TextFormField(
                 controller: editProductController.nameProduct,
                 onChanged: editProductController.onChangeNameProduct,
-                decoration: InputDecoration(
-                    labelText: 'Tên sản phẩm ',
-                    labelStyle: GoogleFonts.roboto(color: Colors.blueGrey))),
+                decoration: InputDecoration(labelText: 'Tên sản phẩm ', labelStyle: GoogleFonts.roboto(color: Colors.blueGrey))),
             TextFormField(
                 keyboardType: TextInputType.number,
                 controller: editProductController.priceProduct,
                 onChanged: editProductController.onChangePriceProduct,
-                decoration: InputDecoration(
-                    labelText: 'Giá bán',
-                    labelStyle: GoogleFonts.roboto(color: Colors.blueGrey)))
+                decoration: InputDecoration(labelText: 'Giá bán', labelStyle: GoogleFonts.roboto(color: Colors.blueGrey)))
           ],
         ),
       ),
@@ -200,8 +182,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           FlatButton.icon(
-            shape: RoundedRectangleBorder(
-                borderRadius: new BorderRadius.circular(5.0)),
+            shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(5.0)),
             minWidth: 10,
             padding: EdgeInsets.zero,
             label: Text(''),
@@ -214,10 +195,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
             },
             // child: const Text(''),
             color: editProductController.currentColor.value,
-            textColor:
-                useWhiteForeground(editProductController.currentColor.value)
-                    ? const Color(0xffffffff)
-                    : const Color(0xffffffff),
+            textColor: useWhiteForeground(editProductController.currentColor.value) ? const Color(0xffffffff) : const Color(0xffffffff),
           ),
           SizedBox(
             width: 5,
@@ -242,9 +220,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                         //   height: Get.height * .12,
                         // ),
                         child: CachedNetworkImage(
-                          imageUrl: BASE_DOMAIN +
-                              '/' +
-                              editProductController.oldImageUrl,
+                          imageUrl: editProductController.oldImageUrl,
                           fit: BoxFit.cover,
                           width: double.infinity,
                           height: Get.height * .12,
@@ -253,8 +229,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     : ClipRRect(
                         borderRadius: BorderRadius.circular(5),
                         child: Image.file(
-                          File(editProductController.imagePickerPath.value) ??
-                              null,
+                          File(editProductController.imagePickerPath.value) ?? null,
                           fit: BoxFit.cover,
                           width: double.infinity,
                           height: Get.height * .12,
@@ -266,11 +241,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 ),
                 Text(
                   editProductController.labelName.value ?? 'Tên sản phẩm',
-                  style: TextStyle(
-                      color: useWhiteForeground(
-                              editProductController.currentColor.value)
-                          ? const Color(0xffffffff)
-                          : const Color(0xffffffff)),
+                  style: TextStyle(color: useWhiteForeground(editProductController.currentColor.value) ? const Color(0xffffffff) : const Color(0xffffffff)),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -279,11 +250,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 ),
                 Text(
                   '${$Number.numberFormat(int.tryParse(editProductController.labelPrice.value) ?? 0)} đ',
-                  style: TextStyle(
-                      color: useWhiteForeground(
-                              editProductController.currentColor.value)
-                          ? const Color(0xffffffff)
-                          : const Color(0xffffffff)),
+                  style: TextStyle(color: useWhiteForeground(editProductController.currentColor.value) ? const Color(0xffffffff) : const Color(0xffffffff)),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 )

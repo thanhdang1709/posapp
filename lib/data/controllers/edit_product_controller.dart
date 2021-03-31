@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:pos_app/config/pallate.dart';
+import 'package:pos_app/config/palette.dart';
 import 'package:pos_app/data/store/product_store.dart';
 import 'package:pos_app/models/product_model.dart';
 import 'package:pos_app/services/product_services.dart';
@@ -39,19 +39,17 @@ class EditProductController extends GetxController {
     labelName.value = oldProduct.name;
     labelPrice.value = oldProduct.price.toString();
     catelogId.value = oldProduct.catelogId;
-    currentColor.value = oldProduct.color == ''
-        ? Pallate.primaryColor
-        : ColorFormat.stringToColor(oldProduct.color);
+    currentColor.value = oldProduct.color == '' ? Palette.primaryColor : ColorFormat.stringToColor(oldProduct.color);
   }
   final _obj = ''.obs;
   set obj(value) => this._obj.value = value;
   get obj => this._obj.value;
-  ProductStore productStore = Get.find<ProductStore>();
+  MasterStore masterStore = Get.find<MasterStore>();
   RxList<ProductModel> products = <ProductModel>[].obs;
   ProductModel oldProduct;
   int productId;
-  var pickerColor = Pallate.primaryColor.obs;
-  var currentColor = Pallate.primaryColor.obs;
+  var pickerColor = Palette.primaryColor.obs;
+  var currentColor = Palette.primaryColor.obs;
   var labelName = 'Tên món'.obs;
   var labelPrice = '0'.obs;
   var imagePickerPath = ''.obs;
@@ -88,7 +86,7 @@ class EditProductController extends GetxController {
   }
 
   void updateProduct() async {
-    //print(productStore.products);
+    //print(MasterStore.products);
     // if (selectedImage.isNull) {
     //   Get.back();
     //   return AppUltils().getSnackBarError(message: 'Vui lòng chọn ảnh cho món');
@@ -114,13 +112,11 @@ class EditProductController extends GetxController {
     };
     print(data);
     print(selectedImage);
-    var result = await ProductService()
-        .updateProduct(file: selectedImage ?? null, data: data);
+    var result = await ProductService().updateProduct(file: selectedImage ?? null, data: data);
     // print(result.body);
-    if (!result.isNull)
-      AppUltils().getSnackBarSuccess(message: 'Thêm sản phẩm thành công');
+    if (!result.isNull) AppUltils().getSnackBarSuccess(message: 'Thêm sản phẩm thành công');
     await getProductAll();
-    productStore.products = products;
+    masterStore.products = products;
     Get.back();
     Get.back();
     Get.back();
@@ -151,9 +147,8 @@ class EditProductController extends GetxController {
             // ignore: unused_local_variable
             var response = (await ProductService().deleteProduct(productId));
             // await getProductAll();
-            var position = productStore.products
-                .indexWhere((element) => element.id == productId);
-            productStore.products = productStore.products..removeAt(position);
+            var position = masterStore.products.indexWhere((element) => element.id == productId);
+            masterStore.products = masterStore.products..removeAt(position);
             Get.back();
             Get.back();
           },

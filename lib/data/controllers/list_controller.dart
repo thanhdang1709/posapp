@@ -10,7 +10,7 @@ import 'package:pos_app/services/product_services.dart';
 
 class ListProductController extends GetxController {
   var box = GetStorage();
-  ProductStore productStore = Get.put<ProductStore>(ProductStore());
+  MasterStore masterStore = Get.put<MasterStore>(MasterStore());
 
   RxList<CatelogModel> catelogies = <CatelogModel>[].obs;
   RxList<CatelogModel> searchCatelogies = <CatelogModel>[].obs;
@@ -31,10 +31,9 @@ class ListProductController extends GetxController {
   }
 
   getCatelogAll() async {
-    var response = (await ProductService().getCatelogAll());
+    var response = (await ProductService().getCategoryAll());
     if (response != null && response.length != 0) {
-      catelogies
-          .assignAll(response.map((e) => CatelogModel.fromJson(e)).toList());
+      catelogies.assignAll(response.map((e) => CatelogModel.fromJson(e)).toList());
     }
     //print(catelogies[0].name);
   }
@@ -42,22 +41,21 @@ class ListProductController extends GetxController {
   getProductAll() async {
     var response = (await ProductService().getProductAll());
     if (response != null && response.length != 0) {
-      products
-          .assignAll(response.map((e) => ProductModel.fromJson(e)).toList());
+      products.assignAll(response.map((e) => ProductModel.fromJson(e)).toList());
       return products;
     }
 
     //print(catelogies[0].name);
   }
 
-  addCatelog(data) async {
+  addCatelog(Map<String, String> data) async {
     var idCatelog = await ProductService().addCatelog(data);
     List<String> listCatelogies = [];
     catelogies.map((e) => listCatelogies.add(e.name));
     box.write('catelog', listCatelogies);
     // Get.reset();
     getCatelogAll();
-    productStore.catelogies = catelogies;
+    masterStore.catelogies = catelogies;
     return idCatelog;
   }
 
@@ -69,31 +67,23 @@ class ListProductController extends GetxController {
   }
 
   getState() {
-    products = productStore.products;
-    catelogies = productStore.catelogies;
-    totalStock.value = products.length != 0
-        ? products.map((m) => (m.stock))?.reduce((a, b) => a + b)
-        : 0;
-    totalPrice.value = products.length != 0
-        ? products
-            .map<int>((m) => (m.stock * m.price))
-            ?.reduce((value, element) => value + element)
-        : 0;
+    products = masterStore.products;
+    catelogies = masterStore.catelogies;
+    totalStock.value = products.length != 0 ? products.map((m) => (m.stock))?.reduce((a, b) => a + b) : 0;
+    totalPrice.value = products.length != 0 ? products.map<int>((m) => (m.stock * m.price))?.reduce((value, element) => value + element) : 0;
   }
 
   _onSearchChanged() {
     if (_debounce?.isActive ?? false) _debounce.cancel();
     _debounce = Timer(const Duration(milliseconds: 500), () {
       if (searchController.text != '') {
-        productStore.searchProducts.assignAll(
-          productStore.products.where(
-            (element) => element.name
-                .toLowerCase()
-                .contains(searchController.text.toLowerCase()),
+        masterStore.searchProducts.assignAll(
+          masterStore.products.where(
+            (element) => element.name.toLowerCase().contains(searchController.text.toLowerCase()),
           ),
         );
       } else {
-        productStore.searchProducts.clear();
+        masterStore.searchProducts.clear();
       }
     });
   }
@@ -104,9 +94,7 @@ class ListProductController extends GetxController {
       if (searchCatelogyController.text != '') {
         searchCatelogies.assignAll(
           catelogies.where(
-            (element) => element.name
-                .toLowerCase()
-                .contains(searchCatelogyController.text.toLowerCase()),
+            (element) => element.name.toLowerCase().contains(searchCatelogyController.text.toLowerCase()),
           ),
         );
       } else {

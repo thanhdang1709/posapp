@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:pos_app/config/pallate.dart';
+import 'package:pos_app/config/palette.dart';
 import 'package:pos_app/models/order_model.dart';
 import 'package:pos_app/ultils/number.dart';
 import 'package:intl/intl.dart';
@@ -28,7 +27,7 @@ class ItemOrder extends StatelessWidget {
             SizedBox(width: 5),
             Text(
               '${$Number.numberFormat(orderPrice ?? 0)} đ',
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: Palette.textStyle().copyWith(fontWeight: FontWeight.bold),
             ),
             SizedBox(
               width: 10,
@@ -37,17 +36,36 @@ class ItemOrder extends StatelessWidget {
                 ? Container(
                     padding: EdgeInsets.all(2),
                     decoration: BoxDecoration(
-                      color: Pallate.primaryColor,
+                      color: Palette.primaryColor,
                       borderRadius: BorderRadius.circular(5),
                     ),
                     child: Text(order.paymentMethodLabel ?? '',
-                        style: TextStyle(
-                          color: Pallate.colorTextOnPink,
+                        style: Palette.textStyle().copyWith(
+                          color: Palette.colorTextOnPink,
                         )),
                   )
                 : Container(),
             Spacer(),
-            Text('${DateFormat('Hm').format(order.createdAt)}')
+            Text(
+              '${DateFormat('Hm').format(order.createdAt)}',
+              style: Palette.textStyle(),
+            )
+          ],
+        ),
+        SizedBox(height: 5),
+        Row(
+          children: [
+            Text(
+              '${order.orderMethoLabel}',
+              style: Palette.textStyle(),
+            ),
+            Spacer(),
+            order.table != null
+                ? Text(
+                    'Bàn: ${order.table.name}',
+                    style: Palette.textStyle(),
+                  )
+                : Container()
           ],
         ),
         SizedBox(height: 5),
@@ -59,7 +77,10 @@ class ItemOrder extends StatelessWidget {
               children: [...buildItemName],
             ),
             Spacer(),
-            Text('#${order.orderCode}'),
+            Text(
+              '#${order.orderCode}',
+              style: Palette.textStyle(),
+            ),
           ],
         ),
         SizedBox(height: 5),

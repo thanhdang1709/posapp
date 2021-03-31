@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:mdi/mdi.dart';
-import 'package:pos_app/config/pallate.dart';
+import 'package:pos_app/config/palette.dart';
 import 'package:pos_app/data/store/product_store.dart';
 import 'package:pos_app/screens/product/list/components/item_catelog.dart';
 import 'package:pos_app/screens/product/list/components/item_product.dart';
@@ -38,11 +38,11 @@ class _ListProductScreenState extends State<ListProductScreen> with SingleTicker
 
   @override
   Widget build(BuildContext context) {
-    ProductStore productStore = Get.put(ProductStore());
+    MasterStore masterStore = Get.put(MasterStore());
     return Scaffold(
       appBar: AppUltils.buildAppBar(
         height: 80,
-        title: 'Menu (${productStore.products.length})',
+        title: 'Menu (${masterStore.products.length})',
         actions: [
           // Padding(
           //   padding: const EdgeInsets.only(right: 10),
@@ -54,8 +54,8 @@ class _ListProductScreenState extends State<ListProductScreen> with SingleTicker
           onTap: (index) {},
           controller: _controller,
           tabs: listCatelogies,
-          labelColor: Pallate.colorTextOnPink,
-          unselectedLabelColor: Pallate.unselectedItemColor,
+          labelColor: Palette.colorTextOnPink,
+          unselectedLabelColor: Palette.unselectedItemColor,
         ),
       ),
       drawer: DrawerApp(),
@@ -144,10 +144,10 @@ class _ColumnListCatelogState extends State<ColumnListCatelog> {
                     ),
                     InkWell(
                         onTap: () async {
-                          Map data = {'name': _catelogNameController.text};
+                          Map<String, String> data = {'name': _catelogNameController.text};
                           // ignore: await_only_futures
                           _catelogNameController.text = '';
-                          print(controller.addCatelog(data));
+                          controller.addCatelog(data);
                         },
                         child: Icon(Icons.save)),
                   ],
@@ -192,7 +192,7 @@ class ColumnListProductStock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ListProductController listProductController = Get.put(ListProductController());
-    ProductStore posStore = Get.find<ProductStore>();
+    MasterStore posStore = Get.find<MasterStore>();
     return Column(
       children: [
         Container(
@@ -316,7 +316,7 @@ class ColumnListProduct extends GetView<ListProductController> {
 
   @override
   Widget build(BuildContext context) {
-    ProductStore posStore = Get.find<ProductStore>();
+    MasterStore posStore = Get.find<MasterStore>();
     return Column(
       children: [
         Container(

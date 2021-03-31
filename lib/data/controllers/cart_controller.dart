@@ -3,9 +3,10 @@ import 'package:get/get.dart';
 import 'package:pos_app/data/store/product_store.dart';
 import 'package:pos_app/models/customer_model.dart';
 import 'package:pos_app/models/product_model.dart';
+import 'package:pos_app/models/table_model.dart';
 
 class CartController extends GetxController {
-  ProductStore productStore = Get.find<ProductStore>();
+  MasterStore masterStore = Get.find<MasterStore>();
   int totalPrice;
   int totalItem;
   RxInt discount = 0.obs;
@@ -16,7 +17,7 @@ class CartController extends GetxController {
   RxList cart = [].obs;
   Map<dynamic, List<dynamic>> newMap;
   Rx<CustomerModel> selectedCustomer = CustomerModel().obs;
-
+  Rx<TableModel> selectedTable = TableModel().obs;
   @override
   void onInit() {
     super.onInit();
@@ -28,9 +29,9 @@ class CartController extends GetxController {
   onCreate() {}
 
   remoteItemInCart(int id) {
-    productStore.cartItem..assignAll(productStore.cartItem.where((element) => element.id != id).toList());
+    masterStore.cartItem..assignAll(masterStore.cartItem.where((element) => element.id != id).toList());
     extendRowId.value = 0;
-    cart = productStore.cartItem;
+    cart = masterStore.cartItem;
     newMap = groupBy(cart, (obj) => obj.id);
     newMap.removeWhere((key, value) => key == id);
     // newCart = null;
@@ -43,20 +44,20 @@ class CartController extends GetxController {
 
   incrementCartItem(ProductModel product, int count) {
     for (var i = 0; i < count; i++) {
-      productStore.cartItem.add(product);
+      masterStore.cartItem.add(product);
     }
     reloadState();
   }
 
   decrementCartItem(ProductModel product, int count) {
     for (var i = 0; i < count; i++) {
-      productStore.cartItem.removeAt(productStore.cartItem.indexWhere((e) => e == product));
+      masterStore.cartItem.removeAt(masterStore.cartItem.indexWhere((e) => e == product));
     }
     reloadState();
   }
 
   addToCart(ProductModel product) {
-    productStore.cartItem.add(product);
+    masterStore.cartItem.add(product);
   }
 
   addNote(String string) {
@@ -64,7 +65,7 @@ class CartController extends GetxController {
   }
 
   clearCart() {
-    productStore.cartItem.clear();
+    masterStore.cartItem.clear();
     Get.back();
     reloadState();
     Get.offAllNamed('pos');
@@ -74,8 +75,12 @@ class CartController extends GetxController {
     selectedCustomer.value = customer;
   }
 
+  selecteTable(TableModel table) {
+    selectedTable.value = table;
+  }
+
   reloadState() {
-    cart = (productStore.cartItem);
+    cart = (masterStore.cartItem);
     newMap = groupBy(cart, (obj) => obj.id);
     newCart.clear();
     newMap.values.forEach(
@@ -93,7 +98,7 @@ class CartController extends GetxController {
           );
       },
     );
-    totalPrice = productStore.cartItem.length != 0 ? productStore.cartItem.map((element) => element.price).reduce((value, element) => value + element) - discount.value : 0;
+    totalPrice = masterStore.cartItem.length != 0 ? masterStore.cartItem.map((element) => element.price).reduce((value, element) => value + element) - discount.value : 0;
     totalItem = cart.length;
   }
 }

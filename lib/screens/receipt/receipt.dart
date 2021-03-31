@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:pos_app/config/pallate.dart';
+import 'package:pos_app/config/palette.dart';
 import 'package:pos_app/data/controllers/cart_controller.dart';
 import 'package:pos_app/data/controllers/receipt_controller.dart';
+import 'package:pos_app/data/store/master_storage.dart';
 import 'package:pos_app/screens/receipt/components/row_action_receipt.dart';
 import 'package:pos_app/ultils/number.dart';
 import 'package:tiengviet/tiengviet.dart';
@@ -34,7 +35,7 @@ class ReceiptScreen extends GetView<ReceiptController> {
                           children: [
                             InkWell(
                                 onTap: () {
-                                  cartController.productStore.cartItem.clear();
+                                  cartController.masterStore.cartItem.clear();
                                   Get.offNamed('pos');
                                 },
                                 child: Icon(Icons.close)),
@@ -63,7 +64,7 @@ class ReceiptScreen extends GetView<ReceiptController> {
                             Row(
                               children: [
                                 Text(
-                                  TiengViet.parse(GetStorage().read('store_name') ?? 'Ca Phe Vinatech'),
+                                  TiengViet.parse(MasterConfig().storeInfo?.name ?? 'Ca Phe Vinatech'),
                                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                                 )
                               ],
@@ -72,7 +73,7 @@ class ReceiptScreen extends GetView<ReceiptController> {
                               children: [
                                 Expanded(
                                   child: Text(
-                                    TiengViet.parse(GetStorage().read('address') ?? 'Không có'),
+                                    TiengViet.parse(MasterConfig().storeInfo?.address ?? 'Không có'),
                                     maxLines: 2,
                                     style: TextStyle(fontSize: 13),
                                   ),
@@ -85,7 +86,7 @@ class ReceiptScreen extends GetView<ReceiptController> {
                             Row(
                               children: [
                                 Text(
-                                  'Hotline: ${TiengViet.parse(GetStorage().read('phone') ?? '')}',
+                                  'Hotline: ${TiengViet.parse(MasterConfig().storeInfo?.hotline ?? '')}',
                                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                                 )
                               ],
@@ -99,7 +100,7 @@ class ReceiptScreen extends GetView<ReceiptController> {
                                       child: Text(
                                         '${controller.totalMenu} món (SL: ${controller.totalOrderItem})',
                                         maxLines: 2,
-                                        style: Pallate.titleProduct(),
+                                        style: Palette.titleProduct(),
                                       ),
                                     )
                                   ],
@@ -254,7 +255,7 @@ class RowItemReCeipt extends StatelessWidget {
                   children: [
                     Text(
                       productName,
-                      style: Pallate.titleProduct(),
+                      style: Palette.titleProduct(),
                     ),
                     Text(
                       '${$Number.numberFormat(productPrice)} đ',

@@ -1,16 +1,21 @@
+import './../app/screens/kitchen/kitchen_screen.dart';
+import './../app/bindings/kitchen_binding.dart';
+import './../app/screens/table/table_screen.dart';
+import './../app/bindings/table_binding.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:pos_app/data/binding/analytic_binding.dart';
 import 'package:pos_app/data/binding/cart_binding.dart';
 import 'package:pos_app/data/binding/customer_binding.dart';
 import 'package:pos_app/data/binding/employee_binding.dart';
 import 'package:pos_app/data/binding/home_binding.dart';
+import 'package:pos_app/data/binding/login_binding.dart';
 import 'package:pos_app/data/binding/order_binding.dart';
 import 'package:pos_app/data/binding/order_detail_binding.dart';
 import 'package:pos_app/data/binding/payment_binding.dart';
 import 'package:pos_app/data/binding/receipt_binding.dart';
 import 'package:pos_app/data/binding/transaction_binding.dart';
 import 'package:pos_app/screens/analytics/analytic.dart';
+import 'package:pos_app/screens/auth/auth_screen.dart';
 import 'package:pos_app/screens/auth/welcome_page.dart';
 import 'package:pos_app/screens/cart/index.dart';
 import 'package:pos_app/screens/catelog/add/add.dart';
@@ -30,27 +35,23 @@ import 'package:pos_app/data/binding/list_binding.dart';
 import 'package:pos_app/screens/product/list/list.dart';
 import 'package:pos_app/screens/receipt/receipt.dart';
 import 'package:pos_app/screens/setting/list.dart';
+import 'package:pos_app/screens/splashscreen/splash_screen.dart';
 import 'package:pos_app/screens/transaction/list/list.dart';
-import 'package:pos_app/screens/welcome/onboarding_page.dart';
 part './app_routes.dart';
 
 class AppPages {
   static final pages = [
-    GetPage(
-        name: Routes.INITIAL,
-        page: () {
-          return GetStorage().hasData('first_visit')
-              ? GetStorage().hasData('token')
-                  ? PosScreen()
-                  : WelcomePage()
-              : OnBoardingPage();
-        },
-        binding: HomeBinding()),
+    GetPage(name: Routes.INITIAL, page: () => SplashScreen(), binding: HomeBinding()),
     GetPage(
       name: Routes.WELCOME,
       page: () {
-        return GetStorage().hasData('token') ? PosScreen() : WelcomePage();
+        return WelcomePage();
       },
+    ),
+    GetPage(
+      name: Routes.LOGIN,
+      page: () => LoginScreen(),
+      binding: LoginBinding(),
     ),
     GetPage(
       name: Routes.HOME,
@@ -160,6 +161,18 @@ class AppPages {
       name: Routes.ANALYTIC,
       page: () => AnalyticScreen(),
       binding: AnalyticBinding(),
+    ),
+    GetPage(
+      name: Routes.TABLE,
+      page: () => TableScreen(),
+      transition: Transition.cupertino,
+      binding: TableBinding(),
+    ),
+    GetPage(
+      name: Routes.KITCHEN,
+      page: () => KitchenScreen(),
+      transition: Transition.cupertino,
+      binding: KitchenBinding(),
     ),
   ];
 }

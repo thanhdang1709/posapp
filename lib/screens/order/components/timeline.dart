@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pos_app/config/palette.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 
 // ignore: must_be_immutable
@@ -9,6 +10,7 @@ class TimeLineStatus extends StatelessWidget {
     this.iconColor = Colors.white,
     this.hour,
     this.title,
+    this.subTitle,
     this.content,
     this.isFirst = false,
     this.isLast = false,
@@ -19,6 +21,7 @@ class TimeLineStatus extends StatelessWidget {
   final double iconSize;
   final String hour;
   final String title;
+  final String subTitle;
   final String content;
   final bool isLast;
   final bool isFirst;
@@ -83,12 +86,26 @@ class TimeLineStatus extends StatelessWidget {
           children: <Widget>[
             Text(
               title,
-              style: TextStyle(
+              style: Palette.textStyle().copyWith(
                 fontSize: 18,
                 color: textColor.withOpacity(0.8),
-                fontWeight: FontWeight.bold,
+                //fontWeight: FontWeight.bold,
               ),
             ),
+            const SizedBox(
+              height: 5,
+            ),
+            subTitle != null
+                ? Text(
+                    subTitle,
+                    style: Palette.textStyle().copyWith(
+                      fontSize: 15,
+                      color: textColor.withOpacity(0.8),
+                      //fontWeight: FontWeight.bold,
+                    ),
+                  )
+                : Container(),
+
             // const SizedBox(height: 4),
             // Text(
             //   temperature,
@@ -101,7 +118,7 @@ class TimeLineStatus extends StatelessWidget {
             const SizedBox(height: 5),
             Text(
               content,
-              style: TextStyle(
+              style: Palette.textStyle().copyWith(
                 fontSize: 14,
                 color: textColor.withOpacity(0.6),
                 fontWeight: FontWeight.normal,

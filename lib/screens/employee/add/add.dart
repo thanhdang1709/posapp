@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pos_app/config/pallate.dart';
+import 'package:pos_app/config/palette.dart';
 import 'package:pos_app/data/controllers/employee_controller.dart';
 import 'package:pos_app/ultils/app_ultils.dart';
 
@@ -124,7 +124,7 @@ class AddEmployeeScreen extends GetView<EmployeeController> {
                   height: 50,
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: Pallate.primaryColor,
+                    color: Palette.primaryColor,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Center(

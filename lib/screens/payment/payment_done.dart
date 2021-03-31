@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pos_app/config/pallate.dart';
+import 'package:pos_app/config/palette.dart';
 import 'package:pos_app/data/controllers/cart_controller.dart';
 import 'package:pos_app/data/controllers/payment_controller.dart';
 import 'package:pos_app/ultils/number.dart';
@@ -36,7 +36,7 @@ class PaymentDoneScreen extends GetView<PaymentController> {
                   agrs != null
                       ? Text(
                           agrs != null ? 'Đơn hàng: ' + $Number.numberFormat(agrs['totalPrice']) + ' đ' : '',
-                          style: TextStyle(fontSize: 20, color: Pallate.primaryColor),
+                          style: TextStyle(fontSize: 20, color: Palette.primaryColor),
                         )
                       : Text(''),
                   SizedBox(
@@ -105,14 +105,14 @@ class PaymentDoneScreen extends GetView<PaymentController> {
               children: [
                 InkWell(
                   onTap: () {
-                    cartController.productStore.cartItem.clear();
+                    cartController.masterStore.cartItem.clear();
                     Get.offAllNamed('pos');
                   },
                   child: Text(
                     'Tạo đơn mới',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: Pallate.textTitle1(),
+                    style: Palette.textTitle1(),
                   ),
                 )
               ],

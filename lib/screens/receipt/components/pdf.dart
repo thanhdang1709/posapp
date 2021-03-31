@@ -55,8 +55,7 @@ Future savetoPdf({
                               createdAt?.hour.toString() +
                               ':' +
                               createdAt?.minute.toString(),
-                          style:
-                              pw.TextStyle(color: PdfColors.black, fontSize: 6),
+                          style: pw.TextStyle(color: PdfColors.black, fontSize: 6),
                         )
                       ],
                     ),
@@ -68,8 +67,7 @@ Future savetoPdf({
                       children: [
                         pw.Text(
                           'Ca Phe Panda',
-                          style: pw.TextStyle(
-                              fontWeight: pw.FontWeight.bold, fontSize: 15),
+                          style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 15),
                         )
                       ],
                     ),
@@ -102,7 +100,7 @@ Future savetoPdf({
                           child: pw.Text(
                             '$totalMenu mon (SL: $totalItem)',
                             maxLines: 2,
-                            //style: Pallate.titleProduct(),
+                            //style: Palette.titleProduct(),
                           ),
                         )
                       ],
@@ -141,8 +139,7 @@ Future savetoPdf({
                       children: [
                         pw.Text(
                           'Nhan: 50,000 d',
-                          style: pw.TextStyle(
-                              color: PdfColors.blueGrey, fontSize: 10),
+                          style: pw.TextStyle(color: PdfColors.blueGrey, fontSize: 10),
                         )
                       ],
                     ),
@@ -151,8 +148,7 @@ Future savetoPdf({
                       children: [
                         pw.Text(
                           'Tien thua: 10,000 d',
-                          style: pw.TextStyle(
-                              color: PdfColors.blueGrey, fontSize: 10),
+                          style: pw.TextStyle(color: PdfColors.blueGrey, fontSize: 10),
                         )
                       ],
                     ),
@@ -171,10 +167,7 @@ Future savetoPdf({
                       children: [
                         pw.Text(
                           'Cam on quy khach, hen gap lai!',
-                          style: pw.TextStyle(
-                              color: PdfColors.blueGrey,
-                              fontWeight: pw.FontWeight.bold,
-                              fontSize: 7),
+                          style: pw.TextStyle(color: PdfColors.blueGrey, fontWeight: pw.FontWeight.bold, fontSize: 7),
                         )
                       ],
                     ),
@@ -226,10 +219,7 @@ List<pw.Widget> _buildItemReceipt(products) {
                 children: [
                   pw.Text(
                     '${v['product_name']}',
-                    style: pw.TextStyle(
-                        fontSize: 7,
-                        color: PdfColors.black,
-                        fontWeight: pw.FontWeight.bold),
+                    style: pw.TextStyle(fontSize: 7, color: PdfColors.black, fontWeight: pw.FontWeight.bold),
                   ),
                   pw.Text(
                     '${v['product_price']} d',
@@ -239,9 +229,7 @@ List<pw.Widget> _buildItemReceipt(products) {
               ),
             ),
           ),
-          pw.Text(
-              '${$Number.numberFormat(v['quantity'] * v['product_price'])} d',
-              style: pw.TextStyle(fontSize: 8))
+          pw.Text('${$Number.numberFormat(v['quantity'] * v['product_price'])} d', style: pw.TextStyle(fontSize: 8))
         ],
       ));
     },

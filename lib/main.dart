@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:pos_app/data/binding/home_binding.dart';
-import 'package:pos_app/data/binding/welcome_binding.dart';
-import 'package:pos_app/repositories/notification_service.dart';
+import 'package:pos_app/config/palette.dart';
+import 'package:pos_app/lang/localization.dart';
 import 'package:pos_app/routes/pages.dart';
-import 'package:pos_app/screens/auth/welcome_page.dart';
 import 'package:pos_app/screens/splashscreen/splash_screen.dart';
-import 'package:pos_app/screens/welcome/onboarding_page.dart';
-import 'package:intl/date_symbol_data_local.dart'; // for other locales
+import 'package:intl/date_symbol_data_local.dart';
+
+import 'data/binding/splash_binding.dart'; // for other locales
 
 void main() async {
   Future.delayed(
@@ -26,25 +25,26 @@ void main() async {
       );
     },
   );
-
   initializeDateFormatting('vi');
-
   await GetStorage.init();
-  var box = GetStorage();
+  // SystemChrome.setEnabledSystemUIOverlays([]);
   return runApp(
     GetMaterialApp(
       initialRoute: Routes.INITIAL,
       smartManagement: SmartManagement.full,
       getPages: AppPages.pages,
-      initialBinding: box.hasData('token') ? HomeBinding() : WelcomeBinding(),
+      initialBinding: SplashBinding(),
+      home: SplashScreen(),
+      theme: ThemeData(
+        fontFamily: 'roboto',
+        primaryColor: Palette.primaryColor,
+      ),
+      locale: LocalizationService.locale,
+      fallbackLocale: LocalizationService.fallbackLocale,
+      translations: LocalizationService(),
+      // initialBinding: box.hasData('token') ? HomeBinding() : WelcomeBinding(),
       title: 'POPOS',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(primarySwatch: Colors.pink),
-      home: box.hasData('token')
-          ? SplashScreen()
-          : box.hasData('first_visit')
-              ? WelcomePage()
-              : OnBoardingPage(),
     ),
   );
 }

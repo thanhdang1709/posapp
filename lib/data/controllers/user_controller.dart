@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pos_app/data/store/master_storage.dart';
 import 'package:pos_app/models/user_model.dart';
 
 class UserController extends GetxController {
@@ -27,11 +28,11 @@ class UserController extends GetxController {
     // TODO: implement onInit
     super.onInit();
     userInfo = new UserModel(
-      address: box.read('address'),
-      name: box.read('store_name'),
-      phone: box.read('phone'),
-      email: box.read('email'),
-      logo: box.read('logo'),
+      address: MasterConfig().userInfo?.address,
+      name: MasterConfig().userInfo?.storeName,
+      phone: MasterConfig().userInfo?.phone,
+      email: MasterConfig().userInfo?.email,
+      logo: MasterConfig().userInfo?.logo,
     );
   }
 

@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pos_app/config/palette.dart';
 import 'package:pos_app/data/store/product_store.dart';
 import 'package:pos_app/models/order_model.dart';
 import 'package:pos_app/models/product_model.dart';
@@ -11,7 +12,7 @@ import 'package:pos_app/services/order_service.dart';
 
 class OrderController extends GetxController {
   RxList cartItem = [].obs;
-  ProductStore productStore = Get.put(ProductStore());
+  MasterStore masterStore = Get.put(MasterStore());
   RxList orders = [].obs;
   RxMap mapOrders = {}.obs;
   RxInt totalOrderItem = 0.obs;
@@ -22,7 +23,7 @@ class OrderController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    cartItem.assignAll(productStore.cartItem.map((element) => element.id).toList());
+    cartItem.assignAll(masterStore.cartItem.map((element) => element.id).toList());
     await loadData();
   }
 
@@ -50,7 +51,11 @@ class OrderController extends GetxController {
     List<Widget> lists = [];
     var groupProductById = groupBy(products, (obj) => obj.id);
     groupProductById.forEach((k, v) {
-      lists..add(Text('${v.length}x ${v.first.name}'));
+      lists
+        ..add(Text(
+          '${v.length}x ${v.first.name}',
+          style: Palette.textStyle(),
+        ));
     });
     return lists;
   }

@@ -6,6 +6,6 @@ class SplashBinding implements Bindings {
   @override
   void dependencies() {
     Get.put<SplashController>(SplashController());
-    Get.put<ProductStore>(ProductStore());
+    Get.put<MasterStore>(MasterStore());
   }
 }

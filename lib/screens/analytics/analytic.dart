@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:pos_app/config/pallate.dart';
+import 'package:pos_app/config/palette.dart';
 import 'package:pos_app/data/controllers/analytic_controller.dart';
 import 'package:pos_app/screens/analytics/components/filter.dart';
 import 'package:pos_app/screens/analytics/detail/analytic_best_seller.dart';
@@ -19,7 +19,7 @@ class AnalyticScreen extends GetView<AnalyticController> {
       appBar: AppUltils.buildAppBar(
         height: 50,
         centerTitle: false,
-        title: 'Thống kê',
+        title: 'report.report'.tr,
         actions: [],
       ),
       drawer: DrawerApp(),
@@ -32,7 +32,7 @@ class AnalyticScreen extends GetView<AnalyticController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Obx(() => FilterDateContainer(
-                          label: controller.typeFilterLabel ?? 'Hôm nay',
+                          label: controller.typeFilterLabel ?? 'time.today'.tr,
                         )),
                     SizedBox(
                       height: 20,
@@ -43,73 +43,73 @@ class AnalyticScreen extends GetView<AnalyticController> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         AnalyticItem(
-                          label: 'Doanh thu',
+                          label: 'report.revenue'.tr,
                           amount: controller.revenue.value,
                           bestDay: controller.bestDayRevenue.value,
                           onPressed: () {
                             if (controller.inDays == 0 || controller.inDays == -1) {
                               Get.to(AnalyticRenevueByHourDetailScreen(
-                                title: 'Doanh thu',
+                                title: 'report.revenue'.tr,
                                 dateRange: controller.typeFilterLabel,
                               ));
                             } else {
                               Get.to(AnalyticRenevueByDateDetailScreen(
-                                title: 'Doanh thu',
+                                title: 'label.revenue'.tr,
                                 dateRange: controller.typeFilterLabel,
                               ));
                             }
                           },
                         ),
                         AnalyticItem(
-                          label: 'Đơn',
+                          label: 'label.order'.tr,
                           amount: controller.sales.value,
                           isNumber: true,
                           bestDay: controller.bestDaysales.value,
                           onPressed: () {
                             if (controller.inDays == 0 || controller.inDays == -1) {
                               Get.to(AnalyticSaleByHourDetailScreen(
-                                title: 'Số đơn',
+                                title: 'report.total_order'.tr,
                                 dateRange: controller.typeFilterLabel,
                               ));
                             } else {
                               Get.to(AnalyticRenevueByDateDetailScreen(
-                                title: 'Số đơn',
+                                title: 'report.total_order'.tr,
                                 dateRange: controller.typeFilterLabel,
                               ));
                             }
                           },
                         ),
                         AnalyticItem(
-                          label: 'Trung bình 1 đơn',
+                          label: 'report.avg_one_order'.tr,
                           amount: controller.avgSale.value,
                           bestDay: controller.bestDaysales.value,
                           onPressed: () {},
                         ),
                         AnalyticItem(
-                          label: 'Lợi nhuận',
+                          label: 'report.profit'.tr,
                           amount: controller.profit.value,
                           bestDay: '',
                           onPressed: () {},
                         ),
                         AnalyticItem(
-                          label: 'Sản phẩm bán chạy',
+                          label: 'report.best_sale_product'.tr,
                           title: controller.bestProduct.value,
                           bestAmount: 0,
                           onPressed: () {},
                         ),
                         AnalyticItem(
-                          label: 'Nhân viên ',
+                          label: 'label.employee'.tr,
                           title: controller.bestUser.value ?? '',
                           bestAmount: controller.mapRevenueByUser.length != 0 ? controller.mapRevenueByUser?.last['revenue'] : 0,
                           onPressed: () {
                             Get.to(AnalyticBestSellerScreen(
-                              title: 'Nhân viên',
+                              title: 'label.employee'.tr,
                               dateRange: controller.typeFilterLabel,
                             ));
                           },
                         ),
                         AnalyticItem(
-                          label: 'Khách hàng',
+                          label: 'label.customer'.tr,
                           title: '',
                           bestAmount: 0,
                           onPressed: () {},
@@ -153,7 +153,7 @@ class AnalyticItem extends StatelessWidget {
           children: [
             Text(
               label,
-              style: Pallate.titleProduct(),
+              style: Palette.titleProduct(),
             ),
             SizedBox(
               height: 5,
@@ -161,7 +161,7 @@ class AnalyticItem extends StatelessWidget {
             Text(
               amount != null ? '${$Number.numberFormat(amount)} ${isNumber ? '' : 'đ'}' : title,
               style: TextStyle(
-                color: Pallate.primaryColor,
+                color: Palette.primaryColor,
                 fontSize: 24,
                 fontWeight: FontWeight.w500,
               ),
@@ -173,12 +173,12 @@ class AnalyticItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 bestDay != null
-                    ? Text('Ngày cao nhất: ${bestDay}', style: TextStyle(color: Pallate.colorCyan, fontWeight: FontWeight.w500))
-                    : Text('Doanh số' + ': ${$Number.numberFormat(bestAmount ?? 0)} đ', style: TextStyle(color: Pallate.colorCyan, fontWeight: FontWeight.w500)),
+                    ? Text('${'report.best_day'.tr}: $bestDay', style: TextStyle(color: Palette.colorCyan, fontWeight: FontWeight.w500))
+                    : Text('${'report.sales'.tr}' + ': ${$Number.numberFormat(bestAmount ?? 0)} đ', style: TextStyle(color: Palette.colorCyan, fontWeight: FontWeight.w500)),
                 //: Text(''),
                 Icon(
                   MdiIcons.chevronRight,
-                  color: Pallate.colorCyan,
+                  color: Palette.colorCyan,
                 ),
               ],
             ),
@@ -208,7 +208,7 @@ class FilterDateContainer extends StatelessWidget {
       child: Container(
         height: Get.height * .08,
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), border: Border.all(color: Pallate.primaryColor.withOpacity(.5), width: 2)),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), border: Border.all(color: Palette.primaryColor.withOpacity(.5), width: 2)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

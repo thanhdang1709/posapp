@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pos_app/config/pallate.dart';
+import 'package:pos_app/config/palette.dart';
 import 'package:pos_app/data/controllers/payment_controller.dart';
 import 'package:pos_app/screens/payment/amount_controller.dart';
 import 'package:pos_app/ultils/app_ultils.dart';
@@ -50,7 +50,7 @@ class AmountNumpadWidget extends GetView<AmountController> {
               padding: EdgeInsets.only(top: Get.height * .05),
               child: Text(
                 'Số tiền nhận:',
-                style: Pallate.titleProduct(),
+                style: Palette.titleProduct(),
               ),
             ),
             SizedBox(height: 5),
@@ -68,12 +68,12 @@ class AmountNumpadWidget extends GetView<AmountController> {
                 if (amountController.amountReceive.value - totalPrice > 0) {
                   return Text(
                     'Hoàn lại: ${$Number.numberFormat(amountController.amountReceive.value - totalPrice)} đ',
-                    style: Pallate.titleProduct(),
+                    style: Palette.titleProduct(),
                   );
                 } else {
                   return Text(
                     'Còn thiếu: ${$Number.numberFormat(-(amountController.amountReceive.value - totalPrice))} đ',
-                    style: Pallate.titleProduct(),
+                    style: Palette.titleProduct(),
                   );
                 }
               }),
@@ -108,7 +108,7 @@ class AmountNumpadWidget extends GetView<AmountController> {
                     amountController.amountReceive.value = e;
                   }
                 },
-                buttonColor: Pallate.primaryColor,
+                buttonColor: Palette.primaryColor,
                 textColor: Colors.white,
               ),
             ),
@@ -116,7 +116,7 @@ class AmountNumpadWidget extends GetView<AmountController> {
                   margin: EdgeInsets.only(left: 5, right: 5, bottom: 10),
                   padding: EdgeInsets.all(15),
                   decoration: BoxDecoration(
-                    color: amountController.amountReceive.value - totalPrice >= 0 ? Pallate.colorCyan : Colors.grey,
+                    color: amountController.amountReceive.value - totalPrice >= 0 ? Palette.colorCyan : Colors.grey,
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: Row(
@@ -145,7 +145,7 @@ class AmountNumpadWidget extends GetView<AmountController> {
                           'Thanh Toán',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: Pallate.textTitle1(),
+                          style: Palette.textTitle1(),
                         ),
                       )
                     ],

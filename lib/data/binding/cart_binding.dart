@@ -6,7 +6,7 @@ class CartBinding implements Bindings {
   @override
   void dependencies() {
     Get.put(CartController());
-    Get.put(ProductStore());
+    Get.put(MasterStore());
     //Get.lazyPut(() => CartController());
   }
 }

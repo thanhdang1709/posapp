@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pos_app/config/pallate.dart';
+import 'package:pos_app/config/palette.dart';
 import 'package:pos_app/models/catelog_model.dart';
 import 'package:pos_app/data/controllers/list_controller.dart';
 import 'package:pos_app/widgets/popup/pop_menu.dart';
@@ -18,7 +18,7 @@ class ItemCatelog extends StatelessWidget {
           Expanded(
             child: Text(
               catelogItem.name,
-              style: Pallate.titleProduct(),
+              style: Palette.titleProduct(),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),

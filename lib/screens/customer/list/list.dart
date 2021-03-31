@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:get/get.dart';
-import 'package:pos_app/config/pallate.dart';
+import 'package:pos_app/config/palette.dart';
 import 'package:pos_app/data/controllers/cart_controller.dart';
 import 'package:pos_app/data/controllers/customer_controller.dart';
 import 'package:pos_app/models/customer_model.dart';
@@ -115,7 +115,7 @@ class RowContactItem extends StatelessWidget {
           children: [
             Text(
               customer.name.toString(),
-              style: Pallate.titleProduct(),
+              style: Palette.titleProduct(),
             ),
             SizedBox(
               height: 5,

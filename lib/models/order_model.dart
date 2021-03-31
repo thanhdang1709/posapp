@@ -15,6 +15,7 @@ class OrderModel {
   int totalPrice;
   int amountReceive;
   int change;
+  int tableId;
   TableModel table;
   EmployeeModel employee;
   CustomerModel customer;
@@ -37,6 +38,7 @@ class OrderModel {
     this.change,
     this.employee,
     this.customer,
+    this.tableId,
     this.table,
     this.createdAt,
     this.date,
@@ -69,6 +71,8 @@ class OrderModel {
         status.add(new StatusModel.fromJson(v));
       });
     }
+    tableId = json['table_id'];
+    table = (json['table']) != null ? TableModel.fromJson(json['table']) : null;
     amountReceive = json['amount_receive'];
     change = json['amount_change'];
     totalPrice = json['total_price'];

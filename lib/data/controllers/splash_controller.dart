@@ -1,42 +1,33 @@
 import 'package:get/get.dart';
-import 'package:pos_app/data/store/product_store.dart';
-import 'package:pos_app/models/catelog_model.dart';
-import 'package:pos_app/models/product_model.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:pos_app/data/controllers/initData_controller.dart';
 import 'package:pos_app/repositories/notification_service.dart';
-import 'package:pos_app/services/product_services.dart';
+import 'package:pos_app/screens/welcome/onboarding_page.dart';
 
 class SplashController extends GetxController {
-  RxList<CatelogModel> catelogies = <CatelogModel>[].obs;
-  ProductStore productStore = Get.put<ProductStore>(ProductStore());
-  RxList<ProductModel> products = <ProductModel>[].obs;
-
+  GetStorage box = GetStorage();
   @override
   void onInit() async {
     super.onInit();
 
-    await getCatelogAll();
-    await getProductAll();
-
-    productStore.catelogies = catelogies;
-    productStore.products = products;
-
     PushNotificationsManager().init();
-    // if (catelogies.length != 0 && catelogies.length != 0)
-    Get.offAllNamed('pos');
-  }
 
-  Future getCatelogAll() async {
-    var response = await ProductService().getCatelogAll();
-    print(response);
-    if (response != null && response.length != 0) {
-      catelogies.assignAll(response.map((e) => CatelogModel.fromJson(e)).toList());
-    }
-  }
-
-  Future getProductAll() async {
-    var response = (await ProductService().getProductAll());
-    if (response != null && response.length != 0) {
-      products.assignAll(response.map((e) => ProductModel.fromJson(e)).toList());
+    if (box.hasData('token')) {
+      await InitData().onInit();
+      await Future.delayed(Duration(seconds: 1), () {
+        print(box.read('token'));
+        Get.offAllNamed('pos');
+      });
+    } else {
+      if (box.hasData('first_visit')) {
+        await Future.delayed(Duration(seconds: 1), () {
+          Get.offAllNamed('welcome');
+        });
+      } else {
+        await Future.delayed(Duration(seconds: 1), () {
+          Get.to(OnBoardingPage());
+        });
+      }
     }
   }
 }

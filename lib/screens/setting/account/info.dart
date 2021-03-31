@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:pos_app/config/pallate.dart';
+import 'package:pos_app/config/palette.dart';
 import 'package:pos_app/data/controllers/user_controller.dart';
-import 'package:pos_app/repositories/common.dart';
 import 'package:pos_app/ultils/app_ultils.dart';
 import 'package:pos_app/widgets/circle_border_asset.dart';
 import 'package:pos_app/widgets/circle_border_avatar.dart';
@@ -47,7 +45,7 @@ class AccountScreen extends GetView<UserController> {
                                 ? CircleBorderAvatar(
                                     height: 150,
                                     width: 150,
-                                    imageUrl: BASE_URL + "/" + userController.userInfo.logo,
+                                    imageUrl: userController.userInfo.logo,
                                   )
                                 : CircleBorderAsset(
                                     imageUrl: 'assets/icons/pos.png',
@@ -68,7 +66,7 @@ class AccountScreen extends GetView<UserController> {
                                 width: 35,
                                 padding: EdgeInsets.all(5),
                                 decoration: BoxDecoration(
-                                  color: Pallate.primaryColor,
+                                  color: Palette.primaryColor,
                                   borderRadius: BorderRadius.circular(200),
                                 ),
                                 child: ClipRRect(
@@ -88,8 +86,8 @@ class AccountScreen extends GetView<UserController> {
                         height: 15,
                       ),
                       Text(
-                        userController.userInfo.name,
-                        style: Pallate.textTitle1(),
+                        userController.userInfo.name ?? '',
+                        style: Palette.textTitle1(),
                       ),
                       RowItemInfo(
                         label: 'Số điện thoại'.tr,
@@ -118,7 +116,7 @@ class AccountScreen extends GetView<UserController> {
                         onPressed: () async {},
                         icon: Icon(Icons.edit, color: Colors.white),
                         label: Text('Sửa'.tr, style: TextStyle(color: Colors.white)),
-                        color: Pallate.primaryColor,
+                        color: Palette.primaryColor,
                         minWidth: Get.width,
                         height: 50,
                       )

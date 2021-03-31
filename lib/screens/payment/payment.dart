@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:get/get.dart';
-import 'package:pos_app/config/pallate.dart';
+import 'package:pos_app/config/palette.dart';
 import 'package:pos_app/data/controllers/cart_controller.dart';
 import 'package:pos_app/data/controllers/payment_controller.dart';
 import 'package:pos_app/screens/payment/amount_received.dart';
@@ -69,7 +69,7 @@ class PaymentScreen extends GetView<PaymentController> {
                             width: Get.width * .8,
                             decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
                             child: FlatButton.icon(
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0), side: BorderSide(color: Pallate.primaryColor)),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0), side: BorderSide(color: Palette.primaryColor)),
                               //color: Colors.grey[300],
                               onPressed: () {
                                 controller.saveOrder();
@@ -80,7 +80,7 @@ class PaymentScreen extends GetView<PaymentController> {
                               ),
                               label: Text(
                                 'Lưu  đơn',
-                                style: Pallate.titleProduct(),
+                                style: Palette.titleProduct(),
                               ),
                             ),
                           ),
@@ -89,12 +89,12 @@ class PaymentScreen extends GetView<PaymentController> {
                           //   width: Get.width * .4,
                           //   decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
                           //   child: FlatButton(
-                          //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0), side: BorderSide(color: Pallate.primaryColor)),
+                          //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0), side: BorderSide(color: Palette.primaryColor)),
                           //     //color: Colors.grey[300],
                           //     onPressed: () {},
                           //     child: Text(
                           //       'T.Toán sau',
-                          //       style: Pallate.titleProduct(),
+                          //       style: Palette.titleProduct(),
                           //     ),
                           //   ),
                           // ),
@@ -129,7 +129,7 @@ class PaymentScreen extends GetView<PaymentController> {
             margin: EdgeInsets.all(5),
             padding: EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: Pallate.primaryColor,
+              color: Palette.primaryColor,
               borderRadius: BorderRadius.circular(10),
             ),
             child: Row(
@@ -161,7 +161,7 @@ class PaymentScreen extends GetView<PaymentController> {
                               'Tiếp tục',
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: Pallate.textTitle1(),
+                              style: Palette.textTitle1(),
                             ),
                             Spacer(),
                             Icon(
@@ -205,18 +205,18 @@ class MethodPaymentContainer extends StatelessWidget {
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),
             side: BorderSide(
-              color: active ? Pallate.primaryColor : Colors.grey,
+              color: active ? Palette.primaryColor : Colors.grey,
             )),
         //color: Colors.grey[300],
         onPressed: onPressed,
         icon: Icon(
           icon,
-          color: active ? Pallate.primaryColor : Colors.grey,
+          color: active ? Palette.primaryColor : Colors.grey,
         ),
         label: Text(
           title ?? '',
           style: TextStyle(
-            color: active ? Pallate.primaryColor : Colors.grey,
+            color: active ? Palette.primaryColor : Colors.grey,
           ),
         ),
       ),

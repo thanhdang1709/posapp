@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:get/get.dart';
 import 'package:mdi/mdi.dart';
-import 'package:pos_app/config/pallate.dart';
+import 'package:pos_app/config/palette.dart';
 import 'package:pos_app/screens/setting/account/info.dart';
 import 'package:pos_app/ultils/app_ultils.dart';
 import 'package:pos_app/widgets/drawer/drawer.dart';
@@ -20,7 +20,7 @@ class _SettingScreenState extends State<SettingScreen> {
     return Scaffold(
         appBar: AppUltils.buildAppBar(
           height: 40,
-          title: 'Cài đặt',
+          title: 'common.settings'.tr,
         ),
         drawer: DrawerApp(),
         body: SingleChildScrollView(
@@ -31,35 +31,35 @@ class _SettingScreenState extends State<SettingScreen> {
                 SizedBox(
                   height: 20,
                 ),
-                // RowSettingItem(
-                //   title: 'Cài đặt chung',
-                //   icon: Icons.settings,
-                // ),
+                RowSettingItem(
+                  title: 'common.common_setting'.tr,
+                  icon: Icons.settings,
+                ),
                 InkWell(
                   onTap: () {
                     Get.to(AccountScreen());
                   },
                   child: RowSettingItem(
-                    title: 'Thông tin cửa hàng',
+                    title: 'label.store_info'.tr,
                     icon: Icons.house,
                   ),
                 ),
-                // RowSettingItem(
-                //   title: 'Đặt hàng và danh mục',
-                //   icon: Mdi.cart,
-                // ),
-                // RowSettingItem(
-                //   title: 'Hoá đơn',
-                //   icon: Icons.receipt,
-                // ),
-                // RowSettingItem(
-                //   title: 'Tài chính',
-                //   icon: FontAwesome.dollar,
-                // ),
-                // RowSettingItem(
-                //   title: 'Xuất báo cáo',
-                //   icon: Mdi.export,
-                // ),
+                RowSettingItem(
+                  title: 'label.order_and_category'.tr,
+                  icon: Mdi.cart,
+                ),
+                RowSettingItem(
+                  title: 'label.receipt'.tr,
+                  icon: Icons.receipt,
+                ),
+                RowSettingItem(
+                  title: 'label.finance'.tr,
+                  icon: FontAwesome.dollar,
+                ),
+                RowSettingItem(
+                  title: 'common.export'.tr,
+                  icon: Mdi.export,
+                ),
                 // RowSettingItem(
                 //   title: 'Hoá đơn',
                 //   icon: Icons.receipt,
@@ -94,7 +94,7 @@ class RowSettingItem extends StatelessWidget {
           Expanded(
             child: Text(
               title,
-              style: Pallate.titleProduct(),
+              style: Palette.titleProduct(),
             ),
           ),
           Icon(

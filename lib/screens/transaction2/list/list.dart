@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:get/get.dart';
 import 'package:mdi/mdi.dart';
-import 'package:pos_app/config/pallate.dart';
+import 'package:pos_app/config/palette.dart';
 import 'package:pos_app/data/controllers/transaction_controller.dart';
 import 'package:pos_app/ultils/app_ultils.dart';
 import 'package:pos_app/widgets/drawer/drawer.dart';
@@ -54,8 +54,7 @@ class TransactionScreen2 extends GetView<TransactionController> {
             padding: EdgeInsets.all(10),
             child: Row(
               children: [
-                Icon(Icons.supervised_user_circle_outlined,
-                    color: Colors.black54),
+                Icon(Icons.supervised_user_circle_outlined, color: Colors.black54),
                 SizedBox(
                   width: 5,
                 ),
@@ -84,7 +83,7 @@ class TransactionScreen2 extends GetView<TransactionController> {
                       children: [
                         Text(
                           'Hôm nay',
-                          style: Pallate.titleProduct(),
+                          style: Palette.titleProduct(),
                         )
                       ],
                     ),
@@ -95,7 +94,7 @@ class TransactionScreen2 extends GetView<TransactionController> {
                       children: [
                         Text(
                           '2 sale, 480.000 đ',
-                          style: Pallate.smallText(),
+                          style: Palette.smallText(),
                         ),
                       ],
                     ),
@@ -120,7 +119,7 @@ class TransactionScreen2 extends GetView<TransactionController> {
                 children: [
                   Text(
                     'Tổng 30 ngày gần nhất',
-                    style: Pallate.textTitle1(),
+                    style: Palette.textTitle1(),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -128,7 +127,7 @@ class TransactionScreen2 extends GetView<TransactionController> {
                     children: [
                       Text(
                         ' 2 đơn hàng: 480.000 đ',
-                        style: Pallate.textTitle2(),
+                        style: Palette.textTitle2(),
                       )
                     ],
                   )
@@ -160,7 +159,7 @@ class RowTransactionItem extends StatelessWidget {
             Expanded(
               child: Text(
                 '480.000 đ',
-                style: Pallate.titleProduct(),
+                style: Palette.titleProduct(),
               ),
             ),
             Text('14:46'),
@@ -171,7 +170,7 @@ class RowTransactionItem extends StatelessWidget {
             Expanded(
               child: Text(
                 '2x RedBull, 6x Cà phê',
-                style: Pallate.smallText(),
+                style: Palette.smallText(),
               ),
             ),
             Text('#1'),

@@ -7,7 +7,7 @@ class PaymentBinding implements Bindings {
   @override
   void dependencies() {
     Get.put(PaymentController());
-    Get.put<ProductStore>(ProductStore(), permanent: true);
+    Get.put<MasterStore>(MasterStore(), permanent: true);
     Get.put(CartController());
   }
 }

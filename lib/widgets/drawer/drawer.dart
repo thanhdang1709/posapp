@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:pos_app/config/pallate.dart';
+import 'package:pos_app/config/palette.dart';
 import 'package:pos_app/data/controllers/pos_controller.dart';
-import 'package:pos_app/screens/auth/auth_screen.dart';
-import 'package:pos_app/screens/auth/login_page.dart';
+import 'package:pos_app/data/store/master_storage.dart';
 import 'package:pos_app/screens/auth/welcome_page.dart';
 
 class DrawerApp extends StatelessWidget {
@@ -16,7 +15,7 @@ class DrawerApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var box = GetStorage();
-    int role = box.read('role');
+    int role = MasterConfig().userInfo?.role;
     return SafeArea(
         child: Drawer(
       elevation: 10,
@@ -25,10 +24,10 @@ class DrawerApp extends StatelessWidget {
           color: Colors.white,
           gradient: LinearGradient(
             colors: [
-              Pallate.primaryColor.withOpacity(0.7),
-              // Pallate.secondColor.withOpacity(0.7),
-              // Pallate.secondColor.withOpacity(0.7),
-              Pallate.primaryColor.withOpacity(0.7),
+              Palette.primaryColor.withOpacity(0.7),
+              // Palette.secondColor.withOpacity(0.7),
+              // Palette.secondColor.withOpacity(0.7),
+              Palette.primaryColor.withOpacity(0.7),
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -46,10 +45,10 @@ class DrawerApp extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        box.read('store_name') ?? 'Cà Phê Trung Nguyên Nguyên Nguyên',
+                        MasterConfig().storeInfo?.name ?? 'Cà Phê Trung Nguyên Nguyên Nguyên',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: Pallate.textTitle1(),
+                        style: Palette.textStyle().copyWith(fontSize: 18, color: Colors.white),
                       ),
                     ),
                     Icon(
@@ -66,7 +65,7 @@ class DrawerApp extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        box.read('name') ?? 'Vinatech',
+                        MasterConfig().userInfo?.name ?? 'Vinatech',
                         style: TextStyle(
                           fontSize: 14,
                           color: Colors.white70,
@@ -76,20 +75,21 @@ class DrawerApp extends StatelessWidget {
                     Chip(
                       backgroundColor: Colors.purple,
                       label: Text(
-                        'Miễn phí',
+                        'label.free'.tr,
                         style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                       ),
                     )
                   ],
                 ),
+
                 SizedBox(
-                  height: 20,
+                  height: 5,
                 ),
                 if (role == 1 || role == 2 || role == 3 || role == 4)
                   ItemMenuDraw(
                     imageUrl: 'assets/icons/pos.png',
-                    title: 'Bán hàng',
-                    selectedColor: Get.currentRoute == 'pos' ? Pallate.primaryColor : null,
+                    title: 'label.pos'.tr,
+                    selectedColor: Get.currentRoute == 'pos' ? Palette.primaryColor : null,
                     onPress: () {
                       Get.put(PosController());
                       Get.offNamed(
@@ -100,27 +100,35 @@ class DrawerApp extends StatelessWidget {
                 if (role == 1 || role == 2 || role == 3)
                   ItemMenuDraw(
                     imageUrl: 'assets/icons/checklist.png',
-                    title: 'Đơn hàng',
-                    selectedColor: Get.currentRoute == 'order' ? Pallate.primaryColor : null,
+                    title: 'label.order'.tr,
+                    selectedColor: Get.currentRoute == 'order' ? Palette.primaryColor : null,
                     onPress: () {
                       Get.offNamed('order');
                     },
                   ),
-                // ItemMenuDraw(
-                //   imageUrl: 'assets/icons/table.png',
-                //   title: 'Bàn',
-                //   onPress: () {},
-                // ),
-                // ItemMenuDraw(
-                //   imageUrl: 'assets/icons/cooking.png',
-                //   title: 'Bếp',
-                //   onPress: () {},
-                // ),
+                if (role == 1 || role == 2 || role == 3)
+                  ItemMenuDraw(
+                    imageUrl: 'assets/icons/table.png',
+                    title: 'label.table'.tr,
+                    selectedColor: Get.currentRoute == 'table' ? Palette.primaryColor : null,
+                    onPress: () {
+                      Get.offNamed('table');
+                    },
+                  ),
+                if (role == 1 || role == 2 || role == 3)
+                  ItemMenuDraw(
+                    imageUrl: 'assets/icons/cooking.png',
+                    title: 'label.kitchen'.tr,
+                    selectedColor: Get.currentRoute == 'kitchen' ? Palette.primaryColor : null,
+                    onPress: () {
+                      Get.offNamed('kitchen');
+                    },
+                  ),
                 if (role == 1 || role == 2 || role == 4)
                   ItemMenuDraw(
                     imageUrl: 'assets/icons/diet.png',
-                    title: 'Sản phẩm',
-                    selectedColor: Get.currentRoute == '/product' ? Pallate.primaryColor : null,
+                    title: 'label.product'.tr,
+                    selectedColor: Get.currentRoute == '/product' ? Palette.primaryColor : null,
                     onPress: () {
                       Get.offNamed('/product');
                     },
@@ -133,8 +141,8 @@ class DrawerApp extends StatelessWidget {
                 if (role == 1 || role == 2)
                   ItemMenuDraw(
                     imageUrl: 'assets/icons/customer.png',
-                    title: 'Khách hàng',
-                    selectedColor: Get.currentRoute == '/customer' ? Pallate.primaryColor : null,
+                    title: 'label.customer'.tr,
+                    selectedColor: Get.currentRoute == '/customer' ? Palette.primaryColor : null,
                     onPress: () {
                       Get.offNamed('/customer');
                     },
@@ -142,8 +150,8 @@ class DrawerApp extends StatelessWidget {
                 if (role == 1)
                   ItemMenuDraw(
                     imageUrl: 'assets/icons/transaction.png',
-                    title: 'Giao dịch',
-                    selectedColor: Get.currentRoute == '/transaction' ? Pallate.primaryColor : null,
+                    title: 'label.transaction'.tr,
+                    selectedColor: Get.currentRoute == '/transaction' ? Palette.primaryColor : null,
                     onPress: () {
                       Get.offNamed('/transaction');
                     },
@@ -151,8 +159,8 @@ class DrawerApp extends StatelessWidget {
                 if (role == 1)
                   ItemMenuDraw(
                     imageUrl: 'assets/icons/report.png',
-                    title: 'Báo cáo',
-                    selectedColor: Get.currentRoute == '/analytic' ? Pallate.primaryColor : null,
+                    title: 'label.report'.tr,
+                    selectedColor: Get.currentRoute == '/analytic' ? Palette.primaryColor : null,
                     onPress: () {
                       Get.offNamed('/analytic');
                     },
@@ -160,8 +168,8 @@ class DrawerApp extends StatelessWidget {
                 if (role == 1)
                   ItemMenuDraw(
                     imageUrl: 'assets/icons/user.png',
-                    title: 'Nhân viên',
-                    selectedColor: Get.currentRoute == 'employee' ? Pallate.primaryColor : null,
+                    title: 'label.employee'.tr,
+                    selectedColor: Get.currentRoute == 'employee' ? Palette.primaryColor : null,
                     onPress: () {
                       Get.offNamed('employee');
                     },
@@ -169,8 +177,8 @@ class DrawerApp extends StatelessWidget {
                 // if (role == 1)
                 //   ItemMenuDraw(
                 //     imageUrl: 'assets/icons/settings.png',
-                //     title: 'Cài đặt',
-                //     selectedColor: Get.currentRoute == '/setting' ? Pallate.primaryColor : null,
+                //     title: 'common.settings'.tr,
+                //     selectedColor: Get.currentRoute == '/setting' ? Palette.primaryColor : null,
                 //     onPress: () {
                 //       Get.offNamed('/setting');
                 //       print(Get.currentRoute);
@@ -179,14 +187,19 @@ class DrawerApp extends StatelessWidget {
 
                 ItemMenuDraw(
                   imageUrl: 'assets/icons/log-out.png',
-                  title: 'Đăng xuất',
-                  //selectedColor: Get.currentRoute == '/setting' ? Pallate.primaryColor : null,
+                  title: 'account.logout'.tr,
+                  //selectedColor: Get.currentRoute == '/setting' ? Palette.primaryColor : null,
                   onPress: () {
                     box.erase();
                     Get.reset();
                     Get.offAll(WelcomePage());
                   },
                 ),
+                Divider(),
+                Text('${'common.version'.tr}: 1.0',
+                    style: Palette.textStyle().copyWith(
+                      color: Colors.white,
+                    )),
               ],
             ),
           ),
@@ -224,7 +237,7 @@ class ItemMenuDraw extends StatelessWidget {
               Expanded(
                   child: Text(
                 title,
-                style: Pallate.textTitle2(),
+                style: Palette.textStyle().copyWith(fontSize: 18, color: Colors.white, fontWeight: FontWeight.w300),
               ))
             ],
           ),

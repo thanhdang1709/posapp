@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pos_app/config/pallate.dart';
+import 'package:pos_app/config/palette.dart';
 import 'package:pos_app/models/product_model.dart';
-import 'package:pos_app/repositories/common.dart';
 import 'package:pos_app/screens/product/edit/edit.dart';
 import 'package:pos_app/ultils/number.dart';
 import 'package:pos_app/widgets/image/image_container.dart';
@@ -27,7 +26,7 @@ class ItemProduct extends StatelessWidget {
         child: Row(
           children: [
             ContainerImageProduct(
-              imageUrl: BASE_DOMAIN + '/' + product.imageUrl,
+              imageUrl: product.imageUrl,
             ),
             SizedBox(
               width: 10,
@@ -35,7 +34,7 @@ class ItemProduct extends StatelessWidget {
             Expanded(
               child: Text(
                 product.name,
-                style: Pallate.titleProduct(),
+                style: Palette.titleProduct(),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),

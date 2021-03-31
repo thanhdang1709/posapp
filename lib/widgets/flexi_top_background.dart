@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pos_app/config/pallate.dart';
+import 'package:pos_app/config/palette.dart';
 
 class FlexibleTopBackground extends StatelessWidget {
   const FlexibleTopBackground({
@@ -27,7 +27,7 @@ class FlexibleTopBackground extends StatelessWidget {
           decoration: BoxDecoration(
             color: titleColor,
             gradient: LinearGradient(
-              colors: [Pallate.primaryColor.withOpacity(0.8), Pallate.secondColor.withOpacity(0.9)],
+              colors: [Palette.primaryColor.withOpacity(0.8), Palette.secondColor.withOpacity(0.9)],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),

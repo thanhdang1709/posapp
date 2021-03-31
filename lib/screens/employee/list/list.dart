@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:get/get.dart';
-import 'package:pos_app/config/pallate.dart';
+import 'package:pos_app/config/palette.dart';
 import 'package:pos_app/data/controllers/cart_controller.dart';
 import 'package:pos_app/data/controllers/employee_controller.dart';
 import 'package:pos_app/models/employee.dart';
@@ -107,10 +107,10 @@ class RowContactItem extends StatelessWidget {
               children: [
                 Text(
                   employee.name.toString(),
-                  style: Pallate.titleProduct(),
+                  style: Palette.titleProduct(),
                 ),
                 Container(
-                  decoration: BoxDecoration(border: Border.all(color: Pallate.primaryColor)),
+                  decoration: BoxDecoration(border: Border.all(color: Palette.primaryColor)),
                   padding: EdgeInsets.all(5),
                   child: Text(employee.roleLabel),
                 )

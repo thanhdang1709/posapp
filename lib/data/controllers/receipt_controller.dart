@@ -5,6 +5,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:pos_app/data/store/master_storage.dart';
 import 'package:pos_app/models/order_model.dart';
 import 'package:pos_app/screens/receipt/components/pdf_print.dart';
 import 'package:pos_app/screens/receipt/receipt.dart';
@@ -152,7 +153,7 @@ class ReceiptController extends GetxController {
                         mainAxisAlignment: pw.MainAxisAlignment.center,
                         children: [
                           pw.Text(
-                            TiengViet.parse(GetStorage().read('store_name') ?? 'Ca Phe Vinatech'),
+                            TiengViet.parse(MasterConfig().storeInfo?.name ?? 'Ca Phe Vinatech'),
                             style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 15),
                           )
                         ],
@@ -161,7 +162,7 @@ class ReceiptController extends GetxController {
                         mainAxisAlignment: pw.MainAxisAlignment.center,
                         children: [
                           pw.Text(
-                            TiengViet.parse(GetStorage().read('address') ?? 'Không có'),
+                            TiengViet.parse(MasterConfig().storeInfo?.address ?? 'Không có'),
                             maxLines: 2,
                             style: pw.TextStyle(fontSize: 8),
                           ),
@@ -171,7 +172,7 @@ class ReceiptController extends GetxController {
                         mainAxisAlignment: pw.MainAxisAlignment.center,
                         children: [
                           pw.Text(
-                            'Hotline: ${TiengViet.parse(GetStorage().read('phone') ?? '')}',
+                            'Hotline: ${TiengViet.parse(MasterConfig().storeInfo?.hotline ?? '')}',
                             maxLines: 2,
                             style: pw.TextStyle(fontSize: 8),
                           ),
@@ -186,7 +187,7 @@ class ReceiptController extends GetxController {
                             child: pw.Text(
                               '$totalMenu mon (SL: ${totalOrderItem.value})',
                               maxLines: 2,
-                              //style: Pallate.titleProduct(),
+                              //style: Palette.titleProduct(),
                             ),
                           )
                         ],
@@ -308,13 +309,13 @@ class ReceiptController extends GetxController {
                     children: [
                       // pw.Icon(pw.Icons.close),
                       pw.SizedBox(
-                        height: 20,
+                        height: 5,
                       ),
                       pw.Row(
-                        mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: pw.MainAxisAlignment.center,
                         children: [
                           pw.Text(
-                            'Hoa Don #$orderCode',
+                            'Hoa don: #$orderCode',
                             style: pw.TextStyle(
                               fontSize: 8,
                               fontWeight: pw.FontWeight.bold,
@@ -323,7 +324,7 @@ class ReceiptController extends GetxController {
                         ],
                       ),
                       pw.Row(
-                        mainAxisAlignment: pw.MainAxisAlignment.start,
+                        mainAxisAlignment: pw.MainAxisAlignment.center,
                         children: [
                           pw.Text(
                             order[0].createdAt?.day.toString() +
@@ -340,14 +341,14 @@ class ReceiptController extends GetxController {
                         ],
                       ),
                       pw.SizedBox(
-                        height: 10,
+                        height: 5,
                       ),
                       pw.Row(
                         mainAxisAlignment: pw.MainAxisAlignment.center,
                         children: [
                           pw.Text(
-                            TiengViet.parse(GetStorage().read('store_name') ?? 'Ca Phe Vinatech'),
-                            style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 15),
+                            TiengViet.parse(MasterConfig().storeInfo?.name ?? 'Ca Phe Vinatech'),
+                            style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 13),
                           )
                         ],
                       ),
@@ -355,7 +356,7 @@ class ReceiptController extends GetxController {
                         mainAxisAlignment: pw.MainAxisAlignment.center,
                         children: [
                           pw.Text(
-                            TiengViet.parse(GetStorage().read('address') ?? 'Không có'),
+                            TiengViet.parse(MasterConfig().storeInfo?.address ?? 'Không có'),
                             maxLines: 2,
                             style: pw.TextStyle(fontSize: 8),
                           ),
@@ -365,7 +366,7 @@ class ReceiptController extends GetxController {
                         mainAxisAlignment: pw.MainAxisAlignment.center,
                         children: [
                           pw.Text(
-                            'Hotline: ${TiengViet.parse(GetStorage().read('phone') ?? 'Không có')}',
+                            'Hotline: ${TiengViet.parse(MasterConfig().storeInfo?.hotline ?? 'Không có')}',
                             maxLines: 2,
                             style: pw.TextStyle(fontSize: 8),
                           ),
@@ -380,7 +381,7 @@ class ReceiptController extends GetxController {
                             child: pw.Text(
                               '$totalMenu mon (SL: ${totalOrderItem.value})',
                               maxLines: 2,
-                              //style: Pallate.titleProduct(),
+                              //style: Palette.titleProduct(),
                             ),
                           )
                         ],
@@ -440,12 +441,12 @@ class ReceiptController extends GetxController {
                         height: 20,
                       ),
                       pw.Divider(
-                        thickness: 2,
+                        thickness: 1,
                         color: PdfColors.black,
                       ),
-                      pw.SizedBox(
-                        height: 10,
-                      ),
+                      // pw.SizedBox(
+                      //   height: 10,
+                      // ),
                       pw.Row(
                         mainAxisAlignment: pw.MainAxisAlignment.center,
                         children: [
@@ -470,6 +471,9 @@ class ReceiptController extends GetxController {
                             //child: pw.BarcodeWidget(),
                           ),
                         ],
+                      ),
+                      pw.SizedBox(
+                        height: 20,
                       ),
                     ],
                   ),

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pos_app/config/pallate.dart';
+import 'package:pos_app/config/palette.dart';
 import 'package:pos_app/data/controllers/customer_controller.dart';
 import 'package:pos_app/data/controllers/edit_customer_controller.dart';
 import 'package:pos_app/models/customer_model.dart';
@@ -97,8 +97,7 @@ class CustomerDetailScreen extends GetView<EditCustomerController> {
                             Expanded(
                               child: TextFormField(
                                 controller: controller.nameController,
-                                decoration: InputDecoration(
-                                    labelText: 'Tên khách hàng *'),
+                                decoration: InputDecoration(labelText: 'Tên khách hàng *'),
                               ),
                             )
                           ],
@@ -108,8 +107,7 @@ class CustomerDetailScreen extends GetView<EditCustomerController> {
                             Expanded(
                               child: TextFormField(
                                 controller: controller.phoneController,
-                                decoration:
-                                    InputDecoration(labelText: 'Điện thoại'),
+                                decoration: InputDecoration(labelText: 'Điện thoại'),
                               ),
                             )
                           ],
@@ -146,14 +144,13 @@ class CustomerDetailScreen extends GetView<EditCustomerController> {
                   height: 50,
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: Pallate.primaryColor,
+                    color: Palette.primaryColor,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Center(
                     child: Text(
                       'LƯU',
-                      style:
-                          GoogleFonts.roboto(fontSize: 20, color: Colors.white),
+                      style: GoogleFonts.roboto(fontSize: 20, color: Colors.white),
                     ),
                   )),
             ),

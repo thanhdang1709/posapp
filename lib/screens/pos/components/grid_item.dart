@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:pos_app/config/pallate.dart';
+import 'package:pos_app/config/palette.dart';
 import 'package:pos_app/ultils/number.dart';
 
 class CardFoodGridItem extends StatefulWidget {
@@ -25,8 +25,7 @@ class CardFoodGridItem extends StatefulWidget {
   _CardFoodGridItemState createState() => _CardFoodGridItemState();
 }
 
-class _CardFoodGridItemState extends State<CardFoodGridItem>
-    with SingleTickerProviderStateMixin {
+class _CardFoodGridItemState extends State<CardFoodGridItem> with SingleTickerProviderStateMixin {
   double _scale;
   AnimationController _controller;
   @override
@@ -67,9 +66,7 @@ class _CardFoodGridItemState extends State<CardFoodGridItem>
               height: widget.size.height * .15,
               width: double.infinity,
               child: ClipRRect(
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    topRight: Radius.circular(10)),
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
                 child: CachedNetworkImage(
                   imageUrl: widget.imageUrl,
                   fit: BoxFit.cover,
@@ -94,9 +91,7 @@ class _CardFoodGridItemState extends State<CardFoodGridItem>
               width: double.infinity,
               decoration: BoxDecoration(
                 color: widget.color,
-                borderRadius: BorderRadius.only(
-                    bottomRight: Radius.circular(10),
-                    bottomLeft: Radius.circular(10)),
+                borderRadius: BorderRadius.only(bottomRight: Radius.circular(10), bottomLeft: Radius.circular(10)),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,9 +99,7 @@ class _CardFoodGridItemState extends State<CardFoodGridItem>
                 children: [
                   Text(
                     widget.title,
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Pallate.textColorLight),
+                    style: TextStyle(fontWeight: FontWeight.bold, color: Palette.textColorLight),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -114,7 +107,7 @@ class _CardFoodGridItemState extends State<CardFoodGridItem>
                   Flexible(
                     child: Text(
                       '${$Number.numberFormat(widget.price).toString()} đ',
-                      style: TextStyle(color: Pallate.textColorLight),
+                      style: TextStyle(color: Palette.textColorLight),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),

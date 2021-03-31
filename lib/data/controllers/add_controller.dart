@@ -2,25 +2,26 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:fma/get_tool/get_tool.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:pos_app/config/pallate.dart';
+import 'package:pos_app/config/palette.dart';
 import 'package:pos_app/data/store/product_store.dart';
 import 'package:pos_app/models/product_model.dart';
 import 'package:pos_app/services/product_services.dart';
 import 'package:pos_app/ultils/app_ultils.dart';
 import 'package:pos_app/ultils/color.dart';
 
-class AddProductController extends GetxController {
+class AddProductController extends GetxController with GetTool {
   final _obj = ''.obs;
   set obj(value) => this._obj.value = value;
   get obj => this._obj.value;
-  ProductStore productStore = Get.find<ProductStore>();
+  MasterStore masterStore = Get.find<MasterStore>();
 
   RxList<ProductModel> products = <ProductModel>[].obs;
 
-  var pickerColor = Pallate.primaryColor.obs;
-  var currentColor = Pallate.primaryColor.obs;
+  var pickerColor = Palette.primaryColor.obs;
+  var currentColor = Palette.primaryColor.obs;
   var labelName = 'Tên sản phẩm'.obs;
   var labelPrice = '0'.obs;
   var imagePickerPath = ''.obs;
@@ -58,16 +59,14 @@ class AddProductController extends GetxController {
 
   void addProduct() async {
     if (selectedImage.isNull) {
-      Get.back();
-      return AppUltils().getSnackBarError(message: 'Vui lòng chọn ảnh cho món');
+      //Get.back();
+      notify.error(title: 'Thất bại', message: 'Vui lòng chọn ảnh cho món');
+      return;
     }
     if (nameProduct.text == '') {
-      Get.back();
-      return AppUltils().getSnackBarError(message: 'Vui lòng chọn tên cho món');
-    }
-    if (nameProduct.text == '') {
-      Get.back();
-      return AppUltils().getSnackBarError(message: 'Vui lòng chọn tên cho món');
+      //  Get.back();
+      notify.error(title: 'Thất bại', message: 'Vui lòng chọn đặt tên cho món');
+      return;
     }
 
     Map<String, String> data = {
@@ -86,7 +85,7 @@ class AddProductController extends GetxController {
     print('end');
 
     await getProductAll();
-    productStore.products = products;
+    masterStore.products = products;
     //Get.back();
     Get.back();
     Get.back();

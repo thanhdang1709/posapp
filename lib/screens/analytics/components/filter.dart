@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:pos_app/config/pallate.dart';
+import 'package:pos_app/config/palette.dart';
 import 'package:pos_app/data/controllers/analytic_controller.dart';
 import 'package:pos_app/ultils/app_ultils.dart';
 import 'package:date_range_picker/date_range_picker.dart' as DateRagePicker;
@@ -45,7 +45,7 @@ class FilterAnalytic extends GetView<AnalyticController> {
                             }
                           },
                           child: Container(
-                            decoration: BoxDecoration(border: Border.all(color: Pallate.primaryColor), borderRadius: BorderRadius.circular(10)),
+                            decoration: BoxDecoration(border: Border.all(color: Palette.primaryColor), borderRadius: BorderRadius.circular(10)),
                             padding: EdgeInsets.all(10),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -227,7 +227,7 @@ class FilterAnalytic extends GetView<AnalyticController> {
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
-                color: Pallate.primaryColor,
+                color: Palette.primaryColor,
               ),
               margin: EdgeInsets.all(5),
               height: 50,
@@ -262,7 +262,7 @@ class TypeTimeContainer extends StatelessWidget {
       child: Container(
         width: Get.width,
         padding: EdgeInsets.all(25),
-        decoration: BoxDecoration(border: Border.all(color: active ? Pallate.primaryColor : Colors.grey.withOpacity(.5))),
+        decoration: BoxDecoration(border: Border.all(color: active ? Palette.primaryColor : Colors.grey.withOpacity(.5))),
         child: Text(
           label,
           style: TextStyle(

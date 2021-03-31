@@ -6,6 +6,6 @@ class ListProductBinding implements Bindings {
   @override
   void dependencies() {
     Get.put<ListProductController>(ListProductController(), permanent: true);
-    Get.put<ProductStore>(ProductStore(), permanent: true);
+    Get.put<MasterStore>(MasterStore(), permanent: true);
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pos_app/config/pallate.dart';
+import 'package:pos_app/config/palette.dart';
 import 'package:pos_app/data/controllers/analytic_controller.dart';
 import 'package:pos_app/ultils/app_ultils.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
@@ -49,7 +49,7 @@ class AnalyticSaleByHourDetailScreen extends GetView<AnalyticController> {
                 ),
                 Text(
                   '${$Number.numberFormat(controller.sales.value)}',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: Pallate.primaryColor),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: Palette.primaryColor),
                 )
               ],
             ),

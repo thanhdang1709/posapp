@@ -6,6 +6,6 @@ class PosBinding implements Bindings {
   @override
   void dependencies() {
     Get.put<PosController>(PosController(), permanent: true);
-    Get.put<ProductStore>(ProductStore(), permanent: true);
+    Get.put<MasterStore>(MasterStore(), permanent: true);
   }
 }

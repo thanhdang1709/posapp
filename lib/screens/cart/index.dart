@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:get/get.dart';
-import 'package:pos_app/config/pallate.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:pos_app/config/palette.dart';
 import 'package:pos_app/data/controllers/cart_controller.dart';
 import 'package:pos_app/data/store/product_store.dart';
 import 'package:pos_app/screens/cart/add_note.dart';
@@ -12,7 +13,7 @@ import 'package:pos_app/ultils/number.dart';
 class CartScreen extends GetView<CartController> {
   @override
   Widget build(BuildContext context) {
-    ProductStore productStore = Get.find();
+    MasterStore masterStore = Get.find();
 
     List<Widget> buildCartItem(CartController controller) {
       List<Widget> results = [];
@@ -66,7 +67,7 @@ class CartScreen extends GetView<CartController> {
           //   ),
           // ),
           SizedBox(
-            width: 20,
+            width: 10,
           ),
           InkWell(
             onTap: () {
@@ -77,6 +78,33 @@ class CartScreen extends GetView<CartController> {
               child: Icon(
                 FontAwesome.user_plus,
               ),
+            ),
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Obx(() => controller.selectedTable.value.name != null
+              ? Container(
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.only(left: 5, right: 5),
+                  margin: EdgeInsets.only(bottom: 5, top: 5),
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                    color: Colors.white,
+                  )),
+                  child: Text(controller.selectedTable.value.name, style: TextStyle(fontWeight: FontWeight.w700)),
+                )
+              : Text('')),
+          SizedBox(
+            width: 5,
+          ),
+          InkWell(
+            onTap: () {
+              Get.toNamed('table');
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(right: 10),
+              child: Icon(MdiIcons.tableChair),
             ),
           )
         ],
@@ -118,7 +146,7 @@ class CartScreen extends GetView<CartController> {
                   height: 60,
                   decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
                   child: FlatButton(
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0), side: BorderSide(color: Pallate.primaryColor)),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0), side: BorderSide(color: Palette.primaryColor)),
                       //color: Colors.grey[300],
                       onPressed: () {
                         cartModalBottomSheet(context);
@@ -132,7 +160,7 @@ class CartScreen extends GetView<CartController> {
                   child: Container(
                     padding: EdgeInsets.all(0),
                     decoration: BoxDecoration(
-                      color: Pallate.primaryColor,
+                      color: Palette.primaryColor,
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Row(
@@ -146,10 +174,10 @@ class CartScreen extends GetView<CartController> {
                                     Get.toNamed('payment', arguments: {'totalPrice': controller.totalPrice});
                                   },
                                   child: Text(
-                                    '${productStore.cartItem.length} món = ${$Number.numberFormat(productStore.cartItem.length != 0 ? productStore.cartItem?.map((element) => element.price)?.reduce((a, b) => a + b) : 0)} đ',
+                                    '${masterStore.cartItem.length} món = ${$Number.numberFormat(masterStore.cartItem.length != 0 ? masterStore.cartItem?.map((element) => element.price)?.reduce((a, b) => a + b) : 0)} đ',
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
-                                    style: Pallate.textTitle1(),
+                                    style: Palette.textTitle1(),
                                   ),
                                 )),
                           ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pos_app/config/pallate.dart';
+import 'package:pos_app/config/palette.dart';
 
 class RowSearchInput extends StatelessWidget {
   const RowSearchInput({
@@ -27,8 +27,7 @@ class RowSearchInput extends StatelessWidget {
         Expanded(
           child: TextFormField(
             controller: controller,
-            decoration: InputDecoration(
-                border: InputBorder.none, hintText: hintText ?? 'Tìm menu'),
+            decoration: InputDecoration(border: InputBorder.none, hintText: hintText ?? 'Tìm menu'),
           ),
         ),
         InkWell(
@@ -38,7 +37,7 @@ class RowSearchInput extends StatelessWidget {
             child: Icon(
               iconRight ?? Icons.add,
               size: 30,
-              color: Pallate.primaryColor,
+              color: Palette.primaryColor,
             ),
           ),
         ),

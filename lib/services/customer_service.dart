@@ -2,9 +2,9 @@ import 'dart:io';
 
 import 'package:pos_app/ultils/http_service.dart';
 
-class CustomerService {
-  Future addProduct({File file, Map<String, String> data}) async {
-    var response = await HttpService().fetch(url: 'api/customer/add', method: 'POST', files: file == null ? null : [file], body: data);
+class CustomerService extends HttpService {
+  Future addProduct({File file, Map<String, dynamic> data}) async {
+    var response = await fetch(url: 'api/customer/add', method: 'POST', images: file == null ? null : [file], body: data);
     if (response.httpCode == 200) {
       var result = (response.body);
       if (result['alert'] == 'success') {
@@ -15,8 +15,8 @@ class CustomerService {
     }
   }
 
-  Future update({File file, Map<String, String> data}) async {
-    var response = await HttpService().fetch(url: 'api/customer/update', method: 'POST', files: file == null ? null : [file], body: data);
+  Future update({File file, Map<String, dynamic> data}) async {
+    var response = await fetch(url: 'api/customer/update', method: 'POST', images: file == null ? null : [file], body: data);
     if (response.httpCode == 200) {
       var result = (response.body);
       if (result['alert'] == 'success') {
@@ -29,7 +29,7 @@ class CustomerService {
 
   // ignore: missing_return
   Future<List> getAll() async {
-    var response = await HttpService().fetch(
+    var response = await fetch(
       url: 'api/customer/all',
       method: 'GET',
     );
@@ -45,7 +45,7 @@ class CustomerService {
   }
 
   Future delete(id) async {
-    var response = await HttpService().fetch(
+    var response = await fetch(
       url: 'api/customer/delete/$id',
       method: 'GET',
     );

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pos_app/config/pallate.dart';
+import 'package:pos_app/config/palette.dart';
 import 'package:pos_app/ultils/number.dart';
 import 'package:intl/intl.dart';
 
@@ -27,14 +27,14 @@ class ItemOrderGroupDate extends StatelessWidget {
               children: [
                 Text(
                   '${DateFormat.EEEE('vi').format(createdAt)} ${DateFormat('dd-MM').format(createdAt)}',
-                  style: Pallate.titleProduct(),
+                  style: Palette.titleProduct(),
                 ),
                 SizedBox(
                   height: 5,
                 ),
                 Text(
                   '$totalQuantity đơn ${$Number.numberFormat(totalPrice)} đ',
-                  style: TextStyle(color: Colors.grey, fontSize: 14),
+                  style: Palette.textStyle().copyWith(color: Colors.grey, fontSize: 14),
                 ),
               ],
             ),

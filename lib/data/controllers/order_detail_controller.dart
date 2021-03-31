@@ -2,6 +2,10 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:get/get.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:mdi/mdi.dart';
+import 'package:pos_app/config/palette.dart';
+import 'package:pos_app/models/kitchen_model.dart';
 import 'package:pos_app/models/order_model.dart';
 import 'package:pos_app/models/product_model.dart';
 import 'package:pos_app/models/status_model.dart';
@@ -16,6 +20,8 @@ class OrderDetailController extends GetxController with SingleGetTickerProviderM
   Rx<OrderModel> order = OrderModel().obs;
   RxBool isLoading = true.obs;
   int orderId = 0;
+  RxList<KitchenModel> listKitchen = RxList<KitchenModel>();
+
   TextEditingController noteController = new TextEditingController();
   @override
   void onInit() async {
@@ -23,8 +29,15 @@ class OrderDetailController extends GetxController with SingleGetTickerProviderM
     orderId = Get.arguments.id;
 
     await getOrderById(orderId);
+    await getListKitchen(orderId);
 
     print(order.value.customer);
+    if (listKitchen.value.length > 0) {
+      tabItem.add(Tab(
+        child: Text('Bếp'),
+      ));
+    }
+
     if (order.value.customer != null) {
       tabItem.add(Tab(
         child: Text('Khách hàng'),
@@ -35,8 +48,18 @@ class OrderDetailController extends GetxController with SingleGetTickerProviderM
         child: Text('Đơn App'),
       ));
     }
+
     tabController = TabController(length: tabItem.length, vsync: this);
     //  print(order.value.client.name);
+  }
+
+  getListKitchen(int orderId) async {
+    isLoading.value = true;
+    var res = await OrderService().getListKitchen(orderId);
+    if (res != null) {
+      listKitchen.assignAll(res);
+    }
+    isLoading.value = false;
   }
 
   updateStatusOrder() {}
@@ -143,12 +166,36 @@ class OrderDetailController extends GetxController with SingleGetTickerProviderM
     return results;
   }
 
+  List<Widget> buildTimeLineKitchen(List<KitchenModel> status) {
+    List<Widget> results = [];
+    status = status.reversed.toList();
+    List.generate(
+        status.length,
+        (index) => {
+              results.add(TimeLineStatus(
+                iconData: MdiIcons.noodles,
+                iconColor: Palette.primaryColor,
+                isFirst: index == 0 ? true : false,
+                isLast: index + 1 == status.length ? true : false,
+                hour: '',
+                subTitle: status[index].labelStatus,
+                title: status[index].products.first.name,
+                content: "Cập nhật: " + DateFormat('hh:mm dd/MM/yyyy').format(DateTime.parse(status[index].updatedAt).toLocal()),
+              ))
+            });
+
+    return results;
+  }
+
   List<Widget> tabItem = [
     Tab(
-      child: Text("Món"),
+      child: Text(
+        "common.item".tr,
+        style: Palette.textStyle(),
+      ),
     ),
     Tab(
-      child: Text("Chi tiết"),
+      child: Text("Chi tiết", style: Palette.textStyle()),
     ),
   ];
 }

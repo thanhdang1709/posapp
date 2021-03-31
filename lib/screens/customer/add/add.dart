@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pos_app/config/pallate.dart';
+import 'package:pos_app/config/palette.dart';
 import 'package:pos_app/data/controllers/customer_controller.dart';
 import 'package:pos_app/ultils/app_ultils.dart';
 
@@ -37,29 +37,28 @@ class AddCustomerScreen extends GetView<CustomerController> {
                             controller.addImageModalBottomSheet(context);
                             print('hello');
                           },
-                          child:
-                              Obx(() => controller.imagePickerPath.value == ''
-                                  ? Container(
-                                      color: Colors.blueGrey,
-                                      padding: const EdgeInsets.all(20.0),
-                                      child: Transform.scale(
-                                        scale: 1,
-                                        child: Image.asset(
-                                          'assets/icons/picture.png',
-                                          height: 50,
-                                          fit: BoxFit.scaleDown,
-                                        ),
-                                      ),
-                                    )
-                                  : Container(
-                                      color: Colors.blueGrey,
-                                      //  padding: const EdgeInsets.all(20.0),
-                                      child: Image.file(
-                                        File(controller.imagePickerPath.value),
-                                        //height: 100,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    )),
+                          child: Obx(() => controller.imagePickerPath.value == ''
+                              ? Container(
+                                  color: Colors.blueGrey,
+                                  padding: const EdgeInsets.all(20.0),
+                                  child: Transform.scale(
+                                    scale: 1,
+                                    child: Image.asset(
+                                      'assets/icons/picture.png',
+                                      height: 50,
+                                      fit: BoxFit.scaleDown,
+                                    ),
+                                  ),
+                                )
+                              : Container(
+                                  color: Colors.blueGrey,
+                                  //  padding: const EdgeInsets.all(20.0),
+                                  child: Image.file(
+                                    File(controller.imagePickerPath.value),
+                                    //height: 100,
+                                    fit: BoxFit.cover,
+                                  ),
+                                )),
                         ),
                         borderRadius: BorderRadius.circular(100),
                       ),
@@ -74,8 +73,7 @@ class AddCustomerScreen extends GetView<CustomerController> {
                             Expanded(
                               child: TextFormField(
                                 controller: controller.nameController,
-                                decoration: InputDecoration(
-                                    labelText: 'Tên khách hàng *'),
+                                decoration: InputDecoration(labelText: 'Tên khách hàng *'),
                               ),
                             )
                           ],
@@ -85,8 +83,7 @@ class AddCustomerScreen extends GetView<CustomerController> {
                             Expanded(
                               child: TextFormField(
                                 controller: controller.phoneController,
-                                decoration:
-                                    InputDecoration(labelText: 'Điện thoại'),
+                                decoration: InputDecoration(labelText: 'Điện thoại'),
                               ),
                             )
                           ],
@@ -124,14 +121,13 @@ class AddCustomerScreen extends GetView<CustomerController> {
                   height: 50,
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: Pallate.primaryColor,
+                    color: Palette.primaryColor,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Center(
                     child: Text(
                       'LƯU',
-                      style:
-                          GoogleFonts.roboto(fontSize: 20, color: Colors.white),
+                      style: GoogleFonts.roboto(fontSize: 20, color: Colors.white),
                     ),
                   )),
             ),

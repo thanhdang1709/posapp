@@ -3,9 +3,8 @@ import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:pos_app/config/pallate.dart';
+import 'package:pos_app/config/palette.dart';
 import 'package:pos_app/data/controllers/order_detail_controller.dart';
-import 'package:pos_app/models/status_model.dart';
 import 'package:pos_app/models/status_model.dart';
 import 'package:pos_app/ultils/app_ultils.dart';
 import 'package:intl/intl.dart';
@@ -74,14 +73,14 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                                           children: [
                                             Text(
                                               $Number.numberFormat(controller.order.value.totalPrice) + ' đ',
-                                              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Pallate.primaryColor),
+                                              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Palette.primaryColor),
                                             ),
                                             SizedBox(
                                               height: 20,
                                             ),
                                             Get.previousRoute == '/transaction'
                                                 ? Text('Đã thanh toán',
-                                                    style: TextStyle(
+                                                    style: Palette.textStyle().copyWith(
                                                       color: Colors.green,
                                                     ))
                                                 : RowStatus(controller: controller, lastStatus: controller.order.value.status)
@@ -89,14 +88,16 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                                         ),
                                         Spacer(),
                                         Column(
+                                          mainAxisAlignment: MainAxisAlignment.end,
+                                          crossAxisAlignment: CrossAxisAlignment.end,
                                           children: [
                                             Text(
                                               '#' + controller.order.value.orderCode,
-                                              style: TextStyle(color: Colors.blue),
+                                              style: Palette.textStyle().copyWith(color: Colors.blue),
                                             ),
                                             Text(
                                               controller.order.value.employee.name,
-                                              style: TextStyle(color: Colors.cyan),
+                                              style: Palette.textStyle().copyWith(color: Colors.cyan),
                                             )
                                           ],
                                         ),
@@ -104,29 +105,33 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                                     ),
                                   ),
                                   Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-                                    child: controller.order.value.note != null && controller.order.value.note != ''
+                                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                                      child: controller.order.value.note != null && controller.order.value.note != ''
+                                          ? Row(
+                                              children: [
+                                                Expanded(
+                                                    child: Text(
+                                                  'Ghi chú: ' + controller.order.value.note,
+                                                  style: Palette.textStyle(),
+                                                )),
+                                              ],
+                                            )
+                                          : Container()),
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                                    child: controller.order.value.table != null
                                         ? Row(
                                             children: [
                                               Expanded(
                                                   child: Text(
-                                                'Ghi chú: ' + controller.order.value.note,
+                                                'Bàn: ' + controller.order.value.table.name,
+                                                style: Palette.textStyle(),
                                               )),
+                                              Spacer(),
+                                              Text(controller.order.value.orderMethoLabel, style: Palette.textStyle())
                                             ],
                                           )
-                                        : Get.previousRoute == '/transaction'
-                                            ? Container()
-                                            : InkWell(
-                                                onTap: () {
-                                                  print('add note event');
-                                                },
-                                                child: Row(
-                                                  children: [
-                                                    Icon(Icons.add),
-                                                    Text('Thêm ghi chú'),
-                                                  ],
-                                                ),
-                                              ),
+                                        : Container(),
                                   ),
                                   TabHeading(controller: controller),
                                   Expanded(
@@ -152,7 +157,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                                             width: 60,
                                             height: 50,
                                             decoration: BoxDecoration(
-                                              border: Border.all(color: Pallate.primaryColor),
+                                              border: Border.all(color: Palette.primaryColor),
                                               borderRadius: BorderRadius.circular(10),
                                               color: Colors.white,
                                             ),
@@ -168,7 +173,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                                               ? SlidingButton(
                                                   key: new GlobalKey(),
                                                   buttonHeight: 50,
-                                                  buttonColor: Pallate.secondColor,
+                                                  buttonColor: Palette.secondColor,
                                                   slideButtonIconColor: Colors.pink,
                                                   radius: 20,
                                                   buttonText: 'Trượt để xác nhận',
@@ -186,14 +191,14 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                                                   child: Container(
                                                     decoration: BoxDecoration(
                                                       borderRadius: BorderRadius.circular(20),
-                                                      color: Pallate.primaryColor,
+                                                      color: Palette.primaryColor,
                                                     ),
                                                     margin: EdgeInsets.all(5),
                                                     height: 60,
                                                     child: Center(
                                                       child: Text(
                                                         'Thanh toán',
-                                                        style: TextStyle(color: Colors.white, fontSize: 25),
+                                                        style: Palette.textStyle().copyWith(color: Colors.white, fontSize: 25),
                                                       ),
                                                     ),
                                                   ),
@@ -255,8 +260,8 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                                 Get.back();
                               },
                               child: Text('Sửa',
-                                  style: TextStyle(
-                                    color: Pallate.primaryColor,
+                                  style: Palette.textStyle().copyWith(
+                                    color: Palette.primaryColor,
                                     fontSize: 20,
                                   )),
                             ),
@@ -275,20 +280,20 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                   ));
                 },
               ),
-              new ListTile(
-                leading: Icon(
-                  Icons.edit,
-                  color: Colors.purple,
-                ),
-                title: new Text(
-                  'Sửa đơn',
-                  style: TextStyle(color: Colors.purple),
-                ),
-                onTap: () {
-                  // controller.clearCart();
-                  // Get.to(AddNoteScreen());
-                },
-              ),
+              // new ListTile(
+              //   leading: Icon(
+              //     Icons.edit,
+              //     color: Colors.purple,
+              //   ),
+              //   title: new Text(
+              //     'Sửa đơn',
+              //     style: TextStyle(color: Colors.purple),
+              //   ),
+              //   onTap: () {
+              //     // controller.clearCart();
+              //     // Get.to(AddNoteScreen());
+              //   },
+              // ),
               new ListTile(
                 leading: Icon(Icons.close, color: Colors.red),
                 title: new Text(
@@ -321,6 +326,11 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
     lists.add(
       SingleChildScrollView(child: Column(children: [...controller.buildTimeLineStatus(controller.order.value.status, controller.order.value)])),
     );
+    if (controller.listKitchen.value.length > 0) {
+      lists.add(
+        SingleChildScrollView(child: Column(children: [...controller.buildTimeLineKitchen(controller.listKitchen)])),
+      );
+    }
     if (controller.order.value.customer != null) {
       lists.add(
         Row(
@@ -332,11 +342,11 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
               margin: EdgeInsets.only(top: 20),
               // height: 100,
               //alignment: Alignment.center,
-              decoration: BoxDecoration(border: Border.all(color: Pallate.primaryColor)),
+              decoration: BoxDecoration(border: Border.all(color: Palette.primaryColor)),
               padding: EdgeInsets.all(10),
               child: Text(
                 controller.order.value.customer.name,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Pallate.primaryColor),
+                style: Palette.textStyle().copyWith(fontSize: 20, fontWeight: FontWeight.w600, color: Palette.primaryColor),
                 textAlign: TextAlign.center,
               ),
             )),
@@ -349,55 +359,57 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
       lists.add(
         Padding(
           padding: const EdgeInsets.all(15.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 20,
-              ),
-              Text(
-                "Tên khách hàng: ",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Pallate.colorCyan),
-              ),
-              Text(
-                controller.order.value.client.name ?? '',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Pallate.primaryColor),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Text(
-                "Số điện thoại: ",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Pallate.colorCyan),
-              ),
-              Text(
-                controller.order.value.client.phone ?? '',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Pallate.primaryColor),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Text(
-                "Địa chỉ: ",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Pallate.colorCyan),
-              ),
-              Text(
-                controller.order.value.client.address ?? '',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Pallate.primaryColor),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Text(
-                "Loại đơn: ",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Pallate.colorCyan),
-              ),
-              Text(
-                controller.order.value.orderMethoLabel ?? '',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Pallate.primaryColor),
-              ),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  "Tên khách hàng: ",
+                  style: Palette.textStyle().copyWith(fontSize: 18, fontWeight: FontWeight.w600, color: Palette.colorCyan),
+                ),
+                Text(
+                  controller.order.value.client.name ?? '',
+                  style: Palette.textStyle().copyWith(fontSize: 20, fontWeight: FontWeight.w600, color: Palette.primaryColor),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  "Số điện thoại: ",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Palette.colorCyan),
+                ),
+                Text(
+                  controller.order.value.client.phone ?? '',
+                  style: Palette.textStyle().copyWith(fontSize: 20, fontWeight: FontWeight.w600, color: Palette.primaryColor),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  "Địa chỉ: ",
+                  style: Palette.textStyle().copyWith(fontSize: 18, fontWeight: FontWeight.w600, color: Palette.colorCyan),
+                ),
+                Text(
+                  controller.order.value.client.address ?? '',
+                  style: Palette.textStyle().copyWith(fontSize: 20, fontWeight: FontWeight.w600, color: Palette.primaryColor),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  "Loại đơn: ",
+                  style: Palette.textStyle().copyWith(fontSize: 18, fontWeight: FontWeight.w600, color: Palette.colorCyan),
+                ),
+                Text(
+                  controller.order.value.orderMethoLabel ?? '',
+                  style: Palette.textStyle().copyWith(fontSize: 20, fontWeight: FontWeight.w600, color: Palette.primaryColor),
+                ),
+              ],
+            ),
           ),
         ),
       );
@@ -434,11 +446,11 @@ class TabViewWithCustomer extends StatelessWidget {
               margin: EdgeInsets.only(top: 20),
               // height: 100,
               //alignment: Alignment.center,
-              decoration: BoxDecoration(border: Border.all(color: Pallate.primaryColor)),
+              decoration: BoxDecoration(border: Border.all(color: Palette.primaryColor)),
               padding: EdgeInsets.all(10),
               child: Text(
                 controller.order.value.customer.name,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Pallate.primaryColor),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Palette.primaryColor),
                 textAlign: TextAlign.center,
               ),
             )),
@@ -469,7 +481,7 @@ class RowStatus extends StatelessWidget {
           padding: EdgeInsets.all(10),
           margin: EdgeInsets.only(bottom: 10),
           decoration: BoxDecoration(
-            border: list[index]['active'] ? Border.all(color: Pallate.primaryColor) : Border.all(color: Colors.white),
+            border: list[index]['active'] ? Border.all(color: Palette.primaryColor) : Border.all(color: Colors.white),
           ),
           child: Row(
             children: [

@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pos_app/config/pallate.dart';
+import 'package:pos_app/config/palette.dart';
+import 'package:pos_app/data/controllers/pos_controller.dart';
 import 'package:pos_app/data/store/product_store.dart';
 import 'package:pos_app/models/product_model.dart';
-import 'package:pos_app/repositories/common.dart';
 import 'package:pos_app/screens/pos/components/add_new_card_item.dart';
 import 'package:pos_app/screens/pos/components/grid_item.dart';
-import 'package:pos_app/data/controllers/pos_controller.dart';
 import 'package:pos_app/screens/pos/components/pos_action_row.dart';
 import 'package:pos_app/ultils/color.dart';
 import 'package:pos_app/ultils/number.dart';
@@ -52,7 +51,7 @@ class _TabPosItemState extends State<TabPosItem> with SingleTickerProviderStateM
   Widget build(BuildContext context) {
     _scale = 1 - _controller.value;
     PosController posController = Get.put(PosController());
-    ProductStore posStore = Get.find();
+    MasterStore posStore = Get.find();
     products = widget.catelogId != 0 ? posStore.products.where((element) => element.catelogId == widget.catelogId).toList() : posStore.products;
 
     return Column(children: [
@@ -61,7 +60,7 @@ class _TabPosItemState extends State<TabPosItem> with SingleTickerProviderStateM
       //   child: PosActionRow(),
       // ),
       SizedBox(
-        height: 20,
+        height: 5,
       ),
       Expanded(
         child: Padding(
@@ -87,10 +86,10 @@ class _TabPosItemState extends State<TabPosItem> with SingleTickerProviderStateM
                     child: FadeInAnimation(
                       child: CardFoodGridItem(
                         size: Get.size,
-                        color: products[index].color == '' ? Pallate.primaryColor : ColorFormat.stringToColor(products[index].color),
+                        color: products[index].color == '' ? Palette.primaryColor : ColorFormat.stringToColor(products[index].color),
                         title: products[index].name,
                         price: products[index].price,
-                        imageUrl: '$BASE_DOMAIN/${products[index].imageUrl}',
+                        imageUrl: '${products[index].imageUrl}',
                         onPressed: () {
                           posController.addToCart(products[index]);
                           bounceButtonAction(_controller);
@@ -118,7 +117,7 @@ class _TabPosItemState extends State<TabPosItem> with SingleTickerProviderStateM
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: Pallate.primaryColor,
+                color: Palette.primaryColor,
               ),
               width: Get.size.width - 20,
               height: 50,
@@ -126,7 +125,7 @@ class _TabPosItemState extends State<TabPosItem> with SingleTickerProviderStateM
               margin: EdgeInsets.all(0),
               child: Center(
                   child: Obx(() => Text(
-                        '${posStore.cartItem.length} món = ${$Number.numberFormat(posStore.cartItem.length != 0 ? posStore.cartItem?.map((element) => element.price)?.reduce((a, b) => a + b) : 0)} đ',
+                        '${posStore.cartItem.length} ${'label.item'.tr} = ${$Number.numberFormat(posStore.cartItem.length != 0 ? posStore.cartItem?.map((element) => element.price)?.reduce((a, b) => a + b) : 0)} đ',
                         style: TextStyle(color: Colors.white, fontSize: 25),
                       ))),
             ),

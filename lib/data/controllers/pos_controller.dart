@@ -6,8 +6,8 @@ import 'package:pos_app/services/product_services.dart';
 
 class PosController extends GetxController {
   RxList<CatelogModel> catelogies = <CatelogModel>[].obs;
-  ProductStore productStore = Get.put<ProductStore>(ProductStore());
-  //ProductStore productStore = Get.find();
+  MasterStore masterStore = Get.put<MasterStore>(MasterStore());
+  //MasterStore MasterStore = Get.find();
   RxList<ProductModel> products = <ProductModel>[].obs;
   RxInt totalItem = 0.obs;
   RxInt totalPrice = 0.obs;
@@ -16,27 +16,24 @@ class PosController extends GetxController {
   void onInit() async {
     super.onInit();
     print('backnpos');
-    await getCatelogAll();
-    await getProductAll();
+    // // await getCatelogAll();
+    // // await getProductAll();
 
-    productStore.catelogies = catelogies;
-    productStore.products = products;
+    // MasterStore.catelogies = catelogies;
+    // MasterStore.products = products;
   }
 
   addToCart(ProductModel product) {
-    productStore.cartItem.add(product);
-    totalItem.value = productStore.cartItem.length;
-    totalPrice.value = productStore.cartItem
-        .map((element) => element.price)
-        .reduce((a, b) => a + b);
+    masterStore.cartItem.add(product);
+    totalItem.value = masterStore.cartItem.length;
+    totalPrice.value = masterStore.cartItem.map((element) => element.price).reduce((a, b) => a + b);
   }
 
   getCatelogAll() async {
-    var response = (await ProductService().getCatelogAll());
+    var response = (await ProductService().getCategoryAll());
     // print(response);
     if (response != null && response.length != 0) {
-      catelogies
-          .assignAll(response.map((e) => CatelogModel.fromJson(e)).toList());
+      catelogies.assignAll(response.map((e) => CatelogModel.fromJson(e)).toList());
       //print(catelogies[0].name);
     }
   }
@@ -45,8 +42,7 @@ class PosController extends GetxController {
     var response = (await ProductService().getProductAll());
     // print(response);
     if (response != null && response.length != 0) {
-      products
-          .assignAll(response.map((e) => ProductModel.fromJson(e)).toList());
+      products.assignAll(response.map((e) => ProductModel.fromJson(e)).toList());
     }
     //print(catelogies[0].name);
   }

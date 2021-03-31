@@ -5,7 +5,7 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mdi/mdi.dart';
-import 'package:pos_app/config/pallate.dart';
+import 'package:pos_app/config/palette.dart';
 import 'package:pos_app/data/store/product_store.dart';
 import 'package:pos_app/models/catelog_model.dart';
 import 'package:pos_app/data/controllers/add_controller.dart';
@@ -24,7 +24,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
   //final picker = ImagePicker();
 
   AddProductController addProductController = Get.put(AddProductController(), permanent: false);
-  ProductStore productStore = Get.find();
+  MasterStore masterStore = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,7 +55,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                     new DropdownSearch<CatelogModel>(
                       mode: Mode.BOTTOM_SHEET,
                       showSelectedItem: false,
-                      items: productStore.catelogies,
+                      items: masterStore.catelogies,
                       dropdownSearchDecoration: InputDecoration(
                         border: InputBorder.none,
                         contentPadding: EdgeInsets.only(left: 0, right: 0, bottom: 0, top: 5),
@@ -135,7 +135,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
           'Lưu',
           style: TextStyle(color: Colors.white),
         ),
-        color: Pallate.primaryColor,
+        color: Palette.primaryColor,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );

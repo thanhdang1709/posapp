@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:pos_app/config/pallate.dart';
+import 'package:pos_app/config/palette.dart';
 import 'package:pos_app/data/store/product_store.dart';
 import 'package:pos_app/screens/pos/components/pos_item.dart';
 import 'package:pos_app/data/controllers/pos_controller.dart';
@@ -23,12 +22,12 @@ class _PosScreenState extends State<PosScreen> with SingleTickerProviderStateMix
   //get catelo
   List<Widget> lists = [
     Tab(
-      icon: Text('Tất cả'),
+      icon: Text('common.all'.tr),
     )
   ];
 
   var box = GetStorage();
-  ProductStore posStore = Get.find<ProductStore>();
+  MasterStore posStore = Get.find<MasterStore>();
   PosController posController = Get.find<PosController>();
   //CartController cartController = Get.put(CartController());
   @override
@@ -76,8 +75,8 @@ class _PosScreenState extends State<PosScreen> with SingleTickerProviderStateMix
       appBar: AppBar(
         centerTitle: true,
         toolbarHeight: 80,
-        title: const Text(
-          'Máy POS',
+        title: Text(
+          'label.pos'.tr,
           //style: TextStyle(color: Colors.white),
         ),
         flexibleSpace: FlexibleTopBackground(
@@ -117,8 +116,8 @@ class _PosScreenState extends State<PosScreen> with SingleTickerProviderStateMix
           onTap: (index) {},
           controller: _controller,
           tabs: lists,
-          labelColor: Pallate.colorTextOnPink,
-          unselectedLabelColor: Pallate.unselectedItemColor,
+          labelColor: Palette.colorTextOnPink,
+          unselectedLabelColor: Palette.unselectedItemColor,
         ),
       ),
       drawer: DrawerApp(),
