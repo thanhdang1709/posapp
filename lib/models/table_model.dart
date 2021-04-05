@@ -35,10 +35,10 @@ class TableModel {
   Color get colorStatus {
     switch (status) {
       case 1:
-        return Colors.orange;
+        return Colors.green;
         break;
       case 2:
-        return Colors.green;
+        return Colors.orange;
         break;
       default:
         return Colors.white;

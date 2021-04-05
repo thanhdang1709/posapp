@@ -62,13 +62,23 @@ class _CardTableGridItemState extends State<CardTableGridItem> with SingleTicker
         child: Column(children: [
           Flexible(
             flex: 2,
-            child: Container(
-              height: widget.size.height * .15,
-              width: double.infinity,
-              child: ClipRRect(
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-                child: Image.asset('assets/icons/table.png'),
-              ),
+            child: Stack(
+              children: [
+                Container(
+                  height: widget.size.height * .15,
+                  width: double.infinity,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+                    child: Image.asset('assets/icons/table.png'),
+                  ),
+                ),
+                Container(
+                  child: Text(
+                    '0 / ${widget.capacity ?? 0}',
+                    style: Palette.textStyle().copyWith(color: Palette.primaryColor),
+                  ),
+                )
+              ],
             ),
           ),
           Flexible(
@@ -77,7 +87,7 @@ class _CardTableGridItemState extends State<CardTableGridItem> with SingleTicker
               padding: EdgeInsets.all(5),
               width: double.infinity,
               decoration: BoxDecoration(
-                color: widget.color.withOpacity(.3),
+                color: widget.color.withOpacity(.2),
                 borderRadius: BorderRadius.only(bottomRight: Radius.circular(10), bottomLeft: Radius.circular(10)),
               ),
               child: Column(

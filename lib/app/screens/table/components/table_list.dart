@@ -82,6 +82,7 @@ class _TableListState extends State<TableList> with SingleTickerProviderStateMix
                         name: tables[index].name,
                         status: tables[index].statusName,
                         colorStatus: tables[index].colorStatus,
+                        capacity: tables[index].capacity,
                         onPressed: () {
                           //Get.offAllNamed('cart', arguments: {'table_id': tables[index].id});
                           if (Get.previousRoute == 'cart' || Get.previousRoute == 'payment') {

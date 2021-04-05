@@ -46,6 +46,7 @@ class TableController extends GetxController with GetTool {
     Map<String, dynamic> body = {
       'name': nameTableController.text,
       'description': descriptionAreaController.text,
+      'capacity': capacityController.text,
       'status': statusTable.value,
       'area_id': selectAreaId,
     };
@@ -55,7 +56,7 @@ class TableController extends GetxController with GetTool {
     else {
       var res = await TableService().addTable(body: body);
       if (res != null) {
-        masterStore.listTable.add(res);
+        masterStore.listTable.insert(0, res);
         Get.offAllNamed('table');
         notify.success(title: "Thành công", message: "Thêm bàn thành công");
       }

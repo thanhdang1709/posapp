@@ -8,7 +8,7 @@ class StoreModel {
   int provinceId;
   int districtId;
   int wardId;
-  String long;
+  String lng;
   String lat;
   int categoryStoreId;
   int bannerId;
@@ -29,7 +29,7 @@ class StoreModel {
       this.provinceId,
       this.districtId,
       this.wardId,
-      this.long,
+      this.lng,
       this.lat,
       this.categoryStoreId,
       this.bannerId,
@@ -50,7 +50,7 @@ class StoreModel {
     provinceId = json['province_id'];
     districtId = json['district_id'];
     wardId = json['ward_id'];
-    long = json['long'];
+    lng = json['long'];
     lat = json['lat'];
     categoryStoreId = json['category_store_id'];
     bannerId = json['banner_id'];
@@ -73,7 +73,7 @@ class StoreModel {
     data['province_id'] = this.provinceId;
     data['district_id'] = this.districtId;
     data['ward_id'] = this.wardId;
-    data['long'] = this.long;
+    data['long'] = this.lng;
     data['lat'] = this.lat;
     data['category_store_id'] = this.categoryStoreId;
     data['banner_id'] = this.bannerId;
