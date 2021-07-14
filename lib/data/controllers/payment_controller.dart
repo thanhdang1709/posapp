@@ -3,10 +3,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:pdf/widgets/progress.dart';
 import 'package:pos_app/data/controllers/cart_controller.dart';
 import 'package:pos_app/data/store/product_store.dart';
 import 'package:pos_app/screens/payment/payment_done.dart';
 import 'package:pos_app/services/order_service.dart';
+import 'package:pos_app/ultils/app_ultils.dart';
+import 'package:pos_app/widgets/common.dart';
 
 class PaymentController extends GetxController {
   RxInt totalPrice = 0.obs;
@@ -26,8 +29,10 @@ class PaymentController extends GetxController {
   }
 
   saveOrder() async {
-    Map<String, dynamic> data = {
-      'table_id': cartController.selectedTable.value.id,
+    // print(cartController.selectedTable.value.id == null);
+    CommonWidget.progressIndicator();
+    Map<String, String> data = {
+      'table_id': cartController.selectedTable.value.id == null ? "0" : cartController.selectedTable.value.id.toString(),
       'customer_id': cartController.selectedCustomer.value.id == null ? "0" : cartController.selectedCustomer.value.id.toString(),
       'status': 0.toString(),
       'status_title': 'pending',
@@ -41,13 +46,13 @@ class PaymentController extends GetxController {
     // print((result.runtimeType));
     if (result != null) {
       Get.offAll(PaymentDoneScreen(),
-          arguments: {'totalPrice': totalPrice.value, 'amountReceive': 0, 'icon': MdiIcons.clock, 'order_id': result, 'status_title': 'Đã thêm vào đơn hàng', 'color': Colors.grey});
+          arguments: {'totalPrice': totalPrice.value, 'amountReceive': 0, 'icon': MdiIcons.clock, 'order_id': result['id'], 'status_title': 'Đã thêm vào đơn hàng', 'color': Colors.grey});
     }
   }
 
   paymentOrder(totalPrice, amountReceive) async {
-    Map<String, dynamic> data = {
-      'table_id': cartController.selectedTable.value.id,
+    Map<String, String> data = {
+      'table_id': cartController.selectedTable.value.id == null ? "0" : cartController.selectedTable.value.id.toString(),
       'customer_id': cartController.selectedCustomer.value.id == null ? "0" : cartController.selectedCustomer.value.id.toString(),
       'status': 1.toString(),
       'status_title': 'payment',
@@ -57,12 +62,13 @@ class PaymentController extends GetxController {
       'note': cartController.note.value,
       'items': json.encode(listItemId).replaceFirst("[", '').replaceFirst("]", '')
     };
+    print(data);
     var result = await OrderService().addOrder(data: data);
     // print((result.runtimeType));
     if (result != null) {
       Get.back();
       Get.offAll(PaymentDoneScreen(),
-          arguments: {'totalPrice': totalPrice, 'amountReceive': (amountReceive), 'icon': MdiIcons.check, 'order_id': result, 'status_title': 'Thanh toán thành công', 'color': Colors.green});
+          arguments: {'totalPrice': totalPrice, 'amountReceive': (amountReceive), 'icon': MdiIcons.check, 'order_id': result['id'], 'status_title': 'Thanh toán thành công', 'color': Colors.green});
     }
   }
 

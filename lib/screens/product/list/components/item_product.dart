@@ -39,7 +39,7 @@ class ItemProduct extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
             ),
-            Text('${$Number.numberFormat(product.price)} vnđ'),
+            Text('${$Number.numberFormat(product.price)} đ'),
           ],
         ),
       ),

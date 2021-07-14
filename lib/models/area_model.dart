@@ -7,6 +7,7 @@ class AreaModel {
   int deleted;
   int createdBy;
   String createdAt;
+  int tableCount;
 
   AreaModel({
     this.id,
@@ -17,6 +18,7 @@ class AreaModel {
     this.deleted,
     this.createdBy,
     this.createdAt,
+    this.tableCount,
   });
 
   AreaModel.fromJson(Map<String, dynamic> json) {
@@ -28,6 +30,7 @@ class AreaModel {
     deleted = json['deleted'];
     createdBy = json['created_by'];
     createdAt = json['created_at'];
+    tableCount = json['tables_count'];
   }
 
   Map<String, dynamic> toJson() {

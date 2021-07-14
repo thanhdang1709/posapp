@@ -68,6 +68,8 @@ dependencies:
   flutter_slidable: ^0.5.7
   infinite_scroll_pagination: ^2.3.0
   pull_to_refresh: ^1.6.3
+  flutter_barcode_scanner: ^1.0.1
+  qr_code_scanner:
   fma:
     git:
       url: https://gitlab.com/mobile-app-ltd/ma-flutter-packages.git

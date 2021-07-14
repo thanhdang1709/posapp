@@ -7,6 +7,7 @@ import 'package:pos_app/data/store/product_store.dart';
 import 'package:pos_app/models/kitchen_model.dart';
 import 'package:pos_app/models/product_model.dart';
 import 'package:get/get.dart';
+import 'package:pos_app/widgets/button/button_submit.dart';
 import 'package:pos_app/widgets/empty_data.dart';
 import 'package:pos_app/widgets/smart_refresher_success.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -163,6 +164,7 @@ class ExpandKitchenItem extends StatelessWidget {
       animateTrailing: true,
       initiallyExpanded: (kitchenItem.id != null) ? true : false,
       title: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             kitchenItem.products.first.name ?? '',
@@ -171,7 +173,10 @@ class ExpandKitchenItem extends StatelessWidget {
             ),
           ),
           Spacer(),
-          Text('Mã đơn: ${kitchenItem.order.orderCode}')
+          Text(
+            'Mã đơn: ${kitchenItem.order?.orderCode}',
+            style: Palette.textStyle().copyWith(fontSize: 12),
+          )
         ],
       ),
       subtitle: Text(
@@ -188,10 +193,10 @@ class ExpandKitchenItem extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(bottom: 10, left: 20, right: 10),
           child: Row(
-            children: [Expanded(child: Text('Loại: ${kitchenItem.order.orderMethoLabel}'))],
+            children: [Expanded(child: Text('Loại: ${kitchenItem.order?.orderMethoLabel}'))],
           ),
         ),
-        kitchenItem.order.orderMethod == 1 && kitchenItem.order.table != null
+        kitchenItem.order?.orderMethod == 1 && kitchenItem.order.table != null
             ? Padding(
                 padding: const EdgeInsets.only(bottom: 10, left: 20, right: 10),
                 child: Row(
@@ -206,48 +211,81 @@ class ExpandKitchenItem extends StatelessWidget {
           ),
         ),
         Padding(
-            padding: EdgeInsets.all(0),
+            padding: EdgeInsets.only(left: 5),
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  MaterialButton(
-                    onPressed: kitchenItem.status == 1
-                        ? () {
-                            callback(2);
-                          }
-                        : null,
-                    textTheme: ButtonTextTheme.accent,
-                    child: Text('Xác nhận'),
+                  kitchenItem.status != 1
+                      ? Container()
+                      : MyButtonSubmit(
+                          onPressed: kitchenItem.status == 1
+                              ? () {
+                                  callback(2);
+                                }
+                              : null,
+                          textColor: Palette.textColorLight,
+                          label: 'Xác nhận',
+                          width: 50,
+                          fontSize: 10,
+                          height: 30,
+                          radius: 5,
+                        ),
+                  SizedBox(
+                    width: 10,
                   ),
-                  MaterialButton(
-                    onPressed: kitchenItem.status == 2
+                  MyButtonSubmit(
+                    onPressed: kitchenItem.status != 1 && kitchenItem.status <= 2
                         ? () {
                             callback(3);
                           }
                         : null,
-                    textTheme: ButtonTextTheme.accent,
-                    child: Text('Đang chế biến'),
+                    textColor: Palette.textColorLight,
+                    backgroundColor: kitchenItem.status == 2 ? Colors.green : Palette.primaryColor,
+                    label: 'Đang chế biến',
+                    width: 50,
+                    fontSize: 10,
+                    height: 30,
+                    radius: 5,
                   ),
-                  MaterialButton(
-                    onPressed: kitchenItem.status == 3
+                  SizedBox(
+                    width: 10,
+                  ),
+                  MyButtonSubmit(
+                    onPressed: kitchenItem.status != 1 && kitchenItem.status <= 3
                         ? () {
                             callback(4);
                           }
                         : null,
-                    textTheme: ButtonTextTheme.accent,
-                    child: Text('Sẵn sàng'),
+                    textColor: Palette.textColorLight,
+                    backgroundColor: kitchenItem.status == 3 ? Colors.green : Palette.primaryColor,
+                    label: 'Sẵn sàng',
+                    width: 50,
+                    fontSize: 10,
+                    height: 30,
+                    radius: 5,
                   ),
-                  MaterialButton(
-                    onPressed: kitchenItem.status == 4
+                  SizedBox(
+                    width: 10,
+                  ),
+                  MyButtonSubmit(
+                    onPressed: kitchenItem.status != 1 && kitchenItem.status <= 4
                         ? () {
                             callback(5);
                           }
                         : null,
-                    textTheme: ButtonTextTheme.accent,
-                    child: Text('Lên món'),
-                  )
+                    textColor: Palette.textColorLight,
+                    backgroundColor: kitchenItem.status == 4 ? Colors.green : Palette.primaryColor,
+                    label: 'Lên món',
+                    width: 50,
+                    fontSize: 10,
+                    height: 30,
+                    radius: 5,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
                 ],
               ),
             )),

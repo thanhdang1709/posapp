@@ -6,10 +6,15 @@ import 'package:pos_app/data/store/product_store.dart';
 import 'package:pos_app/models/product_model.dart';
 import 'package:pos_app/screens/pos/components/add_new_card_item.dart';
 import 'package:pos_app/screens/pos/components/grid_item.dart';
+import 'package:pos_app/screens/pos/components/list_item.dart';
 import 'package:pos_app/screens/pos/components/pos_action_row.dart';
 import 'package:pos_app/ultils/color.dart';
 import 'package:pos_app/ultils/number.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:pos_app/widgets/smart_refresher_success.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+
+import 'add_new_list_item.dart';
 
 class TabPosItem extends StatefulWidget {
   const TabPosItem({Key key, this.catelogId}) : super(key: key);
@@ -52,58 +57,119 @@ class _TabPosItemState extends State<TabPosItem> with SingleTickerProviderStateM
     _scale = 1 - _controller.value;
     PosController posController = Get.put(PosController());
     MasterStore posStore = Get.find();
-    products = widget.catelogId != 0 ? posStore.products.where((element) => element.catelogId == widget.catelogId).toList() : posStore.products;
-
+    if (posController.searchPosController.text.isNotEmpty)
+      products = widget.catelogId != 0
+          ? posController.products
+              .where((e) =>
+                  e.catelogId == widget.catelogId &&
+                  (e.name.toLowerCase().contains(posController.searchPosController.text.toLowerCase()) ||
+                      // ignore: null_aware_in_logical_operator
+                      e.barCode.toString().toLowerCase().contains(posController.searchPosController.text.toString().toLowerCase())))
+              .toList()
+          : posController.products
+              .where((element) =>
+                  // ignore: null_aware_in_logical_operator
+                  element.name.toString()?.toLowerCase()?.contains(posController.searchPosController.text.toLowerCase()) ||
+                  // ignore: null_aware_in_logical_operator
+                  element.barCode.toString().toLowerCase().contains(posController.searchPosController.text.toString().toLowerCase()))
+              .toList();
+    else
+      products = widget.catelogId != 0 ? posController.products.where((element) => element.catelogId == widget.catelogId).toList() : posController.products;
+    // print(products.first.name);
     return Column(children: [
-      // Padding(
-      //   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-      //   child: PosActionRow(),
-      // ),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+        child: PosActionRow(),
+      ),
       SizedBox(
         height: 5,
       ),
-      Expanded(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 10, right: 10, bottom: 0),
-          child: AnimationLimiter(
-            child: GridView.count(
-              shrinkWrap: true,
-              crossAxisCount: 3,
-              crossAxisSpacing: 5,
-              mainAxisSpacing: 5,
-              childAspectRatio: 0.8,
-              controller: new ScrollController(keepScrollOffset: true),
-              scrollDirection: Axis.vertical,
-              // children: _buildCardItem(
-              //     size: Get.size, color: Colors.orange, controller: _controller),
-              children: List.generate(
-                products.length,
-                (index) => AnimationConfiguration.staggeredList(
-                  position: index,
-                  duration: const Duration(milliseconds: 375),
-                  child: SlideAnimation(
-                    verticalOffset: 50.0,
-                    child: FadeInAnimation(
-                      child: CardFoodGridItem(
-                        size: Get.size,
-                        color: products[index].color == '' ? Palette.primaryColor : ColorFormat.stringToColor(products[index].color),
-                        title: products[index].name,
-                        price: products[index].price,
-                        imageUrl: '${products[index].imageUrl}',
-                        onPressed: () {
-                          posController.addToCart(products[index]);
-                          bounceButtonAction(_controller);
-                          //print('hello');
-                        },
+
+      Obx(() => Expanded(
+            child: posController.isListItem.value
+                ? SmartRefresher(
+                    enablePullDown: true,
+                    enablePullUp: false,
+                    header: SmartRefresherSuccess(),
+                    controller: posController.refreshController,
+                    onRefresh: posController.onRefresh,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: List.generate(
+                          products.length,
+                          (index) => AnimationConfiguration.staggeredList(
+                            position: index,
+                            duration: const Duration(milliseconds: 375),
+                            child: SlideAnimation(
+                              verticalOffset: 50.0,
+                              child: FadeInAnimation(
+                                child: CardFoodListItem(
+                                  size: Get.size,
+                                  color: products[index].color == '' ? Palette.primaryColor : ColorFormat.stringToColor(products[index].color),
+                                  title: products[index].name,
+                                  price: products[index].price,
+                                  imageUrl: '${products[index].imageUrl}',
+                                  onPressed: () {
+                                    posController.addToCart(products[index]);
+                                    bounceButtonAction(_controller);
+                                    //print('hello');
+                                  },
+                                ),
+                              ),
+                            ),
+                          ),
+                        )..add(AddNewListItem()),
+                      ),
+                    ),
+                  )
+                : SmartRefresher(
+                    enablePullDown: true,
+                    enablePullUp: false,
+                    header: SmartRefresherSuccess(),
+                    controller: posController.refreshController,
+                    onRefresh: posController.onRefresh,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10, right: 5, bottom: 0),
+                      child: AnimationLimiter(
+                        child: GridView.count(
+                          shrinkWrap: true,
+                          crossAxisCount: 3,
+                          crossAxisSpacing: 5,
+                          mainAxisSpacing: 5,
+                          childAspectRatio: 0.8,
+                          controller: new ScrollController(keepScrollOffset: true),
+                          scrollDirection: Axis.vertical,
+                          // children: _buildCardItem(
+                          //     size: Get.size, color: Colors.orange, controller: _controller),
+                          children: List.generate(
+                            products.length,
+                            (index) => AnimationConfiguration.staggeredList(
+                              position: index,
+                              duration: const Duration(milliseconds: 375),
+                              child: SlideAnimation(
+                                verticalOffset: 50.0,
+                                child: FadeInAnimation(
+                                  child: CardFoodGridItem(
+                                    size: Get.size,
+                                    color: products[index].color == '' ? Palette.primaryColor : ColorFormat.stringToColor(products[index].color),
+                                    title: products[index].name,
+                                    price: products[index].price,
+                                    imageUrl: '${products[index].imageUrl}',
+                                    onPressed: () {
+                                      posController.addToCart(products[index]);
+                                      bounceButtonAction(_controller);
+                                      //print('hello');
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )..add(AddNewCardItem()),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              )..add(AddNewCardItem()),
-            ),
-          ),
-        ),
-      ),
+          )),
       InkWell(
         onTap: () {
           if (posStore.cartItem.length != 0) {

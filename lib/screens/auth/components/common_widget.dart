@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pos_app/config/palette.dart';
 
 class FindOutLogo extends StatelessWidget {
   final double fontSize;
@@ -73,23 +74,19 @@ class FindOutHorizontalLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // ignore: unused_local_variable
-    final style = GoogleFonts.poppins(
-        fontWeight: FontWeight.w700,
+    final style = GoogleFonts.poppins(fontWeight: FontWeight.w700, color: Colors.white, fontSize: fontSize, shadows: [
+      Shadow(
         color: Colors.white,
-        fontSize: fontSize,
-        shadows: [
-          Shadow(
-            color: Colors.white,
-            blurRadius: 10,
-          )
-        ]);
+        blurRadius: 10,
+      )
+    ]);
     return Hero(
       tag: 'horizontal_logo',
       child: Material(
         color: Colors.white,
         child: Row(
           children: <Widget>[
-            Text('pos', style: TextStyle(color: Colors.white)),
+            Text('pos', style: Palette.textStyle()),
             Icon(
               FontAwesome.search,
               size: fontSize * .8,
@@ -131,14 +128,7 @@ class TitlePlace extends StatelessWidget {
             style: GoogleFonts.roboto(
               fontSize: baseFontSize * .6,
             ),
-            children: [
-              TextSpan(
-                  text: '\n' + place.title,
-                  style: GoogleFonts.roboto(
-                      fontWeight: FontWeight.w700,
-                      height: 1.2,
-                      fontSize: baseFontSize))
-            ],
+            children: [TextSpan(text: '\n' + place.title, style: GoogleFonts.roboto(fontWeight: FontWeight.w700, height: 1.2, fontSize: baseFontSize))],
           ),
         ),
       ),

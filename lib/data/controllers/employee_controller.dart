@@ -23,7 +23,7 @@ class EmployeeController extends GetxController {
 
   Timer _debounce;
   RxBool isSearchActive = false.obs;
-  RxBool isLoading = true.obs;
+  RxBool isLoading = false.obs;
 
   int roleId;
   @override
@@ -56,8 +56,8 @@ class EmployeeController extends GetxController {
       'role_id': roleId.toString(),
     };
     // ignore: unused_local_variable
-    var result = await EmployeeService().addEmployee(data: data);
-    if (result != null) {
+    var res = await EmployeeService().addEmployee(data: data);
+    if (res != null) {
       nameController.text = '';
       phoneController.text = '';
       addressController.text = '';
@@ -77,7 +77,7 @@ class EmployeeController extends GetxController {
     var response = (await EmployeeService().getAll());
     if (response != null && response.length != 0) {
       // customers.assignAll(
-      employees.assignAll(response.map((e) => EmployeeModel.fromJson(e)).toList());
+      employees.assignAll(response);
       // searchResults = employees;
       isLoading.value = false;
       //);

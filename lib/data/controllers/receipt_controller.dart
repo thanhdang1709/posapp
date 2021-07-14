@@ -55,7 +55,10 @@ class ReceiptController extends GetxController {
 
   Future<OrderModel> getOrderById(id) async {
     var result = await OrderService().getOrder(id);
-    return OrderModel.fromJson(result);
+    if (result != null) {
+      return OrderModel.fromJson(result);
+    }
+    return null;
   }
 
   List<Widget> buildRowItem() {

@@ -1,34 +1,38 @@
 import 'dart:io';
 
+import 'package:pos_app/models/employee.dart';
 import 'package:pos_app/ultils/http_service.dart';
 
 class EmployeeService extends HttpService {
   // ignore: missing_return
-  Future<List> getAll() async {
+  Future<List<EmployeeModel>> getAll() async {
     var response = await fetch(
-      url: 'api/employee/all',
+      url: 'api/employee/list',
       method: 'GET',
     );
-    print(response);
-    if (response.httpCode == 200) {
-      var result = (response.body);
-      if (result['type'] == 'RESPONSE_OK') {
-        return result['data'];
-      }
-    } else {
+    var result;
+    if ([response.isConnectError, response.isResponseError].contains(true)) {
       return null;
+    } else {
+      result = (response.body);
+      if (result['message'] == 'success') {
+        return List<EmployeeModel>.from(result['data']['items'].map((e) => EmployeeModel.fromJson(e)).toList());
+      }
     }
+    return null;
   }
 
   Future addEmployee({File file, Map<String, dynamic> data}) async {
     var response = await fetch(url: 'api/employee/add', method: 'POST', images: file == null ? null : [file], body: data);
-    if (response.httpCode == 200) {
-      var result = (response.body);
-      if (result['type'] == 'RESPONSE_OK') {
+    var result;
+    if ([response.isConnectError, response.isResponseError].contains(true)) {
+      return null;
+    } else {
+      result = (response.body);
+      if (result['message'] == 'success') {
         return result['message'];
       }
-    } else {
-      return false;
     }
+    return null;
   }
 }

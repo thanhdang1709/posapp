@@ -37,12 +37,9 @@ class ItemOrder extends StatelessWidget {
                     padding: EdgeInsets.all(2),
                     decoration: BoxDecoration(
                       color: Palette.primaryColor,
-                      borderRadius: BorderRadius.circular(5),
+                      borderRadius: BorderRadius.circular(3),
                     ),
-                    child: Text(order.paymentMethodLabel ?? '',
-                        style: Palette.textStyle().copyWith(
-                          color: Palette.colorTextOnPink,
-                        )),
+                    child: Text(order.paymentMethodLabel ?? '', style: Palette.textStyle().copyWith(color: Palette.colorTextOnPink, fontSize: 10)),
                   )
                 : Container(),
             Spacer(),

@@ -1,3 +1,4 @@
+import 'package:pos_app/models/cart_model.dart';
 import 'package:pos_app/models/customer_model.dart';
 import 'package:pos_app/models/employee.dart';
 import 'package:pos_app/models/product_model.dart';
@@ -9,7 +10,8 @@ class OrderModel {
   int id;
   String orderCode;
   List<ProductModel> products;
-  List<StatusModel> status;
+  List<CartModel> items;
+  List<OrderStatusModel> status;
   String timeStart;
   String timeEnd;
   int totalPrice;
@@ -26,27 +28,27 @@ class OrderModel {
   int paymentMethod;
   int orderMethod;
 
-  OrderModel({
-    this.id,
-    this.orderCode,
-    this.products,
-    this.status,
-    this.timeStart,
-    this.timeEnd,
-    this.totalPrice,
-    this.amountReceive,
-    this.change,
-    this.employee,
-    this.customer,
-    this.tableId,
-    this.table,
-    this.createdAt,
-    this.date,
-    this.note,
-    this.client,
-    this.orderMethod,
-    this.paymentMethod,
-  });
+  OrderModel(
+      {this.id,
+      this.orderCode,
+      this.products,
+      this.status,
+      this.timeStart,
+      this.timeEnd,
+      this.totalPrice,
+      this.amountReceive,
+      this.change,
+      this.employee,
+      this.customer,
+      this.tableId,
+      this.table,
+      this.createdAt,
+      this.date,
+      this.note,
+      this.client,
+      this.orderMethod,
+      this.paymentMethod,
+      this.items});
 
   // factory OrderModel.fromJson(json) {
   //   return new OrderModel(
@@ -66,9 +68,9 @@ class OrderModel {
     id = json['id'];
     orderCode = json['order_code'];
     if (json['status'] != null) {
-      status = new List<StatusModel>();
+      status = new List<OrderStatusModel>();
       json['status'].forEach((v) {
-        status.add(new StatusModel.fromJson(v));
+        status.add(new OrderStatusModel.fromJson(v));
       });
     }
     tableId = json['table_id'];
@@ -86,6 +88,12 @@ class OrderModel {
       createdAt = DateTime.parse(json['created_at']).toLocal();
       date = DateTime.parse(json['created_at']).toLocal().day;
       note = json['note'];
+    }
+    if (json['items'] != null) {
+      items = new List<CartModel>();
+      json['items'].forEach((v) {
+        items.add(new CartModel.fromJson(v));
+      });
     }
 
     customer = CustomerModel.fromJson(json['customer']);

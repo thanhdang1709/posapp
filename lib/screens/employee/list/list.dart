@@ -7,6 +7,7 @@ import 'package:pos_app/data/controllers/employee_controller.dart';
 import 'package:pos_app/models/employee.dart';
 import 'package:pos_app/ultils/app_ultils.dart';
 import 'package:pos_app/widgets/drawer/drawer.dart';
+import 'package:pos_app/widgets/empty_data.dart';
 
 class EmployeeScreen extends GetView<EmployeeController> {
   @override
@@ -16,67 +17,71 @@ class EmployeeScreen extends GetView<EmployeeController> {
       onTap: () {
         FocusScope.of(context).requestFocus(new FocusNode());
       },
-      child: Scaffold(
-        appBar: AppUltils.buildAppBar(
-          // leading: Icon(Mdi.menu),
-          height: 40,
-          title: 'Nhân viên',
-          actions: [
-            InkWell(
-              onTap: () {
-                Get.toNamed('employee/add');
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: Icon(Icons.add),
-              ),
-            )
-          ],
-        ),
-        drawer: new DrawerApp(),
-        body: Column(
-          children: [
-            Container(
-              color: Colors.grey[200],
-              child: Padding(
-                padding: const EdgeInsets.all(5),
-                child: TextFormField(
-                  focusNode: FocusNode(),
-                  controller: controller.searchKeyword,
-                  decoration: InputDecoration(prefixIcon: Icon(Icons.search, size: 35), border: InputBorder.none, hintText: 'Tìm tên nhân viên'),
+      child: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).requestFocus(new FocusNode());
+        },
+        child: Scaffold(
+          appBar: AppUltils.buildAppBar(
+            // leading: Icon(Mdi.menu),
+            height: 40,
+            title: 'Nhân viên',
+            actions: [
+              InkWell(
+                onTap: () {
+                  Get.toNamed('employee/add');
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Icon(Icons.add),
+                ),
+              )
+            ],
+          ),
+          drawer: new DrawerApp(),
+          body: Column(
+            children: [
+              Container(
+                color: Colors.grey[200],
+                child: Padding(
+                  padding: const EdgeInsets.all(5),
+                  child: TextFormField(
+                    focusNode: FocusNode(),
+                    controller: controller.searchKeyword,
+                    decoration: InputDecoration(prefixIcon: Icon(Icons.search, size: 35), border: InputBorder.none, hintText: 'Tìm tên nhân viên'),
+                  ),
                 ),
               ),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Obx(() => !controller.isLoading.value
-                    ? Padding(
-                        padding: const EdgeInsets.all(15),
-                        child: controller.employees.length != 0
-                            ? controller.searchResults.length == 0
-                                ? Column(
-                                    children: List.generate(
-                                      controller.employees.length,
-                                      (index) => RowContactItem(employee: controller.employees[index]),
-                                    ),
-                                  )
-                                : Column(
-                                    children: List.generate(
-                                      controller.searchResults.length,
-                                      (index) => RowContactItem(employee: controller.searchResults[index]),
-                                    ),
-                                  )
-                            : Image.asset(
-                                'assets/img/empty.png',
-                                height: Get.height * .2,
-                              ),
-                      )
-                    : Center(
-                        child: CircularProgressIndicator(),
-                      )),
-              ),
-            )
-          ],
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Obx(() => !controller.isLoading.value
+                      ? Padding(
+                          padding: const EdgeInsets.all(15),
+                          child: controller.employees.length != 0
+                              ? controller.searchKeyword.text.length != 0
+                                  ? controller.searchResults.length == 0
+                                      ? EmptyDataWidget()
+                                      : Column(
+                                          children: List.generate(
+                                            controller.searchResults.length,
+                                            (index) => RowContactItem(employee: controller.searchResults[index]),
+                                          ),
+                                        )
+                                  : Column(
+                                      children: List.generate(
+                                        controller.employees.length,
+                                        (index) => RowContactItem(employee: controller.employees[index]),
+                                      ),
+                                    )
+                              : EmptyDataWidget(),
+                        )
+                      : Center(
+                          child: CircularProgressIndicator(),
+                        )),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

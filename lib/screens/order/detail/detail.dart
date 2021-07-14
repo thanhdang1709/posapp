@@ -96,7 +96,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                                               style: Palette.textStyle().copyWith(color: Colors.blue),
                                             ),
                                             Text(
-                                              controller.order.value.employee.name,
+                                              controller.order.value.employee?.name ?? '',
                                               style: Palette.textStyle().copyWith(color: Colors.cyan),
                                             )
                                           ],
@@ -153,7 +153,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                                             orderModalBottomSheet();
                                           },
                                           child: Container(
-                                            margin: EdgeInsets.only(left: 5),
+                                            margin: EdgeInsets.only(left: 10),
                                             width: 60,
                                             height: 50,
                                             decoration: BoxDecoration(
@@ -167,7 +167,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                                             ),
                                           ),
                                         ),
-                                        SizedBox(width: 5),
+                                        //SizedBox(width: 5),
                                         Expanded(
                                           child: controller.order.value.status.last.title == 'pending'
                                               ? SlidingButton(
@@ -175,7 +175,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                                                   buttonHeight: 50,
                                                   buttonColor: Palette.secondColor,
                                                   slideButtonIconColor: Colors.pink,
-                                                  radius: 20,
+                                                  radius: 15,
                                                   buttonText: 'Trượt để xác nhận',
                                                   onSlideSuccessCallback: () {
                                                     controller.confirmStatusOrder(statusTitle: 'confirm', status: '2');
@@ -190,7 +190,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
                                                   },
                                                   child: Container(
                                                     decoration: BoxDecoration(
-                                                      borderRadius: BorderRadius.circular(20),
+                                                      borderRadius: BorderRadius.circular(10),
                                                       color: Palette.primaryColor,
                                                     ),
                                                     margin: EdgeInsets.all(5),
@@ -326,7 +326,7 @@ class OrderDetailScreen extends GetView<OrderDetailController> {
     lists.add(
       SingleChildScrollView(child: Column(children: [...controller.buildTimeLineStatus(controller.order.value.status, controller.order.value)])),
     );
-    if (controller.listKitchen.value.length > 0) {
+    if (controller.listKitchen.length > 0) {
       lists.add(
         SingleChildScrollView(child: Column(children: [...controller.buildTimeLineKitchen(controller.listKitchen)])),
       );
@@ -464,7 +464,7 @@ class TabViewWithCustomer extends StatelessWidget {
 // ignore: must_be_immutable
 class RowStatus extends StatelessWidget {
   RowStatus({Key key, this.lastStatus, this.controller}) : super(key: key);
-  final List<StatusModel> lastStatus;
+  final List<OrderStatusModel> lastStatus;
   final controller;
 
   List<Widget> buildRowStatus() {

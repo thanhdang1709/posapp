@@ -27,10 +27,13 @@ class ProductModel {
       id: json['id'],
       name: json['name'],
       price: (json['price']).toInt(),
-      catelogId: (json['catelog_id']).toInt(),
+      catelogId: (json['category_id']).toInt(),
       stock: (json['stock']).toInt(),
+      promoPrice: json['promoPrice'] == null ? 0 : (json['promoPrice']).toInt(),
       imageUrl: json['default_image'],
       color: json['color'].toString(),
+      barCode: json['barcode'].toString(),
+      note: json['note'].toString(),
     );
   }
 

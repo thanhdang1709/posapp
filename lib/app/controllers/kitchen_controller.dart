@@ -1,13 +1,12 @@
 import 'package:fma/get_tool/get_tool.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:pos_app/data/store/product_store.dart';
 import 'package:pos_app/models/kitchen_model.dart';
 import 'package:pos_app/services/kitchen_services.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class KitchenController extends GetxController with GetTool {
-  PagingController<int, KitchenModel> pagingController = PagingController(firstPageKey: 1);
+  PagingController<int, KitchenModel> pagingController = PagingController(firstPageKey: 0);
   RefreshController refreshController = RefreshController(initialRefresh: false);
   // handle here
   RxList<KitchenModel> listMenu = RxList<KitchenModel>();
@@ -23,9 +22,9 @@ class KitchenController extends GetxController with GetTool {
 
   onUpdateStatus({id, status}) async {
     isLoading.value = true;
-    Map<String, dynamic> body = {
-      'id': id,
-      'status': status,
+    Map<String, String> body = {
+      'id': id.toString(),
+      'status': status.toString(),
     };
     var res = await KitchenService().cook(body: body);
     if (res != null) {

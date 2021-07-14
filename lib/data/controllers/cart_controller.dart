@@ -1,9 +1,11 @@
 import 'package:collection/collection.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos_app/data/store/product_store.dart';
 import 'package:pos_app/models/customer_model.dart';
 import 'package:pos_app/models/product_model.dart';
 import 'package:pos_app/models/table_model.dart';
+import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class CartController extends GetxController {
   MasterStore masterStore = Get.find<MasterStore>();
@@ -18,6 +20,11 @@ class CartController extends GetxController {
   Map<dynamic, List<dynamic>> newMap;
   Rx<CustomerModel> selectedCustomer = CustomerModel().obs;
   Rx<TableModel> selectedTable = TableModel().obs;
+  QRViewController qrController;
+  final GlobalKey qrKey = GlobalKey(debugLabel: 'Barcode');
+  Barcode scanResult;
+  RxBool enableQrScan = false.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -100,5 +107,25 @@ class CartController extends GetxController {
     );
     totalPrice = masterStore.cartItem.length != 0 ? masterStore.cartItem.map((element) => element.price).reduce((value, element) => value + element) - discount.value : 0;
     totalItem = cart.length;
+  }
+
+  Widget buildQrView() {
+    // For this example we check how width or tall the device is and change the scanArea and overlay accordingly.
+    var scanArea = (Get.size.width < 400 || Get.size.height < 400) ? 250.0 : 400.0;
+    // To ensure the Scanner view is properly sizes after rotation
+    // we need to listen for Flutter SizeChanged notification and update controller
+    return QRView(
+      key: qrKey,
+      onQRViewCreated: onQRViewCreated,
+      overlay: QrScannerOverlayShape(borderColor: Colors.red, borderRadius: 5, borderLength: 60, borderWidth: 5, cutOutSize: scanArea),
+    );
+  }
+
+  void onQRViewCreated(QRViewController controller) {
+    qrController = controller;
+    controller.scannedDataStream.listen((scanData) {
+      scanResult = scanData;
+      print(scanResult.code);
+    });
   }
 }

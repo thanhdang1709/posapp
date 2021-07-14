@@ -42,7 +42,7 @@ class OrderController extends GetxController {
     isLoading.value = true;
     var response = (await OrderService().getAll());
     if (response != null && response.length != 0) {
-      orders.assignAll(response.map((e) => OrderModel.fromJson(e)).toList());
+      orders.assignAll(response);
     }
     isLoading.value = false;
   }

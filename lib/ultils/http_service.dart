@@ -1,15 +1,15 @@
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:fma/get_tool/get_tool.dart';
 import 'package:fma/http_service.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-//import 'package:pos_app/modules/http_services.dart';
-import 'package:pos_app/repositories/common.dart';
+import 'package:pos_app/contants.dart';
 import 'package:pos_app/widgets/common.dart';
 //import 'package:pos_app/modules/http_services.dart';
 
 class HttpService extends HttpServiceCore {
   /* DESC: Khi "url" bạn truyền vào cho mỗi request mà không có base url, ví dụ "/api/user/delete" thì sẽ được tự động gắn base url này */
-  String baseUrl = BASE_DOMAIN;
+  String baseUrl = CONTANTS.BASE_DOMAIN;
 
   /* DESC: Thời gian chờ một request phản hồi trong trường hợp mạng yếu hoặc API xử lý chậm */
   int defaultTimeout = 30; //seconds
@@ -43,6 +43,8 @@ class HttpService extends HttpServiceCore {
     }
   }
 
+  final serverDebugTool = CONTANTS.BASE_DOMAIN.split(':')[0] + ':' + CONTANTS.BASE_DOMAIN.split(':')[1];
+
   bool isShowLoading = false;
 
   /* DESC: Xử lý dữ liệu trả về  */
@@ -50,14 +52,21 @@ class HttpService extends HttpServiceCore {
     if (isShowLoading) {
       Get.back();
     }
+    if (response.body.toString().contains('Unauthorized')) {
+      GetTool().setTimeout(() {
+        if (Get.isSnackbarOpen) {
+          Get.back();
+        }
+        GetTool().notify.error(title: 'common.request_error'.tr, message: 'common.anauthorized'.tr);
+        Get.toNamed('welcome');
+      }, 1000);
+    }
 
     if (response.body['code'] == 500) {
       GetTool().setTimeout(() {
         if (Get.isSnackbarOpen) {
           Get.back();
         }
-
-        print(response.body);
         GetTool().notify.error(title: 'common.request_error'.tr, message: 'common.server_error'.tr);
       }, 10);
     }

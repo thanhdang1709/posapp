@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:mdi/mdi.dart';
 import 'package:pos_app/config/palette.dart';
 import 'package:pos_app/models/kitchen_model.dart';
 import 'package:pos_app/models/order_model.dart';
@@ -32,6 +31,7 @@ class OrderDetailController extends GetxController with SingleGetTickerProviderM
     await getListKitchen(orderId);
 
     print(order.value.customer);
+    // ignore: invalid_use_of_protected_member
     if (listKitchen.value.length > 0) {
       tabItem.add(Tab(
         child: Text('Bếp'),
@@ -71,7 +71,6 @@ class OrderDetailController extends GetxController with SingleGetTickerProviderM
       'status': status,
     };
     var _result = await OrderService().updatePayment(data: data);
-    print(_result);
     await getOrderById(orderId);
   }
 
@@ -88,10 +87,11 @@ class OrderDetailController extends GetxController with SingleGetTickerProviderM
 
   Future<OrderModel> getOrderById(id) async {
     var result = await OrderService().getOrder(id);
-    order.value = OrderModel.fromJson(result);
-    isLoading.value = false;
-
-    return OrderModel.fromJson(result);
+    if (result != null) {
+      order.value = OrderModel.fromJson(result);
+      isLoading.value = false;
+      return OrderModel.fromJson(result);
+    }
   }
 
   cancelOrder() async {
@@ -139,7 +139,7 @@ class OrderDetailController extends GetxController with SingleGetTickerProviderM
     return lists;
   }
 
-  List<Widget> buildTimeLineStatus(List<StatusModel> status, OrderModel order) {
+  List<Widget> buildTimeLineStatus(List<OrderStatusModel> status, OrderModel order) {
     List<Widget> results = [];
     status = status.reversed.toList();
     List.generate(

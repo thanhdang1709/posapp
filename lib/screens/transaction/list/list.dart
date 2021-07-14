@@ -122,12 +122,12 @@ class RowFilterStatus extends StatelessWidget {
     );
   }
 
-  List<StatusModel> status = [
-    new StatusModel(
+  List<OrderStatusModel> status = [
+    new OrderStatusModel(
       title: 'Chờ xác nhận',
       //icon: (Icons.close),
     ),
-    new StatusModel(
+    new OrderStatusModel(
       title: 'Đã xác nhận',
     ),
   ];

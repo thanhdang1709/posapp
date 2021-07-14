@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:get/get.dart';
 import 'package:pos_app/config/palette.dart';
-import 'package:pos_app/data/controllers/cart_controller.dart';
 import 'package:pos_app/data/controllers/payment_controller.dart';
 import 'package:pos_app/screens/payment/amount_received.dart';
 import 'package:pos_app/ultils/app_ultils.dart';
@@ -104,26 +103,41 @@ class PaymentScreen extends GetView<PaymentController> {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                MethodPaymentContainer(
-                  title: 'Tiền mặt',
-                  icon: FontAwesome.money,
-                  active: true,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                MethodPaymentContainer(
-                  title: 'Chuyển khoản',
-                  icon: FontAwesome.credit_card,
-                  active: false,
-                ),
-              ],
+          ObxValue(
+            (d) => Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  InkWell(
+                    splashColor: Palette.primaryColor,
+                    onTap: () {
+                      d.value = true;
+                    },
+                    child: MethodPaymentContainer(
+                      title: 'Tiền mặt',
+                      icon: FontAwesome.money,
+                      active: d.value,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  InkWell(
+                    splashColor: Palette.primaryColor,
+                    onTap: () {
+                      d.value = false;
+                    },
+                    child: MethodPaymentContainer(
+                      title: 'Chuyển khoản',
+                      icon: FontAwesome.credit_card,
+                      active: !d.value,
+                    ),
+                  ),
+                ],
+              ),
             ),
+            true.obs,
           ),
           Container(
             margin: EdgeInsets.all(5),

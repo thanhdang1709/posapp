@@ -3,6 +3,7 @@ import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:pos_app/config/palette.dart';
 import 'package:pos_app/data/controllers/order_controller.dart';
 import 'package:pos_app/models/status_model.dart';
 import 'package:pos_app/ultils/app_ultils.dart';
@@ -98,13 +99,13 @@ class ListOrderScreen extends GetView<OrderController> {
                 children: [
                   Text(
                     'Tổng đơn hàng',
-                    style: TextStyle(color: Colors.white, fontSize: 20),
+                    style: Palette.textStyle().copyWith(color: Colors.white, fontSize: 20),
                   ),
                   SizedBox(height: 10),
                   Obx(
                     () => Text(
                       '${$Number.numberFormat(controller.totalOrderPrice.value)}đ từ ${controller.totalOrderItem.value} đơn',
-                      style: TextStyle(color: Colors.white, fontSize: 16),
+                      style: Palette.textStyle().copyWith(color: Colors.white, fontSize: 16),
                     ),
                   )
                 ],
@@ -142,12 +143,12 @@ class RowFilterStatus extends StatelessWidget {
     );
   }
 
-  List<StatusModel> status = [
-    new StatusModel(
+  List<OrderStatusModel> status = [
+    new OrderStatusModel(
       title: 'Chờ xác nhận',
       //icon: (Icons.close),
     ),
-    new StatusModel(
+    new OrderStatusModel(
       title: 'Đã xác nhận',
     ),
   ];

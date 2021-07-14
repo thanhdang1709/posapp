@@ -38,6 +38,7 @@ void main() async {
       theme: ThemeData(
         fontFamily: 'roboto',
         primaryColor: Palette.primaryColor,
+        accentColor: Palette.primaryColor,
       ),
       locale: LocalizationService.locale,
       fallbackLocale: LocalizationService.fallbackLocale,

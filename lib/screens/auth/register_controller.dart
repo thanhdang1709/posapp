@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fma/get_tool/get_tool.dart';
 import 'package:get/get.dart';
+import 'package:pos_app/contants.dart';
 import 'package:pos_app/repositories/common.dart';
 import 'package:http/http.dart' as http;
 import 'package:pos_app/ultils/app_ultils.dart';
@@ -51,7 +52,7 @@ class RegisterController extends GetxController with GetTool {
   }
 
   Future register(body) async {
-    var response = await http.post('$BASE_URL/api/register', body: jsonEncode(body), headers: {'Content-Type': 'application/json'});
+    var response = await http.post('${CONTANTS.BASE_DOMAIN}/api/register', body: jsonEncode(body), headers: {'Content-Type': 'application/json'});
     print(response.statusCode);
     if (response.statusCode == 200) {
       if (response.body.isNotEmpty) {

@@ -1,3 +1,4 @@
+import 'package:pos_app/contants.dart';
 import 'package:pos_app/models/order_model.dart';
 import 'package:pos_app/models/product_model.dart';
 
@@ -34,25 +35,28 @@ class KitchenModel {
         products.add(new ProductModel.fromJson(v));
       });
     }
-    order = OrderModel.fromJson(json['order']);
+    order = json['order'] != null ? OrderModel.fromJson(json['order']) : null;
   }
 
   String get labelStatus {
     switch (status) {
       case 1:
-        return "Chờ xác nhận";
+        return CONTANTS.KITCHEN_STATUS[0]['label'];
         break;
       case 2:
-        return "Đã xác nhận";
+        return CONTANTS.KITCHEN_STATUS[1]['label'];
         break;
       case 3:
-        return "Đang chế biến";
+        return CONTANTS.KITCHEN_STATUS[2]['label'];
         break;
       case 4:
-        return "Sẵn sàng";
+        return CONTANTS.KITCHEN_STATUS[3]['label'];
+        break;
+      case 5:
+        return CONTANTS.KITCHEN_STATUS[4]['label'];
         break;
       default:
-        return "Sẵn sàng";
+        return CONTANTS.KITCHEN_STATUS[0]['label'];
     }
   }
 

@@ -88,7 +88,7 @@ class PushNotificationsManager {
           notification = message['notification'];
           print('onMesssage: $message');
 
-          _handleOpenNotify(1);
+          _handleOpenNotify(message);
         },
       );
       print('initial config');
@@ -127,7 +127,6 @@ class PushNotificationsManager {
     String title,
     String content,
   }) async {
-    print(title);
     var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
       'your channel id',
       'your channel name',
@@ -155,8 +154,16 @@ class PushNotificationsManager {
       // Navigator.push(
       //     _context, MaterialPageRoute(builder: (_) => NotifyListScreen()));
       //if (role == 1 || role == 2 || role == 3) {
-      Get.offAllNamed('order');
+      // Get.offAllNamed('order');
       //}
+      //if (message['data']) {
+      var otherData = jsonDecode(message['data']['data']);
+      var typeAction = otherData['other_data']['type_action'];
+      print('type_actionnnnnnnnnnnnnnnnnnnn $otherData');
+      if (typeAction == 'confirm_table') {
+        Get.offAllNamed('confirm_table');
+      }
+      // }
     } else {
       // Get.offAll(BottomBarScreen(
       //   tabIndex: 2,

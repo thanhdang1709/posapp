@@ -46,7 +46,7 @@ class CartScreen extends GetView<CartController> {
       appBar: AppUltils.buildAppBar(
         height: 40,
         centerTitle: false,
-        title: 'Giỏ hàng',
+        title: 'Đơn hàng',
         actions: [
           Obx(() => controller.selectedCustomer.value.name != null
               ? Container(
@@ -111,8 +111,11 @@ class CartScreen extends GetView<CartController> {
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Obx(() => controller.enableQrScan.value ? Expanded(flex: 1, child: controller.buildQrView()) : Container()),
           Expanded(
+            flex: 4,
             child: RefreshIndicator(
               onRefresh: () {
                 print('refreshed');
@@ -135,28 +138,39 @@ class CartScreen extends GetView<CartController> {
               ),
             ),
           ),
-          Obx(() => Text(controller.note.value.toString())),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Obx(() => Text('Ghi chú: ${controller.note.value.toString()}', style: Palette.textStyle())),
+          ),
+          SizedBox(
+            height: 10,
+          ),
           Container(
-            height: 70,
+            height: 60,
             padding: EdgeInsets.all(5),
             // margin: EdgeInsets.only(bottom: 5),
             child: Row(
               children: [
-                Container(
-                  height: 60,
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
-                  child: FlatButton(
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0), side: BorderSide(color: Palette.primaryColor)),
-                      //color: Colors.grey[300],
-                      onPressed: () {
-                        cartModalBottomSheet(context);
-                      },
-                      child: Icon(Icons.more_horiz)),
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    height: 60,
+                    margin: EdgeInsets.only(left: 3),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                    child: FlatButton(
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0), side: BorderSide(color: Palette.primaryColor)),
+                        //color: Colors.grey[300],
+                        onPressed: () {
+                          cartModalBottomSheet(context);
+                        },
+                        child: Icon(Icons.more_horiz)),
+                  ),
                 ),
                 SizedBox(
                   width: 5,
                 ),
                 Expanded(
+                  flex: 5,
                   child: Container(
                     padding: EdgeInsets.all(0),
                     decoration: BoxDecoration(
@@ -204,6 +218,17 @@ class CartScreen extends GetView<CartController> {
         return Container(
           child: new Wrap(
             children: <Widget>[
+              new ListTile(
+                leading: Icon(Icons.qr_code, color: Colors.black),
+                title: new Text(
+                  'Quét mã',
+                  style: TextStyle(color: Colors.black),
+                ),
+                onTap: () {
+                  controller.enableQrScan.value = !controller.enableQrScan.value;
+                  Get.back();
+                },
+              ),
               new ListTile(
                 leading: Icon(
                   Icons.note_add,

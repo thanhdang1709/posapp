@@ -31,7 +31,7 @@ class EmployeeModel {
       role: json['role'],
       status: json['status'],
       description: json['description'],
-      totalOrder: (json['orders'] != null) ? json['orders'].length : 0,
+      totalOrder: json['orders_count'],
     );
   }
   Map<String, dynamic> toJson() {

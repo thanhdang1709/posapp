@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pos_app/config/palette.dart';
+import 'package:pos_app/widgets/popup/pop_menu.dart';
 
 class CardTableGridItem extends StatefulWidget {
   const CardTableGridItem({
@@ -11,6 +13,7 @@ class CardTableGridItem extends StatefulWidget {
     this.onPressed,
     this.capacity,
     this.colorStatus,
+    this.tapDown,
   }) : super(key: key);
 
   final Size size;
@@ -20,6 +23,7 @@ class CardTableGridItem extends StatefulWidget {
   final int capacity;
   final Color colorStatus;
   final VoidCallback onPressed;
+  final Function tapDown;
 
   @override
   _CardTableGridItemState createState() => _CardTableGridItemState();
@@ -53,10 +57,17 @@ class _CardTableGridItemState extends State<CardTableGridItem> with SingleTicker
   Widget build(BuildContext context) {
     _scale = 1 - _controller.value;
     return GestureDetector(
-      onTapDown: _tapDown,
+      onTapDown: (details) {
+        _tapDown(details);
+        widget.tapDown(details);
+      },
       onTapUp: _tapUp,
       onTap: widget.onPressed,
       //height: 300,
+      // onLongPressStart: _longPress,
+      onLongPress: () {
+        new PopMenuCustom();
+      },
       child: Transform.scale(
         scale: _scale,
         child: Column(children: [
@@ -72,12 +83,12 @@ class _CardTableGridItemState extends State<CardTableGridItem> with SingleTicker
                     child: Image.asset('assets/icons/table.png'),
                   ),
                 ),
-                Container(
-                  child: Text(
-                    '0 / ${widget.capacity ?? 0}',
-                    style: Palette.textStyle().copyWith(color: Palette.primaryColor),
-                  ),
-                )
+                // Container(
+                //   child: Text(
+                //     'Sức chứa: ${widget.capacity ?? 0}',
+                //     style: Palette.textStyle().copyWith(color: Palette.primaryColor),
+                //   ),
+                // )
               ],
             ),
           ),

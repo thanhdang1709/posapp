@@ -56,7 +56,7 @@ class AddTableScreen extends GetView<TableController> {
                         ),
                         Container(
                           decoration: BoxDecoration(
-                            color: Palette.secondColor.withOpacity(0.2),
+                            //  color: Palette.secondColor.withOpacity(0.2),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           height: 60,
@@ -82,7 +82,7 @@ class AddTableScreen extends GetView<TableController> {
                         ),
                         Container(
                           decoration: BoxDecoration(
-                            color: Palette.secondColor.withOpacity(0.2),
+                            //color: Palette.secondColor.withOpacity(0.2),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           height: 60,
@@ -95,6 +95,10 @@ class AddTableScreen extends GetView<TableController> {
                             showSelectedItem: false,
                             showSearchBox: true,
                             isFilteredOnline: true,
+                            selectedItem: {
+                              "id": 1,
+                              "name": "Sẵn sàng",
+                            },
                             items: [
                               {
                                 "id": 1,
@@ -118,6 +122,7 @@ class AddTableScreen extends GetView<TableController> {
                             Expanded(
                                 child: MyTextInput(
                               controller: controller.capacityController,
+                              textInputType: TextInputType.number,
                               hintText: 'label.capacity'.tr,
                               iconData: null,
                               hintColor: Colors.black,

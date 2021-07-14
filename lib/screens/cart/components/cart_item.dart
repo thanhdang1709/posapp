@@ -22,24 +22,24 @@ class RowTotalPrice extends StatelessWidget {
       children: [
         Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 20),
-              child: Row(
-                children: [
-                  Text(
-                    'Mã giảm giá?',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.grey),
-                  ),
-                ],
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.only(top: 20),
+            //   child: Row(
+            //     children: [
+            //       Text(
+            //         'Mã giảm giá?',
+            //         style: Palette.textStyle().copyWith(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.grey),
+            //       ),
+            //     ],
+            //   ),
+            // ),
             Padding(
               padding: const EdgeInsets.only(right: 10, top: 10),
               child: Row(
                 children: [
                   Text(
                     'TỔNG:',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.grey),
+                    style: Palette.textStyle().copyWith(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.grey),
                   ),
                   SizedBox(
                     width: 10,
@@ -48,7 +48,7 @@ class RowTotalPrice extends StatelessWidget {
                     '${$Number.numberFormat(totalPrice)} đ',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: GoogleFonts.roboto(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.blueGrey),
+                    style: Palette.textStyle().copyWith(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.blueGrey),
                   ),
                 ],
               ),
@@ -85,7 +85,7 @@ class CartItem extends GetView {
               children: [
                 Text(
                   '$quantity' + 'x',
-                  style: Palette.titleProduct(),
+                  style: Palette.textStyle().copyWith(fontSize: 16, fontWeight: FontWeight.w500),
                 ),
                 SizedBox(
                   width: 5,
@@ -94,12 +94,12 @@ class CartItem extends GetView {
                   '$productName',
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
-                  style: Palette.titleProduct(),
+                  style: Palette.textStyle().copyWith(fontSize: 16, fontWeight: FontWeight.w500),
                 ),
                 Spacer(),
                 Text(
                   '${$Number.numberFormat(totalPriceItem)} đ',
-                  style: Palette.titleProduct(),
+                  style: Palette.textStyle().copyWith(fontSize: 16, fontWeight: FontWeight.w500),
                 ),
               ],
             ),
@@ -125,7 +125,7 @@ class CartItem extends GetView {
                           InkWell(
                             onTap: () {
                               //change quality item in cart
-                              Get.to(
+                              Get.dialog(
                                 NumpadWidget(
                                   productName: productName,
                                   quantity: quantity,
@@ -178,7 +178,7 @@ class CartItem extends GetView {
                               ),
                               Text(
                                 '${$Number.numberFormat(priceItem)} đ',
-                                style: TextStyle(color: Colors.green),
+                                style: Palette.textStyle().copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.green),
                               ),
                             ],
                           ),
@@ -194,7 +194,7 @@ class CartItem extends GetView {
                               ),
                               Text(
                                 'Giảm giá',
-                                style: TextStyle(color: Colors.orange),
+                                style: Palette.textStyle().copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.orange),
                               ),
                             ],
                           ),
@@ -218,7 +218,7 @@ class CartItem extends GetView {
                                 ),
                                 Text(
                                   'Xoá',
-                                  style: TextStyle(color: Colors.red),
+                                  style: Palette.textStyle().copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.red),
                                 ),
                               ],
                             ),

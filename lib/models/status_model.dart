@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-class StatusModel {
+class OrderStatusModel {
   int id;
   String title;
   IconData icon;
   bool isChecked;
   String createdAt;
 
-  StatusModel({this.id, this.title, this.createdAt, this.icon});
-  factory StatusModel.fromJson(json) {
-    return new StatusModel(id: json['id'], title: json['title'], createdAt: json['created_at']);
+  OrderStatusModel({this.id, this.title, this.createdAt, this.icon});
+  factory OrderStatusModel.fromJson(json) {
+    return new OrderStatusModel(id: json['id'], title: json['title'], createdAt: json['created_at']);
   }
   //pending 0
   //confirm 2

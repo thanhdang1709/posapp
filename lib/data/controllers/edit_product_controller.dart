@@ -112,9 +112,9 @@ class EditProductController extends GetxController {
     };
     print(data);
     print(selectedImage);
-    var result = await ProductService().updateProduct(file: selectedImage ?? null, data: data);
+    var result = await ProductService().updateProduct(id: productId, file: selectedImage ?? null, data: data);
     // print(result.body);
-    if (!result.isNull) AppUltils().getSnackBarSuccess(message: 'Thêm sản phẩm thành công');
+    if (!result.isNull) AppUltils().getSnackBarSuccess(message: 'Sửa sản phẩm thành công');
     await getProductAll();
     masterStore.products = products;
     Get.back();

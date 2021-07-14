@@ -125,6 +125,7 @@ class AnalyticController extends GetxController with SingleGetTickerProviderMixi
 
       //bestUser
       var groupRevenueByEmployee;
+
       groupRevenueByEmployee = groupBy(reportLists, (obj) => obj.user.id);
       mapRevenueByUser.clear();
       groupRevenueByEmployee.forEach((k, v) {

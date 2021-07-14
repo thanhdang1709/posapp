@@ -11,7 +11,7 @@ class AddNewCardItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Get.toNamed('product');
+        Get.toNamed('product/add');
       },
       child: Container(
         child: Center(

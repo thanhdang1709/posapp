@@ -5,6 +5,7 @@ import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pos_app/config/palette.dart';
+import 'package:pos_app/contants.dart';
 import 'package:pos_app/data/controllers/customer_controller.dart';
 import 'package:pos_app/data/controllers/edit_customer_controller.dart';
 import 'package:pos_app/models/customer_model.dart';
@@ -72,7 +73,7 @@ class CustomerDetailScreen extends GetView<EditCustomerController> {
                                     )
                                   : ImageCircle(
                                       width: Get.height * .2,
-                                      image: "$BASE_DOMAIN/${customer.avatar}",
+                                      image: "${CONTANTS.BASE_DOMAIN}/${customer.avatar}",
                                     )
                               : Container(
                                   color: Colors.blueGrey,

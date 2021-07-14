@@ -1,11 +1,16 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
+import 'package:fma/http_service.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http_parser/http_parser.dart';
+import 'package:pos_app/contants.dart';
 import 'package:pos_app/repositories/common.dart';
 import 'package:pos_app/ultils/app_ultils.dart';
 import 'package:http/http.dart' as http;
 import 'package:pos_app/ultils/http_service.dart';
+import 'package:pos_app/ultils/images.dart';
 
 class ProductService extends HttpService {
   // ignore: missing_return
@@ -13,44 +18,81 @@ class ProductService extends HttpService {
 
   Map<String, String> headers(box) {
     return {
-      'Authorization': 'Bearer ' + box.read('token'),
+      'Authorization': 'Bearer' + box.read('token'),
+      'Content-Type': 'multipart/form-data',
     };
   }
 
-  Future<int> addProduct({File file, Map<String, dynamic> data}) async {
+  Future<Res> addProduct({String filepath, Map<String, String> data}) async {
     var request = http.MultipartRequest(
       'POST',
-      Uri.parse("$BASE_URL/api/product/add"),
+      Uri.parse("${CONTANTS.BASE_DOMAIN}/api/product/add"),
     );
     //file = compressImage(file);
 
-    if (file != null) {
+    // String addimageUrl = '<domain-name>/api/imageadd';
+    //   Map<String, String> headers = {
+    //     'Content-Type': 'multipart/form-data',
+    //   };
+// var request = http.MultipartRequest('POST', Uri.parse(addimageUrl))
+//       ..fields.addAll(body)
+//       ..headers.addAll(headers)
+//       ..files.add(await http.MultipartFile.fromPath('image', filepath));
+// var response = await request.send();
+//     if (response.statusCode == 201) {
+//       return true;
+//     } else {
+//       return false;
+//     }
+//   }
+
+    if (filepath != null) {
       request.files.add(
-        http.MultipartFile(
+        await http.MultipartFile.fromPath(
           'image',
-          file.readAsBytes().asStream(),
-          file.lengthSync(),
-          filename: 'image.png',
-          contentType: MediaType('image', 'jpeg'),
+          filepath,
+          //contentType: MediaType('image', 'jpg'),
         ),
       );
     }
     request.headers.addAll(headers(_box));
     request.fields.addAll(data);
-    print("request: " + request.toString());
-    var res = await request.send();
-    print("This is response:" + res.toString());
-    print(res);
-    return (res.statusCode);
-    // return res;
+
+    Completer completer = new Completer<Res>();
+    print(request.files.first);
+    http.StreamedResponse res = await request.send().timeout(Duration(seconds: 10000), onTimeout: () async {
+      completer.complete(true);
+      return null;
+    });
+    String responseBodyString = await res.stream.bytesToString();
+    dynamic resultBody;
+    Res response = Res(
+      httpCode: res.statusCode,
+      isConnectError: false,
+      isResponseError: res.statusCode != 200,
+    );
+
+    try {
+      resultBody = json.decode(responseBodyString);
+      response.isMap = true;
+    } catch (e) {
+      response.isMap = false;
+      resultBody = responseBodyString;
+    }
+
+    response.body = resultBody;
+    //completer.complete(await _handleResponse(response));
+
+    return (response);
+    // // return res;
     // isShowLoading = true;
-    // var response = await fetch(url: 'api/product/add', method: 'POST', files: [file], body: data);
+    // var response = await fetch(url: 'api/product/add', method: 'POST', images: [file], body: data);
     // print(response.httpCode);
-    // return response.httpCode;
+    // //return response.httpCode;
   }
 
-  Future<int> updateProduct({File file, Map<String, dynamic> data}) async {
-    var response = await fetch(url: 'api/product/update', method: 'POST', images: file == null ? null : [file], body: data);
+  Future<int> updateProduct({int id, File file, Map<String, dynamic> data}) async {
+    var response = await fetch(url: 'api/product/update/' + id.toString(), method: 'POST', images: file == null ? null : [file], body: data);
     print(response);
     return response.httpCode;
   }
@@ -58,32 +100,38 @@ class ProductService extends HttpService {
   // ignore: missing_return
   Future<List> getProductAll() async {
     var response = await fetch(
-      url: 'api/product/all',
+      url: 'api/product/list',
       method: 'GET',
     );
+
     if (response.httpCode == 200) {
-      var result = (response.body);
-      if (result['alert'] == 'success') {
-        return result['data'];
+      if ([response.isConnectError, response.isResponseError].contains(true)) {
+        return null;
+      } else {
+        var result = (response.body);
+        if (result['type'] == 'RESPONSE_OK' && result['message'] == 'success') {
+          return result['data']['items'];
+        }
       }
     }
   }
 
+  // ignore: missing_return
   Future<List> getCategoryAll() async {
     var response = await fetch(
-      url: 'api/catelog/all',
+      url: 'api/category/list',
       method: 'GET',
     );
     if (response.httpCode == 200) {
       var result = (response.body);
-      if (result['alert'] == 'success') {
-        return result['data'];
+      if (result['message'] == 'success') {
+        return result['data']['items'];
       }
     }
   }
 
   Future deleteProduct(id) async {
-    var response = await http.get('$BASE_URL/api/product/delete/$id', headers: headers(_box));
+    var response = await http.get('${CONTANTS.BASE_DOMAIN}/api/product/delete/$id', headers: headers(_box));
     if (response.statusCode == 200) {
       if (response.body.isNotEmpty) {
         var result = jsonDecode(response.body);
@@ -98,7 +146,7 @@ class ProductService extends HttpService {
   }
 
   Future deleteCatelog(id) async {
-    var response = await http.get('$BASE_URL/api/catelog/delete/$id', headers: headers(_box));
+    var response = await http.get('${CONTANTS.BASE_DOMAIN}/api/category/delete/$id', headers: headers(_box));
     if (response.statusCode == 200) {
       if (response.body.isNotEmpty) {
         var result = jsonDecode(response.body);
@@ -111,17 +159,14 @@ class ProductService extends HttpService {
   }
 
   // ignore: missing_return
-  Future<int> addCatelog(Map<String, dynamic> body) async {
-    var response = await fetch(url: '/api/catelog/add', method: 'POST', body: (body), headers: headers(_box));
-    print(response.body);
-
+  Future<int> addCatelog(Map<String, String> body) async {
+    var response = await fetch(url: '/api/category/add', method: 'POST', body: (body));
     if (response.httpCode == 200) {
-      print(response.body);
       if (response.body.isNotEmpty) {
         var result = (response.body);
-        if (result['alert'] == 'success') {
+        if (result['type'] == 'RESPONSE_OK' && result['message'] == 'success') {
           AppUltils().getSnackBarSuccess(message: 'Thêm danh mục thành công');
-          return result['id'].toInt();
+          return result['data']['item']['id'].toInt();
         }
       }
     } else {

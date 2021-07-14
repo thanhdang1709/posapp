@@ -40,5 +40,5 @@ const localLables = {
   'capacity': 'Sức chứa',
   'fee': 'Miễn phí',
   'add_new_table': 'Thêm bàn mới',
-  'free': 'Miễn phi'
+  'free': 'Miễn phí'
 };

@@ -27,4 +27,5 @@ abstract class Routes {
   static const ANALYTIC = 'analytic';
   static const TABLE = 'table';
   static const KITCHEN = 'kitchen';
+  static const CONFIRM_TABLE = 'confirm_table';
 }

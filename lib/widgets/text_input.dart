@@ -3,20 +3,21 @@ import 'package:pos_app/ultils/validation.dart';
 import 'package:pos_app/config/palette.dart';
 
 class MyTextInput extends StatefulWidget {
-  const MyTextInput({
-    Key key,
-    @required this.hintText,
-    @required this.iconData,
-    this.textInputType,
-    this.controller,
-    this.label = '',
-    this.rules,
-    this.validateCallback,
-    //this.isEnable = true,
-    this.background,
-    this.hintColor,
-    this.maxLines = 1,
-  }) : super(key: key);
+  const MyTextInput(
+      {Key key,
+      @required this.hintText,
+      @required this.iconData,
+      this.textInputType,
+      this.controller,
+      this.label = '',
+      this.rules,
+      this.validateCallback,
+      //this.isEnable = true,
+      this.background,
+      this.hintColor,
+      this.maxLines = 1,
+      this.filled = false})
+      : super(key: key);
   final String hintText;
   final IconData iconData;
   final TextInputType textInputType;
@@ -27,6 +28,7 @@ class MyTextInput extends StatefulWidget {
   final Color background;
   final Color hintColor;
   final int maxLines;
+  final bool filled;
   //final bool isEnable;
 
   @override
@@ -64,7 +66,7 @@ class _TextInputState extends State<MyTextInput> {
             });
           },
           decoration: InputDecoration(
-            filled: true,
+            filled: widget.filled,
             fillColor: widget.background ?? Palette.secondColor.withOpacity(0.2),
             suffixIcon: isPassword
                 ? IconButton(
@@ -76,6 +78,7 @@ class _TextInputState extends State<MyTextInput> {
                   )
                 : null,
             enabledBorder: outlineInputBorder,
+            helperStyle: TextStyle(color: Colors.grey),
             hintText: widget.hintText,
             labelText: label == '' ? null : label,
             labelStyle: label == '' ? null : TextStyle(color: Colors.red),

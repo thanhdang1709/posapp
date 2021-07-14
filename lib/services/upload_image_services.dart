@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:path/path.dart';
+import 'package:pos_app/contants.dart';
 import 'package:pos_app/repositories/common.dart';
 
 class FolderUploadModel {
@@ -29,7 +30,7 @@ class UploadService {
 
     Dio dio = Dio();
     var response = await dio.post(
-      BASE_URL + '/api/media/upload',
+      CONTANTS.BASE_DOMAIN + '/api/media/upload',
       data: form,
       options: Options(
         headers: {

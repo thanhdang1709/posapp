@@ -28,11 +28,11 @@ class UserController extends GetxController {
     // TODO: implement onInit
     super.onInit();
     userInfo = new UserModel(
-      address: MasterConfig().userInfo?.address,
-      name: MasterConfig().userInfo?.storeName,
-      phone: MasterConfig().userInfo?.phone,
-      email: MasterConfig().userInfo?.email,
-      logo: MasterConfig().userInfo?.logo,
+      address: MasterConfig().storeInfo?.address,
+      name: MasterConfig().storeInfo?.name,
+      phone: '19000000' + MasterConfig().storeInfo?.hotline,
+      email: 'vinatech@gmail.com',
+      logo: MasterConfig().storeInfo?.bannerImage,
     );
   }
 

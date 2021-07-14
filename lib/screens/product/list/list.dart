@@ -326,7 +326,7 @@ class ColumnListProduct extends GetView<ListProductController> {
             child: RowSearchInput(
                 controller: controller.searchController,
                 onPressIcon: () {
-                  Get.toNamed('/product/add');
+                  Get.toNamed('product/add');
                 }),
           ),
         ),

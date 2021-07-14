@@ -80,5 +80,6 @@ const commonLabels = {
   'slide_down_to_back': 'Vuốt xuống để quay lại',
   'common_setting': 'Cài đặt chung',
   'export': 'Xuất báo cáo',
-  'add': 'Thêm mới'
+  'add': 'Thêm mới',
+  'anauthorized': 'Hết thời gian đăng nhập, mời đăng nhập lại'
 };

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:pos_app/app/controllers/table_controller.dart';
 import 'package:pos_app/app/screens/table/add_area_screen.dart';
+import 'package:pos_app/app/screens/table/area/list/list.dart';
 import 'package:pos_app/app/screens/table/components/table_list.dart';
 import 'package:pos_app/config/palette.dart';
 import 'package:pos_app/data/store/product_store.dart';
@@ -75,51 +76,100 @@ class _PosScreenState extends State<TableScreen> with SingleTickerProviderStateM
       return buildItem;
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        toolbarHeight: 100,
-        title: Text(
-          'label.table'.tr,
-          //style: TextStyle(color: Colors.white),
-        ),
-        flexibleSpace: FlexibleTopBackground(
-          assetsImage: 'assets/waiter.png',
-        ),
-        actions: [
-          InkWell(
-            onTap: () {
-              Get.to(AddAreaScreen());
-            },
-            child: Padding(
-              padding: const EdgeInsets.only(right: 20),
-              child: Icon(FontAwesome.plus),
+    return Obx(
+      () => !tableController.isLoading.value
+          ? Scaffold(
+              appBar: AppBar(
+                centerTitle: true,
+                toolbarHeight: 100,
+                title: Text(
+                  'label.table'.tr,
+                  //style: TextStyle(color: Colors.white),
+                ),
+                flexibleSpace: FlexibleTopBackground(
+                  assetsImage: 'assets/waiter.png',
+                ),
+                actions: [
+                  InkWell(
+                    onTap: () {
+                      Get.to(AreaScreen());
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 20),
+                      child: Icon(FontAwesome.table),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Get.to(AddTableScreen());
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: Icon(FontAwesome.plus),
+                    ),
+                  )
+                ],
+                bottom: TabBar(
+                  isScrollable: true,
+                  onTap: (index) {},
+                  controller: _controller,
+                  tabs: lists,
+                  labelColor: Palette.colorTextOnPink,
+                  unselectedLabelColor: Palette.unselectedItemColor,
+                ),
+              ),
+              drawer: DrawerApp(),
+              body: TabBarView(
+                controller: _controller,
+                children: _buildItemPost(),
+              ),
+            )
+          : Scaffold(
+              appBar: AppBar(
+                centerTitle: true,
+                toolbarHeight: 100,
+                title: Text(
+                  'label.table'.tr,
+                  //style: TextStyle(color: Colors.white),
+                ),
+                flexibleSpace: FlexibleTopBackground(
+                  assetsImage: 'assets/waiter.png',
+                ),
+                actions: [
+                  InkWell(
+                    onTap: () {
+                      Get.to(AreaScreen());
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 20),
+                      child: Icon(FontAwesome.plus),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Get.to(AddTableScreen());
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: Icon(FontAwesome.table),
+                    ),
+                  )
+                ],
+                bottom: TabBar(
+                  isScrollable: true,
+                  onTap: (index) {},
+                  controller: _controller,
+                  tabs: lists,
+                  labelColor: Palette.colorTextOnPink,
+                  unselectedLabelColor: Palette.unselectedItemColor,
+                ),
+              ),
+              drawer: DrawerApp(),
+              body: TabBarView(
+                controller: _controller,
+                children: _buildItemPost(),
+              ),
             ),
-          ),
-          InkWell(
-            onTap: () {
-              Get.to(AddTableScreen());
-            },
-            child: Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: Icon(FontAwesome.table),
-            ),
-          )
-        ],
-        bottom: TabBar(
-          isScrollable: true,
-          onTap: (index) {},
-          controller: _controller,
-          tabs: lists,
-          labelColor: Palette.colorTextOnPink,
-          unselectedLabelColor: Palette.unselectedItemColor,
-        ),
-      ),
-      drawer: DrawerApp(),
-      body: TabBarView(
-        controller: _controller,
-        children: _buildItemPost(),
-      ),
     );
   }
 }

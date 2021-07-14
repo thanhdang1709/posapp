@@ -57,8 +57,8 @@ class _SettingScreenState extends State<SettingScreen> {
                   icon: FontAwesome.dollar,
                 ),
                 RowSettingItem(
-                  title: 'common.export'.tr,
-                  icon: Mdi.export,
+                  title: 'Voucher'.tr,
+                  icon: Mdi.cursorPointer,
                 ),
                 // RowSettingItem(
                 //   title: 'Hoá đơn',

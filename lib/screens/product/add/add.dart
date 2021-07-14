@@ -80,6 +80,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                     TextFormField(
                       controller: addProductController.promoPriceController,
                       // onChanged: addProductController.onChangePriceProduct,
+                      keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         labelText: 'Giá khuyến mãi',
                         labelStyle: GoogleFonts.roboto(color: Colors.blueGrey),
@@ -88,6 +89,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                     TextFormField(
                       controller: addProductController.costController,
                       onChanged: addProductController.onChangePriceProduct,
+                      keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         labelText: 'Giá gốc',
                         labelStyle: GoogleFonts.roboto(color: Colors.blueGrey),

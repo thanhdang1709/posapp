@@ -1,3 +1,5 @@
+import 'package:pos_app/app/screens/confirm_table/kitchen_screen.dart';
+import './../app/bindings/confirm_table_binding.dart';
 import './../app/screens/kitchen/kitchen_screen.dart';
 import './../app/bindings/kitchen_binding.dart';
 import './../app/screens/table/table_screen.dart';
@@ -173,6 +175,12 @@ class AppPages {
       page: () => KitchenScreen(),
       transition: Transition.cupertino,
       binding: KitchenBinding(),
+    ),
+    GetPage(
+      name: Routes.CONFIRM_TABLE,
+      page: () => ConfirmTableScreen(),
+      transition: Transition.cupertino,
+      binding: ConfirmTableBinding(),
     ),
   ];
 }

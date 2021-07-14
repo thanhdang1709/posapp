@@ -14,6 +14,7 @@ class MyButtonSubmit extends StatelessWidget {
     this.height = 50,
     this.backgroundColor,
     this.radius = 10,
+    this.width,
   }) : super(key: key);
 
   final VoidCallback onPressed;
@@ -22,13 +23,14 @@ class MyButtonSubmit extends StatelessWidget {
   final double fontSize;
   final Color textColor;
   final double height;
+  final double width;
   final Color backgroundColor;
   final double radius;
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(radius)),
-      minWidth: Get.width * 0.95,
+      minWidth: width ?? Get.width * 0.95,
       height: height,
       onPressed: onPressed,
       child: submiting

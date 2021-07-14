@@ -3,6 +3,7 @@ import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:get/get.dart';
 import 'package:pos_app/config/palette.dart';
 import 'package:pos_app/data/controllers/user_controller.dart';
+import 'package:pos_app/screens/setting/account/edit.dart';
 import 'package:pos_app/ultils/app_ultils.dart';
 import 'package:pos_app/widgets/circle_border_asset.dart';
 import 'package:pos_app/widgets/circle_border_avatar.dart';
@@ -33,7 +34,7 @@ class AccountScreen extends GetView<UserController> {
                       SizedBox(
                         height: 5,
                       ),
-                      Text('Ảnh đại diện'.tr, style: TextStyle(fontSize: 18.0, color: Colors.black54)),
+                      Text('Logo cửa hàng'.tr, style: TextStyle(fontSize: 18.0, color: Colors.black54)),
                       SizedBox(
                         height: 10,
                       ),
@@ -90,7 +91,7 @@ class AccountScreen extends GetView<UserController> {
                         style: Palette.textTitle1(),
                       ),
                       RowItemInfo(
-                        label: 'Số điện thoại'.tr,
+                        label: 'Hotline'.tr,
                         content: userController.userInfo.phone,
                       ),
                       RowItemInfo(
@@ -113,7 +114,9 @@ class AccountScreen extends GetView<UserController> {
                         height: 30,
                       ),
                       FlatButton.icon(
-                        onPressed: () async {},
+                        onPressed: () async {
+                          Get.to(EditStoreScreen());
+                        },
                         icon: Icon(Icons.edit, color: Colors.white),
                         label: Text('Sửa'.tr, style: TextStyle(color: Colors.white)),
                         color: Palette.primaryColor,

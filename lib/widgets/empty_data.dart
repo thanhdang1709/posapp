@@ -10,7 +10,7 @@ class EmptyDataWidget extends StatelessWidget {
     return Column(
       children: [
         Image.asset(
-          'assets/images/empty.png',
+          'assets/img/empty.png',
           height: 100,
         ),
         SizedBox(

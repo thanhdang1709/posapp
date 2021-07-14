@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:pos_app/contants.dart';
 import 'package:pos_app/data/controllers/initData_controller.dart';
 import 'package:pos_app/data/store/product_store.dart';
 import 'package:pos_app/models/catelog_model.dart';
@@ -42,11 +43,12 @@ class LoginController extends GetxController {
   }
 
   Future login(body) async {
-    var response = await http.post('$BASE_URL/api/login', body: jsonEncode(body), headers: {'Content-Type': 'application/json'});
-    print(response.body);
+    var response = await http.post('${CONTANTS.BASE_DOMAIN}/api/login', body: jsonEncode(body), headers: {'Content-Type': 'application/json'});
+    print(body);
     if (response.statusCode == 200) {
       if (response.body.isNotEmpty) {
         var result = jsonDecode(response.body);
+        print(result);
         if (result['token'].isNotEmpty) {
           var box = GetStorage();
           box.write('token', result['token']);

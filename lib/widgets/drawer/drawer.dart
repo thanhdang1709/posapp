@@ -16,6 +16,7 @@ class DrawerApp extends StatelessWidget {
   Widget build(BuildContext context) {
     var box = GetStorage();
     int role = MasterConfig().userInfo?.role;
+    print(MasterConfig().userInfo);
     return SafeArea(
         child: Drawer(
       elevation: 10,
@@ -117,6 +118,15 @@ class DrawerApp extends StatelessWidget {
                   ),
                 if (role == 1 || role == 2 || role == 3)
                   ItemMenuDraw(
+                    imageUrl: 'assets/icons/table.png',
+                    title: 'Duyệt bàn'.tr,
+                    selectedColor: Get.currentRoute == 'confirm_table' ? Palette.primaryColor : null,
+                    onPress: () {
+                      Get.offNamed('confirm_table');
+                    },
+                  ),
+                if (role == 1 || role == 2 || role == 3)
+                  ItemMenuDraw(
                     imageUrl: 'assets/icons/cooking.png',
                     title: 'label.kitchen'.tr,
                     selectedColor: Get.currentRoute == 'kitchen' ? Palette.primaryColor : null,
@@ -128,9 +138,9 @@ class DrawerApp extends StatelessWidget {
                   ItemMenuDraw(
                     imageUrl: 'assets/icons/diet.png',
                     title: 'label.product'.tr,
-                    selectedColor: Get.currentRoute == '/product' ? Palette.primaryColor : null,
+                    selectedColor: Get.currentRoute == 'product' ? Palette.primaryColor : null,
                     onPress: () {
-                      Get.offNamed('/product');
+                      Get.offNamed('product');
                     },
                   ),
                 // ItemMenuDraw(
@@ -142,27 +152,27 @@ class DrawerApp extends StatelessWidget {
                   ItemMenuDraw(
                     imageUrl: 'assets/icons/customer.png',
                     title: 'label.customer'.tr,
-                    selectedColor: Get.currentRoute == '/customer' ? Palette.primaryColor : null,
+                    selectedColor: Get.currentRoute == 'customer' ? Palette.primaryColor : null,
                     onPress: () {
-                      Get.offNamed('/customer');
+                      Get.offNamed('customer');
                     },
                   ),
                 if (role == 1)
                   ItemMenuDraw(
                     imageUrl: 'assets/icons/transaction.png',
                     title: 'label.transaction'.tr,
-                    selectedColor: Get.currentRoute == '/transaction' ? Palette.primaryColor : null,
+                    selectedColor: Get.currentRoute == 'transaction' ? Palette.primaryColor : null,
                     onPress: () {
-                      Get.offNamed('/transaction');
+                      Get.offNamed('transaction');
                     },
                   ),
                 if (role == 1)
                   ItemMenuDraw(
                     imageUrl: 'assets/icons/report.png',
                     title: 'label.report'.tr,
-                    selectedColor: Get.currentRoute == '/analytic' ? Palette.primaryColor : null,
+                    selectedColor: Get.currentRoute == 'analytic' ? Palette.primaryColor : null,
                     onPress: () {
-                      Get.offNamed('/analytic');
+                      Get.offNamed('analytic');
                     },
                   ),
                 if (role == 1)
@@ -178,13 +188,12 @@ class DrawerApp extends StatelessWidget {
                 //   ItemMenuDraw(
                 //     imageUrl: 'assets/icons/settings.png',
                 //     title: 'common.settings'.tr,
-                //     selectedColor: Get.currentRoute == '/setting' ? Palette.primaryColor : null,
+                //     selectedColor: Get.currentRoute == 'setting' ? Palette.primaryColor : null,
                 //     onPress: () {
-                //       Get.offNamed('/setting');
+                //       Get.offNamed('setting');
                 //       print(Get.currentRoute);
                 //     },
                 //   ),
-
                 ItemMenuDraw(
                   imageUrl: 'assets/icons/log-out.png',
                   title: 'account.logout'.tr,

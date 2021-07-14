@@ -56,6 +56,9 @@ class TableModel {
       case 3:
         return "Tạm ngưng";
         break;
+      case 4:
+        return "Chờ duyệt";
+        break;
       default:
         return "Tạm nghỉ";
     }

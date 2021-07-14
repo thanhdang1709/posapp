@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Palette {
@@ -24,12 +25,14 @@ class Palette {
 
   static final Color textColorLight = Colors.white;
 
+  static final Color textColor = Get.isDarkMode ? Colors.white : Colors.black;
+
   static TextStyle textTitle1() => TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold);
 
   static TextStyle textTitle2() => TextStyle(fontSize: 18, color: Colors.white);
 
   static TextStyle textStyle() {
-    return GoogleFonts.roboto(fontWeight: FontWeight.w500);
+    return GoogleFonts.roboto(fontSize: 14);
   }
   // return GoogleFonts.roboto();
 
